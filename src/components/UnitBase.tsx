@@ -3,9 +3,11 @@ import { Box } from '@mui/system';
 import * as React from 'react';
 import { LightShadowType } from '../common/constants/LightShadowType';
 import { StyleType } from '../common/constants/StyleType';
-import { getWeaponLabel } from '../common/constants/WeaponType';
+import { getWeaponLabel, WeaponType } from '../common/constants/WeaponType';
+import { Equipment } from '../common/types/Equiqment';
 import { Unit } from '../common/types/Unit';
 import { fetchUnits } from '../features/Units';
+import { fetchWeapons } from '../features/Weapons';
 
 function UnitSelectBox(props: {units: Unit[], onSelected: (s: Unit|null) => void}) {
   const { units, onSelected } = props;
@@ -58,17 +60,52 @@ function UnitSelectBox(props: {units: Unit[], onSelected: (s: Unit|null) => void
   );
 }
 
-// HP, MP
-function UnitStatusA(props: {unit: Unit}) {};
-// 攻撃、防御、魔攻、魔防（, 天冥値）
-function UnitStatusB(props: {unit: Unit}) {};
-// 腕力、耐久・・・
-function UnitStatusC(props: {unit: Unit}) {};
-// 武器、防具、アクセ
-function UnitStatusD(props: {unit: Unit}) {};
+// 武器
+function UnitWeaponSelectBox(props: {
+  type: WeaponType,
+  items: Equipment[],
+  selecting: Equipment|null,
+  onSelected: (s: Equipment|null) => void,
+}) {
+  const { type, items, selecting, onSelected } = props;
+
+  const options = items
+    .filter(option => {
+      return option.weaponType === type
+    })
+    .map((option) => {
+      return {
+        ...option,
+      };
+    });
+
+  const handleChange = (_: any, selected: Equipment|null) => {
+    onSelected(selected);
+  };
+
+  const handleRender = (params: object) => {
+    return (
+      <TextField {...params} label="Weapon" />
+    );
+  };
+
+  return (
+    <Autocomplete
+      id="WeaponSelectBox"
+      options={options}
+      getOptionLabel={(opt) => opt.name}
+      value={selecting}
+      renderInput={handleRender}
+      onChange={handleChange}
+    />
+  );
+};
+// function UnitArmourSelectBox(props: {unit: Unit}) {};
+// function UnitBadgeSelectBox(props: {unit: Unit}) {};
 
 export default function UnitBase() {
   const unitData = fetchUnits();
+  const weaponData = fetchWeapons();
 
   const [unit, setUnit] = React.useState<Unit|null>(null);
   React.useEffect(() => {
@@ -85,7 +122,9 @@ export default function UnitBase() {
   }, [unit]);
 
   React.useEffect(() => {
-    // setWeapons();
+    // 選択ユニットの武器種が変わったら、selectの中身をリセット
+    setWeapon(null);
+    // TODO: 専用装備判定とか。
   }, [unit?.weapon]);
 
   const [unitLightShadow, setUnitLightShadow] = React.useState<LightShadowType|null>(null);
@@ -100,7 +139,7 @@ export default function UnitBase() {
   const [statusSplit, setStatusSplit] = React.useState<number>(0);
   const [statusSpeed, setStatusSpeed] = React.useState<number>(0);
 
-  const [weapons, setWeapons] = React.useState<string>("");
+  const [weapon, setWeapon] = React.useState<Equipment|null>(null);
 
   return (
     <Box
@@ -209,12 +248,21 @@ export default function UnitBase() {
         onChange={e => setStatusSplit(Number(e.target.value))}
       />
 
-      <TextField
-        type="text"
-        label="武器 仮"
-        value={weapons}
-        onChange={e => setWeapons(e.target.value)}
-      />
+      {
+        !!unit
+          ?
+          (<>
+            {/* 武器選択ボックス */}
+            <UnitWeaponSelectBox
+              type={unit.weapon}
+              items={weaponData}
+              selecting={weapon}
+              onSelected={setWeapon}
+            />
+          </>)
+          :
+          (<></>)
+      }
 
     </Box>
   );

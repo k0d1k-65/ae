@@ -1,3 +1,4 @@
+import { ArmourType } from "../constants/ArmourType";
 import { EquipmentType } from "../constants/EquipmentType";
 import { WeaponType } from "../constants/WeaponType";
 
@@ -7,7 +8,7 @@ export type Equipment = {
   // 装備種別
   type: EquipmentType,
   weaponType?: WeaponType,
-  // armourType?: ArmourType,
+  armourType?: ArmourType,
   // 装備限定
   equipOnly?: {
     targets: string[],

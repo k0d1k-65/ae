@@ -17,9 +17,9 @@ function StyleChip(props: {styleType: StyleType|null}) {
   }
 
   const chipColor =
-    props.styleType == StyleType.ES
+    props.styleType === StyleType.ES
     ? "success"
-    : props.styleType == StyleType.AS
+    : props.styleType === StyleType.AS
     ? "error"
     : "warning";
 
@@ -178,9 +178,11 @@ export default function UnitBase() {
     // 選択ユニットの武器種が変わったら、selectの中身をリセット
     setWeapon(null);
 
+    // 選択ユニットの防具種が変わったら、selectの中身をリセット
     if (unit == null || armour && armour.armourType !== getArmourByWeapon(unit.weapon)) {
       setArmour(null);
     }
+
     // TODO: 専用装備判定とか。
   }, [unit?.weapon]);
 

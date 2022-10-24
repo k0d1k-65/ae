@@ -1,13 +1,30 @@
-import { Autocomplete, Chip, TextField } from '@mui/material';
+import { Autocomplete, Chip, Divider, Grid, TextField } from '@mui/material';
 import { Box } from '@mui/system';
 import * as React from 'react';
+import { getArmourByWeapon } from '../common/constants/ArmourType';
 import { LightShadowType } from '../common/constants/LightShadowType';
 import { StyleType } from '../common/constants/StyleType';
 import { getWeaponLabel, WeaponType } from '../common/constants/WeaponType';
 import { Equipment } from '../common/types/Equiqment';
 import { Unit } from '../common/types/Unit';
+import { fetchArmours } from '../features/Armour';
 import { fetchUnits } from '../features/Units';
 import { fetchWeapons } from '../features/Weapons';
+
+function StyleChip(props: {styleType: StyleType|null}) {
+  if (props.styleType == null) {
+    return (<></>);
+  }
+
+  const chipColor =
+    props.styleType == StyleType.ES
+    ? "success"
+    : props.styleType == StyleType.AS
+    ? "error"
+    : "warning";
+
+    return (<Chip label={props.styleType} color={chipColor} size="small" sx={{ml: .5, mr: .5}}/>);
+}
 
 function UnitSelectBox(props: {units: Unit[], onSelected: (s: Unit|null) => void}) {
   const { units, onSelected } = props;
@@ -32,15 +49,9 @@ function UnitSelectBox(props: {units: Unit[], onSelected: (s: Unit|null) => void
   };
 
   const handleRenderOption = (props: object, option: Unit) => {
-    const chipColor =
-      option.styleType == StyleType.ES
-      ? "success"
-      : option.styleType == StyleType.AS
-      ? "error"
-      : "warning";
     return (
-      <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
-        <Chip label={option.styleType} color={chipColor} size="small" />
+      <Box component="li" {...props}>
+        <StyleChip styleType={option.styleType}/>
         <span>{option.name}</span>
       </Box>
     )
@@ -62,16 +73,16 @@ function UnitSelectBox(props: {units: Unit[], onSelected: (s: Unit|null) => void
 
 // 武器
 function UnitWeaponSelectBox(props: {
-  type: WeaponType,
+  wType: WeaponType|null,
   items: Equipment[],
   selecting: Equipment|null,
   onSelected: (s: Equipment|null) => void,
 }) {
-  const { type, items, selecting, onSelected } = props;
+  const { wType, items, selecting, onSelected } = props;
 
   const options = items
     .filter(option => {
-      return option.weaponType === type
+      return option.weaponType === wType
     })
     .map((option) => {
       return {
@@ -100,12 +111,54 @@ function UnitWeaponSelectBox(props: {
     />
   );
 };
-// function UnitArmourSelectBox(props: {unit: Unit}) {};
+
+// 防具
+function UnitArmourSelectBox(props: {
+  wType: WeaponType|null,
+  items: Equipment[],
+  selecting: Equipment|null,
+  onSelected: (s: Equipment|null) => void,
+}) {
+  const { wType, items, selecting, onSelected } = props;
+
+  const aType = wType != null && getArmourByWeapon(wType);
+  const options = items
+    .filter(option => {
+      return option.armourType === aType
+    })
+    .map((option) => {
+      return {
+        ...option,
+      };
+    });
+
+  const handleChange = (_: any, selected: Equipment|null) => {
+    onSelected(selected);
+  };
+
+  const handleRender = (params: object) => {
+    return (
+      <TextField {...params} label="Armour" />
+    );
+  };
+
+  return (
+    <Autocomplete
+      id="ArmourSelectBox"
+      options={options}
+      getOptionLabel={(opt) => opt.name}
+      value={selecting}
+      renderInput={handleRender}
+      onChange={handleChange}
+    />
+  );
+};
 // function UnitBadgeSelectBox(props: {unit: Unit}) {};
 
 export default function UnitBase() {
   const unitData = fetchUnits();
   const weaponData = fetchWeapons();
+  const armourData = fetchArmours();
 
   const [unit, setUnit] = React.useState<Unit|null>(null);
   React.useEffect(() => {
@@ -124,6 +177,10 @@ export default function UnitBase() {
   React.useEffect(() => {
     // 選択ユニットの武器種が変わったら、selectの中身をリセット
     setWeapon(null);
+
+    if (unit == null || armour && armour.armourType !== getArmourByWeapon(unit.weapon)) {
+      setArmour(null);
+    }
     // TODO: 専用装備判定とか。
   }, [unit?.weapon]);
 
@@ -140,6 +197,9 @@ export default function UnitBase() {
   const [statusSpeed, setStatusSpeed] = React.useState<number>(0);
 
   const [weapon, setWeapon] = React.useState<Equipment|null>(null);
+  const [armour, setArmour] = React.useState<Equipment|null>(null);
+
+  const divider = (<Divider variant="middle" sx={{margin: 2}} />);
 
   return (
     <Box
@@ -153,9 +213,6 @@ export default function UnitBase() {
         units={unitData}
         onSelected={setUnit}
       />
-
-      {/* クラス名テキスト */}
-      <Box margin={1}>Class : {!!unit ? unit.className : "-"}</Box>
 
       {/* スタイルボーナスONOFF指定チェックボックス */}
       {/*
@@ -186,83 +243,141 @@ export default function UnitBase() {
         </ToggleButton>
       */}
 
-      {/* 天冥 */}
-      <TextField
-        id="filled-number"
-        // variant="filled"
-        type="number"
-        InputLabelProps={{
-          shrink: true,
-        }}
-        label={unitLightShadow || "-"}
-        value={unitLightShadowNumber}
-        onChange={e => setUnitLightShadowNumber(Number(e.target.value))}
-      />
+      {divider}
 
-      <TextField
-        type="number"
-        label="HP"
-        value={statusHp}
-        onChange={e => setStatusHp(Number(e.target.value))}
-      />
-      <TextField
-        type="number"
-        label="MP"
-        value={statusMp}
-        onChange={e => setStatusMp(Number(e.target.value))}
-      />
-      <TextField
-        type="number"
-        label="腕力"
-        value={statusPower}
-        onChange={e => setStatusPower(Number(e.target.value))}
-      />
-      <TextField
-        type="number"
-        label="耐久"
-        value={statusEndure}
-        onChange={e => setStatusEndure(Number(e.target.value))}
-      />
-      <TextField
-        type="number"
-        label="幸運"
-        value={statusLuck}
-        onChange={e => setStatusLuck(Number(e.target.value))}
-      />
-      <TextField
-        type="number"
-        label="知性"
-        value={statusIntelligence}
-        onChange={e => setStatusIntelligence(Number(e.target.value))}
-      />
-      <TextField
-        type="number"
-        label="速度"
-        value={statusSpeed}
-        onChange={e => setStatusSpeed(Number(e.target.value))}
-      />
-      <TextField
-        type="number"
-        label="精神"
-        value={statusSplit}
-        onChange={e => setStatusSplit(Number(e.target.value))}
-      />
+      <Grid container spacing={1}>
+        <Grid item xs={12}>
+          {/* クラス名テキスト */}
+          <>Class : {!!unit ? unit.className : "-"}</>
+          <StyleChip styleType={!!unit ? unit.styleType : null}/>
+        </Grid>
 
-      {
-        !!unit
-          ?
-          (<>
-            {/* 武器選択ボックス */}
-            <UnitWeaponSelectBox
-              type={unit.weapon}
-              items={weaponData}
-              selecting={weapon}
-              onSelected={setWeapon}
-            />
-          </>)
-          :
-          (<></>)
-      }
+        <Grid item xs={4}>
+          <TextField
+            type="number"
+            label="HP"
+            value={statusHp}
+            onChange={e => setStatusHp(Number(e.target.value))}
+          />
+        </Grid>
+
+        <Grid item xs={4}>
+        </Grid>
+
+        <Grid item xs={4}>
+        </Grid>
+
+        <Grid item xs={4}>
+          <TextField
+            type="number"
+            label="MP"
+            value={statusMp}
+            onChange={e => setStatusMp(Number(e.target.value))}
+          />
+        </Grid>
+      </Grid>
+
+      {divider}
+
+      <Grid container spacing={1}>
+        <Grid item xs={4}>
+          {/* 攻撃 */}
+        </Grid>
+        <Grid item xs={4}>
+          {/* 防御 */}
+        </Grid>
+        <Grid item xs={4}>
+          {/* 天冥 */}
+          <TextField
+            id="filled-number"
+            // variant="filled"
+            type="number"
+            InputLabelProps={{
+              shrink: true,
+            }}
+            label={unitLightShadow || "-"}
+            value={unitLightShadowNumber}
+            onChange={e => setUnitLightShadowNumber(Number(e.target.value))}
+          />
+        </Grid>
+        <Grid item xs={4}>
+          {/* 魔攻 */}
+        </Grid>
+        <Grid item xs={4}>
+          {/* 魔防 */}
+        </Grid>
+      </Grid>
+
+      {divider}
+
+      <Grid container spacing={1}>
+        <Grid item xs={4}>
+          <TextField
+            type="number"
+            label="腕力"
+            value={statusPower}
+            onChange={e => setStatusPower(Number(e.target.value))}
+          />
+        </Grid>
+        <Grid item xs={4}>
+          <TextField
+            type="number"
+            label="耐久"
+            value={statusEndure}
+            onChange={e => setStatusEndure(Number(e.target.value))}
+          />
+        </Grid>
+        <Grid item xs={4}>
+          <TextField
+            type="number"
+            label="幸運"
+            value={statusLuck}
+            onChange={e => setStatusLuck(Number(e.target.value))}
+          />
+        </Grid>
+        <Grid item xs={4}>
+          <TextField
+            type="number"
+            label="知性"
+            value={statusIntelligence}
+            onChange={e => setStatusIntelligence(Number(e.target.value))}
+          />
+        </Grid>
+        <Grid item xs={4}>
+          <TextField
+            type="number"
+            label="速度"
+            value={statusSpeed}
+            onChange={e => setStatusSpeed(Number(e.target.value))}
+          />
+        </Grid>
+        <Grid item xs={4}>
+          <TextField
+            type="number"
+            label="精神"
+            value={statusSplit}
+            onChange={e => setStatusSplit(Number(e.target.value))}
+          />
+        </Grid>
+
+      </Grid>
+
+      {divider}
+
+      {/* 武器選択ボックス */}
+      <UnitWeaponSelectBox
+        wType={!!unit ? unit.weapon : null}
+        items={weaponData}
+        selecting={weapon}
+        onSelected={setWeapon}
+      />
+      {/* 防具選択ボックス */}
+      <UnitArmourSelectBox
+        wType={!!unit ? unit.weapon : null}
+        items={armourData}
+        selecting={armour}
+        onSelected={setArmour}
+      />
 
     </Box>
   );

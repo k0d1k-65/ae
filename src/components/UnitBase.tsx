@@ -232,6 +232,10 @@ export default function UnitBase() {
 
   const [statusHp, setStatusHp] = React.useState<number>(0);
   const [statusMp, setStatusMp] = React.useState<number>(0);
+  const [statusAtk, setStatusAtk] = React.useState<number>(0);
+  const [statusDef, setStatusDef] = React.useState<number>(0);
+  const [statusMatk, setStatusMatk] = React.useState<number>(0);
+  const [statusMdef, setStatusMdef] = React.useState<number>(0);
   const [statusPower, setStatusPower] = React.useState<number>(0);
   const [statusEndure, setStatusEndure] = React.useState<number>(0);
   const [statusLuck, setStatusLuck] = React.useState<number>(0);
@@ -326,9 +330,21 @@ export default function UnitBase() {
       <Grid container spacing={1}>
         <Grid item xs={4}>
           {/* 攻撃 */}
+          <TextField
+            type="number"
+            label="攻撃"
+            value={statusAtk}
+            onChange={e => setStatusAtk(Number(e.target.value))}
+          />
         </Grid>
         <Grid item xs={4}>
           {/* 防御 */}
+          <TextField
+            type="number"
+            label="防御"
+            value={statusDef}
+            onChange={e => setStatusDef(Number(e.target.value))}
+          />
         </Grid>
         <Grid item xs={4}>
           {/* 天冥 */}
@@ -346,9 +362,21 @@ export default function UnitBase() {
         </Grid>
         <Grid item xs={4}>
           {/* 魔攻 */}
+          <TextField
+            type="number"
+            label="魔力"
+            value={statusMatk}
+            onChange={e => setStatusMatk(Number(e.target.value))}
+          />
         </Grid>
         <Grid item xs={4}>
           {/* 魔防 */}
+          <TextField
+            type="number"
+            label="魔防"
+            value={statusMdef}
+            onChange={e => setStatusMdef(Number(e.target.value))}
+          />
         </Grid>
       </Grid>
 

@@ -11,6 +11,7 @@ import { fetchArmours } from '../features/Armour';
 import { fetchBadges } from '../features/Badges';
 import { fetchUnits } from '../features/Units';
 import { fetchWeapons } from '../features/Weapons';
+import Spacer from './utility/Spacer';
 
 function StyleChip(props: {styleType: StyleType|null}) {
   if (props.styleType == null) {
@@ -247,8 +248,6 @@ export default function UnitBase() {
   const [armour, setArmour] = React.useState<Equipment|null>(null);
   const [badge, setBadge] = React.useState<Equipment|null>(null);
 
-  const divider = (<Divider variant="middle" sx={{margin: 2}} />);
-
   return (
     <Box
       margin={2}
@@ -291,7 +290,7 @@ export default function UnitBase() {
         </ToggleButton>
       */}
 
-      {divider}
+      <Divider variant="middle" sx={{margin: 2}} />
 
       <Grid container spacing={1}>
         <Grid item xs={12}>
@@ -325,7 +324,7 @@ export default function UnitBase() {
         </Grid>
       </Grid>
 
-      {divider}
+      <Divider variant="middle" sx={{margin: 2}} />
 
       <Grid container spacing={1}>
         <Grid item xs={4}>
@@ -380,7 +379,7 @@ export default function UnitBase() {
         </Grid>
       </Grid>
 
-      {divider}
+      <Spacer size={32} axis="horizontal" style={{margin: 8}}/>
 
       <Grid container spacing={1}>
         <Grid item xs={4}>
@@ -434,7 +433,7 @@ export default function UnitBase() {
 
       </Grid>
 
-      {divider}
+      <Divider variant="middle" sx={{margin: 2}} />
 
       {/* 武器選択ボックス */}
       <UnitWeaponSelectBox
@@ -444,6 +443,9 @@ export default function UnitBase() {
         selecting={weapon}
         onSelected={setWeapon}
       />
+
+      <Spacer size={32} axis="horizontal" style={{margin: 6}}/>
+
       {/* 防具選択ボックス */}
       <UnitArmourSelectBox
         labelTitle='Armour'
@@ -452,7 +454,10 @@ export default function UnitBase() {
         selecting={armour}
         onSelected={setArmour}
       />
-      {/* 防具選択ボックス */}
+
+      <Spacer size={32} axis="horizontal" style={{margin: 6}}/>
+
+      {/* バッジ選択ボックス */}
       <UnitBadgeSelectBox
         labelTitle='Badge'
         items={badgeData}

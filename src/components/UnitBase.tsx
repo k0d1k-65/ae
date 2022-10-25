@@ -74,12 +74,13 @@ function UnitSelectBox(props: {units: Unit[], onSelected: (s: Unit|null) => void
 
 // 武器
 function UnitWeaponSelectBox(props: {
+  labelTitle: string,
   wType: WeaponType|null,
   items: Equipment[],
   selecting: Equipment|null,
   onSelected: (s: Equipment|null) => void,
 }) {
-  const { wType, items, selecting, onSelected } = props;
+  const { labelTitle, wType, items, selecting, onSelected } = props;
 
   const options = items
     .filter(option => {
@@ -97,7 +98,7 @@ function UnitWeaponSelectBox(props: {
 
   const handleRender = (params: object) => {
     return (
-      <TextField {...params} label="Weapon" />
+      <TextField {...params} label={labelTitle} />
     );
   };
 
@@ -115,12 +116,13 @@ function UnitWeaponSelectBox(props: {
 
 // 防具
 function UnitArmourSelectBox(props: {
+  labelTitle: string,
   wType: WeaponType|null,
   items: Equipment[],
   selecting: Equipment|null,
   onSelected: (s: Equipment|null) => void,
 }) {
-  const { wType, items, selecting, onSelected } = props;
+  const { labelTitle, wType, items, selecting, onSelected } = props;
 
   const aType = wType != null && getArmourByWeapon(wType);
   const options = items
@@ -139,7 +141,7 @@ function UnitArmourSelectBox(props: {
 
   const handleRender = (params: object) => {
     return (
-      <TextField {...params} label="Armour" />
+      <TextField {...params} label={labelTitle} />
     );
   };
 
@@ -408,6 +410,7 @@ export default function UnitBase() {
 
       {/* 武器選択ボックス */}
       <UnitWeaponSelectBox
+        labelTitle='Weapon'
         wType={!!unit ? unit.weapon : null}
         items={weaponData}
         selecting={weapon}
@@ -415,6 +418,7 @@ export default function UnitBase() {
       />
       {/* 防具選択ボックス */}
       <UnitArmourSelectBox
+        labelTitle='Armour'
         wType={!!unit ? unit.weapon : null}
         items={armourData}
         selecting={armour}

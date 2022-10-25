@@ -8,6 +8,7 @@ import { getWeaponLabel, WeaponType } from '../common/constants/WeaponType';
 import { Equipment } from '../common/types/Equiqment';
 import { Unit } from '../common/types/Unit';
 import { fetchArmours } from '../features/Armour';
+import { fetchBadges } from '../features/Badges';
 import { fetchUnits } from '../features/Units';
 import { fetchWeapons } from '../features/Weapons';
 
@@ -153,12 +154,50 @@ function UnitArmourSelectBox(props: {
     />
   );
 };
-// function UnitBadgeSelectBox(props: {unit: Unit}) {};
+
+// バッジ
+function UnitBadgeSelectBox(props: {
+  labelTitle: string,
+  items: Equipment[],
+  selecting: Equipment|null,
+  onSelected: (s: Equipment|null) => void,
+}) {
+  const { labelTitle, items, selecting, onSelected } = props;
+
+  const options = items
+    .map((option) => {
+      return {
+        ...option,
+      };
+    });
+
+  const handleChange = (_: any, selected: Equipment|null) => {
+    onSelected(selected);
+  };
+
+  const handleRender = (params: object) => {
+    return (
+      <TextField {...params} label={labelTitle} />
+    );
+  };
+
+  return (
+    <Autocomplete
+      id="BadgeSelectBox"
+      options={options}
+      getOptionLabel={(opt) => opt.name}
+      value={selecting}
+      renderInput={handleRender}
+      onChange={handleChange}
+    />
+  );
+};
 
 export default function UnitBase() {
   const unitData = fetchUnits();
   const weaponData = fetchWeapons();
   const armourData = fetchArmours();
+  const badgeData = fetchBadges();
 
   const [unit, setUnit] = React.useState<Unit|null>(null);
   React.useEffect(() => {
@@ -200,6 +239,7 @@ export default function UnitBase() {
 
   const [weapon, setWeapon] = React.useState<Equipment|null>(null);
   const [armour, setArmour] = React.useState<Equipment|null>(null);
+  const [badge, setBadge] = React.useState<Equipment|null>(null);
 
   const divider = (<Divider variant="middle" sx={{margin: 2}} />);
 
@@ -379,6 +419,13 @@ export default function UnitBase() {
         items={armourData}
         selecting={armour}
         onSelected={setArmour}
+      />
+      {/* 防具選択ボックス */}
+      <UnitBadgeSelectBox
+        labelTitle='Badge'
+        items={badgeData}
+        selecting={badge}
+        onSelected={setBadge}
       />
 
     </Box>

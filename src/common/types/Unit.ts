@@ -1,6 +1,8 @@
 import { LightShadowType } from "../constants/LightShadowType";
 import { StyleType } from "../constants/StyleType";
 import { WeaponType } from "../constants/WeaponType";
+import { LightShadowBonus } from "./LightShadowBonus";
+import { UnitStat } from "./UnitStat";
 
 export type Unit = {
   // 武器
@@ -16,12 +18,7 @@ export type Unit = {
   // NS or AS or ES
   styleType: StyleType,
   // ベースステータス
-  hp: number,
-  mp: number,
-  power: number,
-  endure: number,
-  luck: number,
-  intelligence: number,
-  split: number,
-  speed: number,
+  stat: UnitStat,
+  // 天冥ボーナス
+  lsBonus: LightShadowBonus[],
 };

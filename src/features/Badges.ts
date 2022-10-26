@@ -6,7 +6,7 @@ const badges = (() => {
     {
       name: "HP+1000",
       type: EquipmentType.Badge,
-      effects: {
+      stat: {
         hp: 1000,
       }
     },

@@ -7,6 +7,7 @@ import { StyleType } from '../common/constants/StyleType';
 import { getWeaponLabel, WeaponType } from '../common/constants/WeaponType';
 import { Equipment } from '../common/types/Equiqment';
 import { Unit } from '../common/types/Unit';
+import { initUnitStat, UnitStat } from '../common/types/UnitStat';
 import { fetchArmours } from '../features/Armour';
 import { fetchBadges } from '../features/Badges';
 import { fetchUnits } from '../features/Units';
@@ -196,6 +197,11 @@ function UnitBadgeSelectBox(props: {
   );
 };
 
+// FIXME:
+function calcStatus(unit: Unit, ...equipments: Equipment[]) {
+
+}
+
 export default function UnitBase() {
   const unitData = fetchUnits();
   const weaponData = fetchWeapons();
@@ -206,14 +212,14 @@ export default function UnitBase() {
   React.useEffect(() => {
     setUnitLightShadow(!!unit ? unit.lightShadow : null);
 
-    setStatusHp(!!unit ? unit.hp : 0);
-    setStatusMp(!!unit ? unit.mp : 0);
-    setStatusPower(!!unit ? unit.power : 0);
-    setStatusEndure(!!unit ? unit.endure : 0);
-    setStatusLuck(!!unit ? unit.luck : 0);
-    setStatusIntelligence(!!unit ? unit.intelligence : 0);
-    setStatusSplit(!!unit ? unit.split : 0);
-    setStatusSpeed(!!unit ? unit.speed : 0);
+    // setStatusHp(!!unit ? unit.hp : 0);
+    // setStatusMp(!!unit ? unit.mp : 0);
+    // setStatusPower(!!unit ? unit.power : 0);
+    // setStatusEndure(!!unit ? unit.endure : 0);
+    // setStatusLuck(!!unit ? unit.luck : 0);
+    // setStatusIntelligence(!!unit ? unit.intelligence : 0);
+    // setStatusSplit(!!unit ? unit.split : 0);
+    // setStatusSpeed(!!unit ? unit.speed : 0);
   }, [unit]);
 
   React.useEffect(() => {

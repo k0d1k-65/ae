@@ -8,7 +8,7 @@ const armours = (() => {
       name: "降魔の腕輪",
       type: EquipmentType.Armour,
       armourType: ArmourType.bracelet,
-      effects: {
+      stat: {
         def: 180,
         mdef: 150,
       }
@@ -17,7 +17,7 @@ const armours = (() => {
       name: "可惜夜の首輪",
       type: EquipmentType.Armour,
       armourType: ArmourType.neckless,
-      effects: {
+      stat: {
         def: 160,
         mdef: 160,
       }
@@ -26,7 +26,7 @@ const armours = (() => {
       name: "フェザーリング",
       type: EquipmentType.Armour,
       armourType: ArmourType.ring,
-      effects: {
+      stat: {
         def: 135,
         mdef: 158,
       }

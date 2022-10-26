@@ -8,7 +8,7 @@ const weapons = (() => {
       name: "ムジマ・ロッド",
       type: EquipmentType.Weapon,
       weaponType: WeaponType.Lod,
-      effects: {
+      stat: {
         atk: 23,
         matk: 190,
       }
@@ -17,7 +17,7 @@ const weapons = (() => {
       name: "復元せし時刻みの剣",
       type: EquipmentType.Weapon,
       weaponType: WeaponType.Sward,
-      effects: {
+      stat: {
         atk: 165,
         matk: 20,
         hp: 500,
@@ -28,7 +28,7 @@ const weapons = (() => {
       name: "黎明の刀",
       type: EquipmentType.Weapon,
       weaponType: WeaponType.Katana,
-      effects: {
+      stat: {
         atk: 153,
         matk: 25,
       }

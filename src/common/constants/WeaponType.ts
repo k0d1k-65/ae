@@ -22,4 +22,22 @@ const weaponTypeLabels = {
 
 export const getWeaponLabel = (type:WeaponType) => {
   return weaponTypeLabels[type];
-}
+};
+
+export const getWeaponTypes = () => {
+  const weaponTypes = [
+    WeaponType.Lod,
+    WeaponType.Sward,
+    WeaponType.Katana,
+    WeaponType.Axe,
+    WeaponType.Lance,
+    WeaponType.Bow,
+    WeaponType.Fist,
+    WeaponType.Hammer,
+  ];
+
+  return weaponTypes.map(wt => ({
+    typ: wt,
+    lbl: weaponTypeLabels[wt],
+  }));
+};

@@ -2,6 +2,7 @@ import { LightShadowType } from "../common/constants/LightShadowType";
 import { StyleType } from "../common/constants/StyleType";
 import { WeaponType } from "../common/constants/WeaponType";
 import { Unit } from "../common/types/Unit";
+import { UnitStat } from "../common/types/UnitStat";
 
 const units: Unit[] = (() => {
   const _units: Unit[] = [
@@ -12,7 +13,7 @@ const units: Unit[] = (() => {
       lightShadow: LightShadowType.Light,
       className: "ハイエロファント",
       styleType: StyleType.NS,
-      stat: {
+      stat: new UnitStat({
         hp: 3444,
         mp: 655,
         power: 211,
@@ -21,7 +22,7 @@ const units: Unit[] = (() => {
         intelligence: 182,
         split: 190,
         speed: 202,
-      },
+      }),
       lsBonus: [],
     },
     {
@@ -31,7 +32,7 @@ const units: Unit[] = (() => {
       lightShadow: LightShadowType.Shadow,
       className: "グレイハウンド",
       styleType: StyleType.NS,
-      stat: {
+      stat: new UnitStat({
         hp: 3444,
         mp: 655,
         power: 211,
@@ -40,7 +41,7 @@ const units: Unit[] = (() => {
         intelligence: 182,
         split: 190,
         speed: 202,
-      },
+      }),
       lsBonus: [],
     },
     {
@@ -50,7 +51,7 @@ const units: Unit[] = (() => {
       lightShadow: LightShadowType.Light,
       className: "アドミラル",
       styleType: StyleType.NS,
-      stat: {
+      stat: new UnitStat({
         hp: 3444,
         mp: 655,
         power: 211,
@@ -59,7 +60,7 @@ const units: Unit[] = (() => {
         intelligence: 182,
         split: 190,
         speed: 202,
-      },
+      }),
       lsBonus: [],
     },
     {
@@ -69,7 +70,7 @@ const units: Unit[] = (() => {
       lightShadow: LightShadowType.Light,
       className: "フィエルテベート",
       styleType: StyleType.AS,
-      stat: {
+      stat: new UnitStat({
         hp: 3444,
         mp: 655,
         power: 211,
@@ -78,7 +79,7 @@ const units: Unit[] = (() => {
         intelligence: 182,
         split: 190,
         speed: 202,
-      },
+      }),
       lsBonus: [],
     },
     {
@@ -88,7 +89,7 @@ const units: Unit[] = (() => {
       lightShadow: LightShadowType.Light,
       className: "ユースティティア",
       styleType: StyleType.ES,
-      stat: {
+      stat: new UnitStat({
         hp: 3444,
         mp: 655,
         power: 211,
@@ -97,7 +98,7 @@ const units: Unit[] = (() => {
         intelligence: 182,
         split: 190,
         speed: 202,
-      },
+      }),
       lsBonus: [],
     },
     {
@@ -107,7 +108,7 @@ const units: Unit[] = (() => {
       lightShadow: LightShadowType.Shadow,
       className: "ユダ",
       styleType: StyleType.NS,
-      stat: {
+      stat: new UnitStat({
         hp: 3444,
         mp: 655,
         power: 211,
@@ -116,7 +117,7 @@ const units: Unit[] = (() => {
         intelligence: 182,
         split: 190,
         speed: 202,
-      },
+      }),
       lsBonus: [],
     },
     {
@@ -126,7 +127,7 @@ const units: Unit[] = (() => {
       lightShadow: LightShadowType.Shadow,
       className: "ソウルブリンガー",
       styleType: StyleType.NS,
-      stat: {
+      stat: new UnitStat({
         hp: 3444,
         mp: 655,
         power: 211,
@@ -135,7 +136,7 @@ const units: Unit[] = (() => {
         intelligence: 182,
         split: 190,
         speed: 202,
-      },
+      }),
       lsBonus: [],
     },
   ];

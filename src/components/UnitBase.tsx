@@ -7,7 +7,7 @@ import { StyleType } from '../common/constants/StyleType';
 import { getWeaponLabel, WeaponType } from '../common/constants/WeaponType';
 import { Equipment } from '../common/types/Equiqment';
 import { Unit } from '../common/types/Unit';
-import { initUnitStat, UnitStat } from '../common/types/UnitStat';
+import { UnitStat } from '../common/types/UnitStat';
 import { fetchArmours } from '../features/Armour';
 import { fetchBadges } from '../features/Badges';
 import { fetchUnits } from '../features/Units';
@@ -45,7 +45,6 @@ function UnitSelectBox(props: {units: Unit[], onSelected: (s: Unit|null) => void
   };
 
   const handleRender = (params: object) => {
-    console.log(params)
     return (
       <TextField {...params} label="Unit" />
     );
@@ -197,11 +196,6 @@ function UnitBadgeSelectBox(props: {
   );
 };
 
-// FIXME:
-function calcStatus(unit: Unit, ...equipments: Equipment[]) {
-
-}
-
 export default function UnitBase() {
   const unitData = fetchUnits();
   const weaponData = fetchWeapons();
@@ -209,31 +203,6 @@ export default function UnitBase() {
   const badgeData = fetchBadges();
 
   const [unit, setUnit] = React.useState<Unit|null>(null);
-  React.useEffect(() => {
-    setUnitLightShadow(!!unit ? unit.lightShadow : null);
-
-    // setStatusHp(!!unit ? unit.hp : 0);
-    // setStatusMp(!!unit ? unit.mp : 0);
-    // setStatusPower(!!unit ? unit.power : 0);
-    // setStatusEndure(!!unit ? unit.endure : 0);
-    // setStatusLuck(!!unit ? unit.luck : 0);
-    // setStatusIntelligence(!!unit ? unit.intelligence : 0);
-    // setStatusSplit(!!unit ? unit.split : 0);
-    // setStatusSpeed(!!unit ? unit.speed : 0);
-  }, [unit]);
-
-  React.useEffect(() => {
-    // 選択ユニットの武器種が変わったら、selectの中身をリセット
-    setWeapon(null);
-
-    // 選択ユニットの防具種が変わったら、selectの中身をリセット
-    if (unit == null || armour && armour.armourType !== getArmourByWeapon(unit.weapon)) {
-      setArmour(null);
-    }
-
-    // TODO: 専用装備判定とか。
-  }, [unit?.weapon]);
-
   const [unitLightShadow, setUnitLightShadow] = React.useState<LightShadowType|null>(null);
   const [unitLightShadowNumber, setUnitLightShadowNumber] = React.useState<number>(0);
 
@@ -253,6 +222,45 @@ export default function UnitBase() {
   const [weapon, setWeapon] = React.useState<Equipment|null>(null);
   const [armour, setArmour] = React.useState<Equipment|null>(null);
   const [badge, setBadge] = React.useState<Equipment|null>(null);
+
+  React.useEffect(() => {
+    setUnitLightShadow(!!unit ? unit.lightShadow : null);
+  }, [unit]);
+
+  React.useEffect(() => {
+    const stat = new UnitStat();
+    if (unit) {
+      stat.integrateStats(unit.stat);
+      weapon && stat.integrateStats(weapon.stat);
+      armour && stat.integrateStats(armour.stat);
+      badge && stat.integrateStats(badge.stat);
+    }
+
+    setStatusHp(stat.hp);
+    setStatusMp(stat.mp);
+    setStatusAtk(stat.atk);
+    setStatusDef(stat.def);
+    setStatusMatk(stat.matk);
+    setStatusMdef(stat.mdef);
+    setStatusPower(stat.power);
+    setStatusEndure(stat.endure);
+    setStatusLuck(stat.luck);
+    setStatusIntelligence(stat.intelligence);
+    setStatusSplit(stat.split);
+    setStatusSpeed(stat.speed);
+  }, [unit, weapon, armour, badge]);
+
+  React.useEffect(() => {
+    // 選択ユニットの武器種が変わったら、selectの中身をリセット
+    setWeapon(null);
+
+    // 選択ユニットの防具種が変わったら、selectの中身をリセット
+    if (unit == null || armour && armour.armourType !== getArmourByWeapon(unit.weapon)) {
+      setArmour(null);
+    }
+
+    // TODO: 専用装備判定とか。
+  }, [unit?.weapon]);
 
   return (
     <Box

@@ -1,6 +1,7 @@
 import { EquipmentType } from "../common/constants/EquipmentType";
 import { WeaponType } from "../common/constants/WeaponType";
 import { Equipment } from "../common/types/Equiqment";
+import { UnitStat } from "../common/types/UnitStat";
 
 const weapons = (() => {
   const _weapons: Equipment[] = [
@@ -8,30 +9,30 @@ const weapons = (() => {
       name: "ムジマ・ロッド",
       type: EquipmentType.Weapon,
       weaponType: WeaponType.Lod,
-      stat: {
+      stat: new UnitStat({
         atk: 23,
         matk: 190,
-      }
+      })
     },
     {
       name: "復元せし時刻みの剣",
       type: EquipmentType.Weapon,
       weaponType: WeaponType.Sward,
-      stat: {
+      stat: new UnitStat({
         atk: 165,
         matk: 20,
         hp: 500,
         mp: 100,
-      }
+      })
     },
     {
       name: "黎明の刀",
       type: EquipmentType.Weapon,
       weaponType: WeaponType.Katana,
-      stat: {
+      stat: new UnitStat({
         atk: 153,
         matk: 25,
-      }
+      })
     },
   ];
 

@@ -49,36 +49,46 @@ export default function UnitBase() {
     setUnitLightShadow(!!unit ? unit.lightShadow : null);
   }, [unit]);
 
+  // Stat 再計算
   React.useEffect(() => {
-    if (calcStatAuto) {
-      const stat = new UnitStat();
-      if (unit) {
-        stat.integrateStats(unit.stat);
-        weapon && stat.integrateStats(weapon.stat);
-        armour && stat.integrateStats(armour.stat);
-        badge && stat.integrateStats(badge.stat);
-      }
-
-      setStatusHp(stat.hp);
-      setStatusMp(stat.mp);
-      setStatusAtk(stat.atk);
-      setStatusDef(stat.def);
-      setStatusMatk(stat.matk);
-      setStatusMdef(stat.mdef);
-      setStatusPower(stat.power);
-      setStatusEndure(stat.endure);
-      setStatusLuck(stat.luck);
-      setStatusIntelligence(stat.intelligence);
-      setStatusSplit(stat.split);
-      setStatusSpeed(stat.speed);
+    // unit 未選択状態では、stat の再計算は行わない
+    if (unit == null) {
+      return;
     }
+
+    // auto ボタンOFFのときは、 stat の再計算は行わない
+    if (!calcStatAuto) {
+      return;
+    }
+
+    const stat = new UnitStat();
+
+    if (unit) {
+      stat.integrateStats(unit.stat);
+      weapon && stat.integrateStats(weapon.stat);
+      armour && stat.integrateStats(armour.stat);
+      badge && stat.integrateStats(badge.stat);
+    }
+
+    setStatusHp(stat.hp);
+    setStatusMp(stat.mp);
+    setStatusAtk(stat.atk);
+    setStatusDef(stat.def);
+    setStatusMatk(stat.matk);
+    setStatusMdef(stat.mdef);
+    setStatusPower(stat.power);
+    setStatusEndure(stat.endure);
+    setStatusLuck(stat.luck);
+    setStatusIntelligence(stat.intelligence);
+    setStatusSplit(stat.split);
+    setStatusSpeed(stat.speed);
   }, [unit, weapon, armour, badge, calcStatAuto]);
 
   React.useEffect(() => {
-    // 選択ユニットの武器種が変わったら、selectの中身をリセット
+    // 選択ユニットの武器種が変わったら、武器selectをリセット
     setWeapon(null);
 
-    // 選択ユニットの防具種が変わったら、selectの中身をリセット
+    // 選択ユニットの防具種が変わったら、防具selectをリセット
     if (unit == null || armour && armour.armourType !== getArmourByWeapon(unit.weapon)) {
       setArmour(null);
     }
@@ -140,9 +150,7 @@ export default function UnitBase() {
           <ToggleButton
             value="check"
             selected={calcStatAuto}
-            onChange={() => {
-              setCalcStatAuto(!calcStatAuto);
-            }}
+            onChange={() => setCalcStatAuto(!calcStatAuto)}
             size={'small'}
             color={'warning'}
             sx={{ position: 'absolute', right: 0 }}
@@ -156,10 +164,9 @@ export default function UnitBase() {
             type="number"
             label="HP"
             value={statusHp}
-            onChange={e => {
-              setStatusHp(Number(e.target.value));
-              setCalcStatAuto(false);
-            }}
+            disabled={calcStatAuto}
+            onChange={e => setStatusHp(Number(e.target.value))}
+            size={'small'}
           />
         </Grid>
 
@@ -174,10 +181,9 @@ export default function UnitBase() {
             type="number"
             label="MP"
             value={statusMp}
-            onChange={e => {
-              setStatusMp(Number(e.target.value));
-              setCalcStatAuto(false);
-            }}
+            disabled={calcStatAuto}
+            onChange={e => setStatusMp(Number(e.target.value))}
+            size={'small'}
           />
         </Grid>
       </Grid>
@@ -191,10 +197,9 @@ export default function UnitBase() {
             type="number"
             label="攻撃"
             value={statusAtk}
-            onChange={e => {
-              setStatusAtk(Number(e.target.value));
-              setCalcStatAuto(false);
-            }}
+            disabled={calcStatAuto}
+            onChange={e => setStatusAtk(Number(e.target.value))}
+            size={'small'}
           />
         </Grid>
         <Grid item xs={4}>
@@ -203,10 +208,9 @@ export default function UnitBase() {
             type="number"
             label="防御"
             value={statusDef}
-            onChange={e => {
-              setStatusDef(Number(e.target.value));
-              setCalcStatAuto(false);
-            }}
+            disabled={calcStatAuto}
+            onChange={e => setStatusDef(Number(e.target.value))}
+            size={'small'}
           />
         </Grid>
         <Grid item xs={4}>
@@ -221,6 +225,7 @@ export default function UnitBase() {
             label={unitLightShadow || "-"}
             value={unitLightShadowNumber}
             onChange={e => setUnitLightShadowNumber(Number(e.target.value))}
+            size={'small'}
           />
         </Grid>
         <Grid item xs={4}>
@@ -229,10 +234,9 @@ export default function UnitBase() {
             type="number"
             label="魔力"
             value={statusMatk}
-            onChange={e => {
-              setStatusMatk(Number(e.target.value));
-              setCalcStatAuto(false);
-            }}
+            disabled={calcStatAuto}
+            onChange={e => setStatusMatk(Number(e.target.value))}
+            size={'small'}
           />
         </Grid>
         <Grid item xs={4}>
@@ -241,15 +245,14 @@ export default function UnitBase() {
             type="number"
             label="魔防"
             value={statusMdef}
-            onChange={e => {
-              setStatusMdef(Number(e.target.value));
-              setCalcStatAuto(false);
-            }}
+            disabled={calcStatAuto}
+            onChange={e => setStatusMdef(Number(e.target.value))}
+            size={'small'}
           />
         </Grid>
       </Grid>
 
-      <Spacer size={32} axis="horizontal" style={{margin: 8}}/>
+      <Spacer size={1} axis="horizontal" style={{margin: 8}}/>
 
       <Grid container spacing={1}>
         <Grid item xs={4}>
@@ -257,10 +260,9 @@ export default function UnitBase() {
             type="number"
             label="腕力"
             value={statusPower}
-            onChange={e => {
-              setStatusPower(Number(e.target.value));
-              setCalcStatAuto(false);
-            }}
+            disabled={calcStatAuto}
+            onChange={e => setStatusPower(Number(e.target.value))}
+            size={'small'}
           />
         </Grid>
         <Grid item xs={4}>
@@ -268,10 +270,9 @@ export default function UnitBase() {
             type="number"
             label="耐久"
             value={statusEndure}
-            onChange={e => {
-              setStatusEndure(Number(e.target.value));
-              setCalcStatAuto(false);
-            }}
+            disabled={calcStatAuto}
+            onChange={e => setStatusEndure(Number(e.target.value))}
+            size={'small'}
           />
         </Grid>
         <Grid item xs={4}>
@@ -279,10 +280,9 @@ export default function UnitBase() {
             type="number"
             label="幸運"
             value={statusLuck}
-            onChange={e => {
-              setStatusLuck(Number(e.target.value));
-              setCalcStatAuto(false);
-            }}
+            disabled={calcStatAuto}
+            onChange={e => setStatusLuck(Number(e.target.value))}
+            size={'small'}
           />
         </Grid>
         <Grid item xs={4}>
@@ -290,10 +290,9 @@ export default function UnitBase() {
             type="number"
             label="知性"
             value={statusIntelligence}
-            onChange={e => {
-              setStatusIntelligence(Number(e.target.value));
-              setCalcStatAuto(false);
-            }}
+            disabled={calcStatAuto}
+            onChange={e => setStatusIntelligence(Number(e.target.value))}
+            size={'small'}
           />
         </Grid>
         <Grid item xs={4}>
@@ -301,10 +300,9 @@ export default function UnitBase() {
             type="number"
             label="速度"
             value={statusSpeed}
-            onChange={e => {
-              setStatusSpeed(Number(e.target.value));
-              setCalcStatAuto(false);
-            }}
+            disabled={calcStatAuto}
+            onChange={e => setStatusSpeed(Number(e.target.value))}
+            size={'small'}
           />
         </Grid>
         <Grid item xs={4}>
@@ -312,10 +310,9 @@ export default function UnitBase() {
             type="number"
             label="精神"
             value={statusSplit}
-            onChange={e => {
-              setStatusSplit(Number(e.target.value));
-              setCalcStatAuto(false);
-            }}
+            disabled={calcStatAuto}
+            onChange={e => setStatusSplit(Number(e.target.value))}
+            size={'small'}
           />
         </Grid>
 

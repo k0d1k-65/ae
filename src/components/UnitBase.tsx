@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Divider, Grid, TextField, ToggleButton } from '@mui/material';
+import { Accordion, AccordionDetails, AccordionSummary, Divider, Grid, TextField, ToggleButton } from '@mui/material';
 import { Box } from '@mui/system';
 import { getArmourByWeapon } from '../common/constants/ArmourType';
 import { LightShadowType } from '../common/constants/LightShadowType';
@@ -16,6 +16,7 @@ import { StyleChip } from './utility/StyleChip';
 import { UnitWeaponSelectBox } from './UnitWeaponSelect';
 import { UnitArmourSelectBox } from './UnitArmourSelect';
 import { UnitBadgeSelectBox } from './UnitBadgeSelect';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 export default function UnitBase() {
   const unitData = fetchUnits();
@@ -24,6 +25,8 @@ export default function UnitBase() {
   const badgeData = fetchBadges();
 
   const [unit, setUnit] = React.useState<Unit|null>(null);
+  const [unitDetailOpened, setUnitDetailOpened] = React.useState(false);
+
   const [unitLightShadow, setUnitLightShadow] = React.useState<LightShadowType|null>(null);
   const [unitLightShadowNumber, setUnitLightShadowNumber] = React.useState<number>(0);
 
@@ -100,256 +103,282 @@ export default function UnitBase() {
     <Box
       margin={2}
       maxWidth={600}
-      display={'flex'}
-      flexDirection={'column'}
     >
-       {/* ユニット選択ボックス */}
-      <UnitSelectBox
-        units={unitData}
-        onSelected={setUnit}
-      />
-
-      {/* スタイルボーナスONOFF指定チェックボックス */}
-      {/*
-        <span>スタイルボーナス</span>
-        <ToggleButton
-          value={StyleType.NS}
-          selected={hasStyleBonus[StyleType.NS]}
-          onChange={handleChangeHasStyleBonus}
-          disabled={!(!!unit && !!unit.className[StyleType.NS])}
-        >
-          {StyleType.NS}
-        </ToggleButton>
-        <ToggleButton
-          value={StyleType.AS}
-          selected={hasStyleBonus[StyleType.AS]}
-          onChange={handleChangeHasStyleBonus}
-          disabled={!(!!unit && !!unit.className[StyleType.AS])}
-        >
-          {StyleType.AS}
-        </ToggleButton>
-        <ToggleButton
-          value={StyleType.ES}
-          selected={hasStyleBonus[StyleType.ES]}
-          onChange={handleChangeHasStyleBonus}
-          disabled={!(!!unit && !!unit.className[StyleType.ES])}
-        >
-          {StyleType.ES}
-        </ToggleButton>
-      */}
-
-      <Divider variant="middle" sx={{margin: 2}} />
-
-      <Grid container spacing={1}>
-        {/* クラス名テキスト */}
-        <Grid item xs={12} sx={{ position: 'relative' }}>
-          <>Class : {!!unit ? unit.className : "-"}</>
-          <StyleChip styleType={!!unit ? unit.styleType : null}/>
-
-          {/* auto計算 */}
+      <Grid container>
+        <Grid item xs={10}>
+          {/* ユニット選択ボックス */}
+          <UnitSelectBox
+            units={unitData}
+            onSelected={setUnit}
+            // size={'small'}
+          />
+        </Grid>
+        <Grid item xs={2}>
           <ToggleButton
-            value="check"
-            selected={calcStatAuto}
-            onChange={() => setCalcStatAuto(!calcStatAuto)}
+            value={0}
+            selected={unitDetailOpened}
+            onChange={() => setUnitDetailOpened(!unitDetailOpened)}
             size={'small'}
-            color={'warning'}
-            sx={{ position: 'absolute', right: 0 }}
           >
-            <>auto計算</>
+            <ExpandMoreIcon />
           </ToggleButton>
         </Grid>
-
-        <Grid item xs={4}>
-          <TextField
-            type="number"
-            label="HP"
-            value={statusHp}
-            disabled={calcStatAuto}
-            onChange={e => setStatusHp(Number(e.target.value))}
-            size={'small'}
-          />
-        </Grid>
-
-        <Grid item xs={4}>
-        </Grid>
-
-        <Grid item xs={4}>
-        </Grid>
-
-        <Grid item xs={4}>
-          <TextField
-            type="number"
-            label="MP"
-            value={statusMp}
-            disabled={calcStatAuto}
-            onChange={e => setStatusMp(Number(e.target.value))}
-            size={'small'}
-          />
-        </Grid>
       </Grid>
 
-      <Divider variant="middle" sx={{margin: 2}} />
+      <Accordion
+        disableGutters
+        expanded={unitDetailOpened}
+        sx={{
+          '&:before': {
+            display: 'none',
+          }
+        }}
+      >
+        <AccordionSummary style={{display: 'none'}}>
+        </AccordionSummary>
+        <AccordionDetails
+          sx={{ margin: '.5rem 0' }}
+        >
+          {/* スタイルボーナスONOFF指定チェックボックス */}
+          {/*
+            <span>スタイルボーナス</span>
+            <ToggleButton
+              value={StyleType.NS}
+              selected={hasStyleBonus[StyleType.NS]}
+              onChange={handleChangeHasStyleBonus}
+              disabled={!(!!unit && !!unit.className[StyleType.NS])}
+            >
+              {StyleType.NS}
+            </ToggleButton>
+            <ToggleButton
+              value={StyleType.AS}
+              selected={hasStyleBonus[StyleType.AS]}
+              onChange={handleChangeHasStyleBonus}
+              disabled={!(!!unit && !!unit.className[StyleType.AS])}
+            >
+              {StyleType.AS}
+            </ToggleButton>
+            <ToggleButton
+              value={StyleType.ES}
+              selected={hasStyleBonus[StyleType.ES]}
+              onChange={handleChangeHasStyleBonus}
+              disabled={!(!!unit && !!unit.className[StyleType.ES])}
+            >
+              {StyleType.ES}
+            </ToggleButton>
+          */}
 
-      <Grid container spacing={1}>
-        <Grid item xs={4}>
-          {/* 攻撃 */}
-          <TextField
-            type="number"
-            label="攻撃"
-            value={statusAtk}
-            disabled={calcStatAuto}
-            onChange={e => setStatusAtk(Number(e.target.value))}
-            size={'small'}
-          />
-        </Grid>
-        <Grid item xs={4}>
-          {/* 防御 */}
-          <TextField
-            type="number"
-            label="防御"
-            value={statusDef}
-            disabled={calcStatAuto}
-            onChange={e => setStatusDef(Number(e.target.value))}
-            size={'small'}
-          />
-        </Grid>
-        <Grid item xs={4}>
-          {/* 天冥 */}
-          <TextField
-            id="filled-number"
-            // variant="filled"
-            type="number"
-            InputLabelProps={{
-              shrink: true,
-            }}
-            label={unitLightShadow || "-"}
-            value={unitLightShadowNumber}
-            onChange={e => setUnitLightShadowNumber(Number(e.target.value))}
-            size={'small'}
-          />
-        </Grid>
-        <Grid item xs={4}>
-          {/* 魔攻 */}
-          <TextField
-            type="number"
-            label="魔力"
-            value={statusMatk}
-            disabled={calcStatAuto}
-            onChange={e => setStatusMatk(Number(e.target.value))}
-            size={'small'}
-          />
-        </Grid>
-        <Grid item xs={4}>
-          {/* 魔防 */}
-          <TextField
-            type="number"
-            label="魔防"
-            value={statusMdef}
-            disabled={calcStatAuto}
-            onChange={e => setStatusMdef(Number(e.target.value))}
-            size={'small'}
-          />
-        </Grid>
-      </Grid>
+          <Grid container spacing={1}>
+            {/* クラス名テキスト */}
+            <Grid item xs={12} sx={{ position: 'relative' }}>
+              <span style={{fontSize: '80%'}}>Class : {!!unit ? unit.className : "-"}</span>
+              <StyleChip styleType={!!unit ? unit.styleType : null}/>
 
-      <Spacer size={1} axis="horizontal" style={{margin: 8}}/>
+              {/* auto計算 */}
+              <ToggleButton
+                value="check"
+                selected={calcStatAuto}
+                onChange={() => setCalcStatAuto(!calcStatAuto)}
+                size={'small'}
+                color={'warning'}
+                sx={{ position: 'absolute', right: 0 }}
+              >
+                <>auto計算</>
+              </ToggleButton>
+            </Grid>
 
-      <Grid container spacing={1}>
-        <Grid item xs={4}>
-          <TextField
-            type="number"
-            label="腕力"
-            value={statusPower}
-            disabled={calcStatAuto}
-            onChange={e => setStatusPower(Number(e.target.value))}
-            size={'small'}
+            <Grid item xs={4}>
+              <TextField
+                type="number"
+                label="HP"
+                value={statusHp}
+                disabled={calcStatAuto}
+                onChange={e => setStatusHp(Number(e.target.value))}
+                size={'small'}
+              />
+            </Grid>
+
+            <Grid item xs={4}>
+            </Grid>
+
+            <Grid item xs={4}>
+            </Grid>
+
+            <Grid item xs={4}>
+              <TextField
+                type="number"
+                label="MP"
+                value={statusMp}
+                disabled={calcStatAuto}
+                onChange={e => setStatusMp(Number(e.target.value))}
+                size={'small'}
+              />
+            </Grid>
+          </Grid>
+
+          <Divider variant="middle" sx={{margin: 1}} />
+
+          <Grid container spacing={1}>
+            <Grid item xs={4}>
+              {/* 攻撃 */}
+              <TextField
+                type="number"
+                label="攻撃"
+                value={statusAtk}
+                disabled={calcStatAuto}
+                onChange={e => setStatusAtk(Number(e.target.value))}
+                size={'small'}
+              />
+            </Grid>
+            <Grid item xs={4}>
+              {/* 防御 */}
+              <TextField
+                type="number"
+                label="防御"
+                value={statusDef}
+                disabled={calcStatAuto}
+                onChange={e => setStatusDef(Number(e.target.value))}
+                size={'small'}
+              />
+            </Grid>
+            <Grid item xs={4}>
+              {/* 天冥 */}
+              <TextField
+                id="filled-number"
+                // variant="filled"
+                type="number"
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                label={unitLightShadow || "-"}
+                value={unitLightShadowNumber}
+                onChange={e => setUnitLightShadowNumber(Number(e.target.value))}
+                size={'small'}
+              />
+            </Grid>
+            <Grid item xs={4}>
+              {/* 魔攻 */}
+              <TextField
+                type="number"
+                label="魔力"
+                value={statusMatk}
+                disabled={calcStatAuto}
+                onChange={e => setStatusMatk(Number(e.target.value))}
+                size={'small'}
+              />
+            </Grid>
+            <Grid item xs={4}>
+              {/* 魔防 */}
+              <TextField
+                type="number"
+                label="魔防"
+                value={statusMdef}
+                disabled={calcStatAuto}
+                onChange={e => setStatusMdef(Number(e.target.value))}
+                size={'small'}
+              />
+            </Grid>
+          </Grid>
+
+          <Spacer size={32} axis="horizontal" style={{margin: 8}}/>
+
+          <Grid container spacing={1}>
+            <Grid item xs={4}>
+              <TextField
+                type="number"
+                label="腕力"
+                value={statusPower}
+                disabled={calcStatAuto}
+                onChange={e => setStatusPower(Number(e.target.value))}
+                size={'small'}
+              />
+            </Grid>
+            <Grid item xs={4}>
+              <TextField
+                type="number"
+                label="耐久"
+                value={statusEndure}
+                disabled={calcStatAuto}
+                onChange={e => setStatusEndure(Number(e.target.value))}
+                size={'small'}
+              />
+            </Grid>
+            <Grid item xs={4}>
+              <TextField
+                type="number"
+                label="幸運"
+                value={statusLuck}
+                disabled={calcStatAuto}
+                onChange={e => setStatusLuck(Number(e.target.value))}
+                size={'small'}
+              />
+            </Grid>
+            <Grid item xs={4}>
+              <TextField
+                type="number"
+                label="知性"
+                value={statusIntelligence}
+                disabled={calcStatAuto}
+                onChange={e => setStatusIntelligence(Number(e.target.value))}
+                size={'small'}
+              />
+            </Grid>
+            <Grid item xs={4}>
+              <TextField
+                type="number"
+                label="速度"
+                value={statusSpeed}
+                disabled={calcStatAuto}
+                onChange={e => setStatusSpeed(Number(e.target.value))}
+                size={'small'}
+              />
+            </Grid>
+            <Grid item xs={4}>
+              <TextField
+                type="number"
+                label="精神"
+                value={statusSplit}
+                disabled={calcStatAuto}
+                onChange={e => setStatusSplit(Number(e.target.value))}
+                size={'small'}
+              />
+            </Grid>
+
+          </Grid>
+
+          <Divider variant="middle" sx={{margin: 1}} />
+
+          {/* 武器選択ボックス */}
+          <UnitWeaponSelectBox
+            labelTitle='Weapon'
+            wType={!!unit ? unit.weapon : null}
+            items={weaponData}
+            selecting={weapon}
+            onSelected={setWeapon}
           />
-        </Grid>
-        <Grid item xs={4}>
-          <TextField
-            type="number"
-            label="耐久"
-            value={statusEndure}
-            disabled={calcStatAuto}
-            onChange={e => setStatusEndure(Number(e.target.value))}
-            size={'small'}
+
+          <Spacer size={32} axis="horizontal" style={{margin: 4}}/>
+
+          {/* 防具選択ボックス */}
+          <UnitArmourSelectBox
+            labelTitle='Armour'
+            wType={!!unit ? unit.weapon : null}
+            items={armourData}
+            selecting={armour}
+            onSelected={setArmour}
           />
-        </Grid>
-        <Grid item xs={4}>
-          <TextField
-            type="number"
-            label="幸運"
-            value={statusLuck}
-            disabled={calcStatAuto}
-            onChange={e => setStatusLuck(Number(e.target.value))}
-            size={'small'}
+
+          <Spacer size={32} axis="horizontal" style={{margin: 4}}/>
+
+          {/* バッジ選択ボックス */}
+          <UnitBadgeSelectBox
+            labelTitle='Badge'
+            items={badgeData}
+            selecting={badge}
+            onSelected={setBadge}
           />
-        </Grid>
-        <Grid item xs={4}>
-          <TextField
-            type="number"
-            label="知性"
-            value={statusIntelligence}
-            disabled={calcStatAuto}
-            onChange={e => setStatusIntelligence(Number(e.target.value))}
-            size={'small'}
-          />
-        </Grid>
-        <Grid item xs={4}>
-          <TextField
-            type="number"
-            label="速度"
-            value={statusSpeed}
-            disabled={calcStatAuto}
-            onChange={e => setStatusSpeed(Number(e.target.value))}
-            size={'small'}
-          />
-        </Grid>
-        <Grid item xs={4}>
-          <TextField
-            type="number"
-            label="精神"
-            value={statusSplit}
-            disabled={calcStatAuto}
-            onChange={e => setStatusSplit(Number(e.target.value))}
-            size={'small'}
-          />
-        </Grid>
-
-      </Grid>
-
-      <Divider variant="middle" sx={{margin: 2}} />
-
-      {/* 武器選択ボックス */}
-      <UnitWeaponSelectBox
-        labelTitle='Weapon'
-        wType={!!unit ? unit.weapon : null}
-        items={weaponData}
-        selecting={weapon}
-        onSelected={setWeapon}
-      />
-
-      <Spacer size={32} axis="horizontal" style={{margin: 6}}/>
-
-      {/* 防具選択ボックス */}
-      <UnitArmourSelectBox
-        labelTitle='Armour'
-        wType={!!unit ? unit.weapon : null}
-        items={armourData}
-        selecting={armour}
-        onSelected={setArmour}
-      />
-
-      <Spacer size={32} axis="horizontal" style={{margin: 6}}/>
-
-      {/* バッジ選択ボックス */}
-      <UnitBadgeSelectBox
-        labelTitle='Badge'
-        items={badgeData}
-        selecting={badge}
-        onSelected={setBadge}
-      />
-
+        </AccordionDetails>
+      </Accordion>
     </Box>
   );
 }

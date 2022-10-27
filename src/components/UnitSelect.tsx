@@ -74,7 +74,7 @@ export function UnitSelectBox(props: {units: Unit[], onSelected: (s: Unit|null) 
   }
 
   return (
-    <>
+    <Box display={'flex'} flexDirection={'column'}>
       {/* ユニット一覧オートコンプリート */}
       <Autocomplete
         id="UnitSelectBox"
@@ -82,7 +82,7 @@ export function UnitSelectBox(props: {units: Unit[], onSelected: (s: Unit|null) 
         groupBy={(opt) => getWeaponLabel(opt.weapon)}
         getOptionLabel={(opt) => opt.name}
         renderOption={handleRenderOption}
-        // sx={{ width: 300 }}
+        size={'small'}
         renderInput={handleRender}
         onChange={handleUnitChange}
       />
@@ -115,6 +115,6 @@ export function UnitSelectBox(props: {units: Unit[], onSelected: (s: Unit|null) 
           })}
         </ToggleButtonGroup>
       </Box>
-    </>
+    </Box>
   );
 }

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Divider, Grid, TextField } from '@mui/material';
+import { Divider, Grid, TextField, ToggleButton } from '@mui/material';
 import { Box } from '@mui/system';
 import { getArmourByWeapon } from '../common/constants/ArmourType';
 import { LightShadowType } from '../common/constants/LightShadowType';
@@ -27,6 +27,7 @@ export default function UnitBase() {
   const [unitLightShadow, setUnitLightShadow] = React.useState<LightShadowType|null>(null);
   const [unitLightShadowNumber, setUnitLightShadowNumber] = React.useState<number>(0);
 
+  const [calcStatAuto, setCalcStatAuto] = React.useState(true);
   const [statusHp, setStatusHp] = React.useState<number>(0);
   const [statusMp, setStatusMp] = React.useState<number>(0);
   const [statusAtk, setStatusAtk] = React.useState<number>(0);
@@ -49,27 +50,29 @@ export default function UnitBase() {
   }, [unit]);
 
   React.useEffect(() => {
-    const stat = new UnitStat();
-    if (unit) {
-      stat.integrateStats(unit.stat);
-      weapon && stat.integrateStats(weapon.stat);
-      armour && stat.integrateStats(armour.stat);
-      badge && stat.integrateStats(badge.stat);
-    }
+    if (calcStatAuto) {
+      const stat = new UnitStat();
+      if (unit) {
+        stat.integrateStats(unit.stat);
+        weapon && stat.integrateStats(weapon.stat);
+        armour && stat.integrateStats(armour.stat);
+        badge && stat.integrateStats(badge.stat);
+      }
 
-    setStatusHp(stat.hp);
-    setStatusMp(stat.mp);
-    setStatusAtk(stat.atk);
-    setStatusDef(stat.def);
-    setStatusMatk(stat.matk);
-    setStatusMdef(stat.mdef);
-    setStatusPower(stat.power);
-    setStatusEndure(stat.endure);
-    setStatusLuck(stat.luck);
-    setStatusIntelligence(stat.intelligence);
-    setStatusSplit(stat.split);
-    setStatusSpeed(stat.speed);
-  }, [unit, weapon, armour, badge]);
+      setStatusHp(stat.hp);
+      setStatusMp(stat.mp);
+      setStatusAtk(stat.atk);
+      setStatusDef(stat.def);
+      setStatusMatk(stat.matk);
+      setStatusMdef(stat.mdef);
+      setStatusPower(stat.power);
+      setStatusEndure(stat.endure);
+      setStatusLuck(stat.luck);
+      setStatusIntelligence(stat.intelligence);
+      setStatusSplit(stat.split);
+      setStatusSpeed(stat.speed);
+    }
+  }, [unit, weapon, armour, badge, calcStatAuto]);
 
   React.useEffect(() => {
     // 選択ユニットの武器種が変わったら、selectの中身をリセット
@@ -128,10 +131,24 @@ export default function UnitBase() {
       <Divider variant="middle" sx={{margin: 2}} />
 
       <Grid container spacing={1}>
-        <Grid item xs={12}>
-          {/* クラス名テキスト */}
+        {/* クラス名テキスト */}
+        <Grid item xs={12} sx={{ position: 'relative' }}>
           <>Class : {!!unit ? unit.className : "-"}</>
           <StyleChip styleType={!!unit ? unit.styleType : null}/>
+
+          {/* auto計算 */}
+          <ToggleButton
+            value="check"
+            selected={calcStatAuto}
+            onChange={() => {
+              setCalcStatAuto(!calcStatAuto);
+            }}
+            size={'small'}
+            color={'warning'}
+            sx={{ position: 'absolute', right: 0 }}
+          >
+            <>auto計算</>
+          </ToggleButton>
         </Grid>
 
         <Grid item xs={4}>
@@ -139,7 +156,10 @@ export default function UnitBase() {
             type="number"
             label="HP"
             value={statusHp}
-            onChange={e => setStatusHp(Number(e.target.value))}
+            onChange={e => {
+              setStatusHp(Number(e.target.value));
+              setCalcStatAuto(false);
+            }}
           />
         </Grid>
 
@@ -154,7 +174,10 @@ export default function UnitBase() {
             type="number"
             label="MP"
             value={statusMp}
-            onChange={e => setStatusMp(Number(e.target.value))}
+            onChange={e => {
+              setStatusMp(Number(e.target.value));
+              setCalcStatAuto(false);
+            }}
           />
         </Grid>
       </Grid>
@@ -168,7 +191,10 @@ export default function UnitBase() {
             type="number"
             label="攻撃"
             value={statusAtk}
-            onChange={e => setStatusAtk(Number(e.target.value))}
+            onChange={e => {
+              setStatusAtk(Number(e.target.value));
+              setCalcStatAuto(false);
+            }}
           />
         </Grid>
         <Grid item xs={4}>
@@ -177,7 +203,10 @@ export default function UnitBase() {
             type="number"
             label="防御"
             value={statusDef}
-            onChange={e => setStatusDef(Number(e.target.value))}
+            onChange={e => {
+              setStatusDef(Number(e.target.value));
+              setCalcStatAuto(false);
+            }}
           />
         </Grid>
         <Grid item xs={4}>
@@ -200,7 +229,10 @@ export default function UnitBase() {
             type="number"
             label="魔力"
             value={statusMatk}
-            onChange={e => setStatusMatk(Number(e.target.value))}
+            onChange={e => {
+              setStatusMatk(Number(e.target.value));
+              setCalcStatAuto(false);
+            }}
           />
         </Grid>
         <Grid item xs={4}>
@@ -209,7 +241,10 @@ export default function UnitBase() {
             type="number"
             label="魔防"
             value={statusMdef}
-            onChange={e => setStatusMdef(Number(e.target.value))}
+            onChange={e => {
+              setStatusMdef(Number(e.target.value));
+              setCalcStatAuto(false);
+            }}
           />
         </Grid>
       </Grid>
@@ -222,7 +257,10 @@ export default function UnitBase() {
             type="number"
             label="腕力"
             value={statusPower}
-            onChange={e => setStatusPower(Number(e.target.value))}
+            onChange={e => {
+              setStatusPower(Number(e.target.value));
+              setCalcStatAuto(false);
+            }}
           />
         </Grid>
         <Grid item xs={4}>
@@ -230,7 +268,10 @@ export default function UnitBase() {
             type="number"
             label="耐久"
             value={statusEndure}
-            onChange={e => setStatusEndure(Number(e.target.value))}
+            onChange={e => {
+              setStatusEndure(Number(e.target.value));
+              setCalcStatAuto(false);
+            }}
           />
         </Grid>
         <Grid item xs={4}>
@@ -238,7 +279,10 @@ export default function UnitBase() {
             type="number"
             label="幸運"
             value={statusLuck}
-            onChange={e => setStatusLuck(Number(e.target.value))}
+            onChange={e => {
+              setStatusLuck(Number(e.target.value));
+              setCalcStatAuto(false);
+            }}
           />
         </Grid>
         <Grid item xs={4}>
@@ -246,7 +290,10 @@ export default function UnitBase() {
             type="number"
             label="知性"
             value={statusIntelligence}
-            onChange={e => setStatusIntelligence(Number(e.target.value))}
+            onChange={e => {
+              setStatusIntelligence(Number(e.target.value));
+              setCalcStatAuto(false);
+            }}
           />
         </Grid>
         <Grid item xs={4}>
@@ -254,7 +301,10 @@ export default function UnitBase() {
             type="number"
             label="速度"
             value={statusSpeed}
-            onChange={e => setStatusSpeed(Number(e.target.value))}
+            onChange={e => {
+              setStatusSpeed(Number(e.target.value));
+              setCalcStatAuto(false);
+            }}
           />
         </Grid>
         <Grid item xs={4}>
@@ -262,7 +312,10 @@ export default function UnitBase() {
             type="number"
             label="精神"
             value={statusSplit}
-            onChange={e => setStatusSplit(Number(e.target.value))}
+            onChange={e => {
+              setStatusSplit(Number(e.target.value));
+              setCalcStatAuto(false);
+            }}
           />
         </Grid>
 

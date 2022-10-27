@@ -1,9 +1,8 @@
 import * as React from 'react';
-import { Autocomplete, Divider, Grid, TextField } from '@mui/material';
+import { Divider, Grid, TextField } from '@mui/material';
 import { Box } from '@mui/system';
-import { ArmourType, getArmourByWeapon } from '../common/constants/ArmourType';
+import { getArmourByWeapon } from '../common/constants/ArmourType';
 import { LightShadowType } from '../common/constants/LightShadowType';
-import { WeaponType } from '../common/constants/WeaponType';
 import { Equipment } from '../common/types/Equiqment';
 import { Unit } from '../common/types/Unit';
 import { UnitStat } from '../common/types/UnitStat';
@@ -14,129 +13,9 @@ import { fetchWeapons } from '../features/Weapons';
 import Spacer from './utility/Spacer';
 import { UnitSelectBox } from './UnitSelect';
 import { StyleChip } from './utility/StyleChip';
-
-// 武器
-function UnitWeaponSelectBox(props: {
-  labelTitle: string,
-  wType: WeaponType|ArmourType|null,
-  items: Equipment[],
-  selecting: Equipment|null,
-  onSelected: (s: Equipment|null) => void,
-}) {
-  const { labelTitle, wType, items, selecting, onSelected } = props;
-
-  const options = items
-    .filter(option => {
-      return option.weaponType === wType
-    })
-    .map((option) => {
-      return {
-        ...option,
-      };
-    });
-
-  const handleChange = (_: any, selected: Equipment|null) => {
-    onSelected(selected);
-  };
-
-  const handleRender = (params: object) => {
-    return (
-      <TextField {...params} label={labelTitle} />
-    );
-  };
-
-  return (
-    <Autocomplete
-      // id="WeaponSelectBox"
-      options={options}
-      getOptionLabel={(opt) => opt.name}
-      value={selecting}
-      renderInput={handleRender}
-      onChange={handleChange}
-    />
-  );
-};
-
-// 防具
-function UnitArmourSelectBox(props: {
-  labelTitle: string,
-  wType: WeaponType|null,
-  items: Equipment[],
-  selecting: Equipment|null,
-  onSelected: (s: Equipment|null) => void,
-}) {
-  const { labelTitle, wType, items, selecting, onSelected } = props;
-
-  const aType = wType != null && getArmourByWeapon(wType);
-  const options = items
-    .filter(option => {
-      return option.armourType === aType
-    })
-    .map((option) => {
-      return {
-        ...option,
-      };
-    });
-
-  const handleChange = (_: any, selected: Equipment|null) => {
-    onSelected(selected);
-  };
-
-  const handleRender = (params: object) => {
-    return (
-      <TextField {...params} label={labelTitle} />
-    );
-  };
-
-  return (
-    <Autocomplete
-      id="ArmourSelectBox"
-      options={options}
-      getOptionLabel={(opt) => opt.name}
-      value={selecting}
-      renderInput={handleRender}
-      onChange={handleChange}
-    />
-  );
-};
-
-// バッジ
-function UnitBadgeSelectBox(props: {
-  labelTitle: string,
-  items: Equipment[],
-  selecting: Equipment|null,
-  onSelected: (s: Equipment|null) => void,
-}) {
-  const { labelTitle, items, selecting, onSelected } = props;
-
-  const options = items
-    .map((option) => {
-      return {
-        ...option,
-      };
-    });
-
-  const handleChange = (_: any, selected: Equipment|null) => {
-    onSelected(selected);
-  };
-
-  const handleRender = (params: object) => {
-    return (
-      <TextField {...params} label={labelTitle} />
-    );
-  };
-
-  return (
-    <Autocomplete
-      id="BadgeSelectBox"
-      options={options}
-      getOptionLabel={(opt) => opt.name}
-      value={selecting}
-      renderInput={handleRender}
-      onChange={handleChange}
-    />
-  );
-};
+import { UnitWeaponSelectBox } from './UnitWeaponSelect';
+import { UnitArmourSelectBox } from './UnitArmourSelect';
+import { UnitBadgeSelectBox } from './UnitBadgeSelect';
 
 export default function UnitBase() {
   const unitData = fetchUnits();

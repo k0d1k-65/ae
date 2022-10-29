@@ -3,38 +3,39 @@ import logo from './logo.svg';
 import './App.css';
 import UnitBase from './components/UnitBase';
 import Test from './components/test';
-import { AppBar, createTheme, CssBaseline, IconButton, ThemeProvider, Toolbar } from '@mui/material';
-import MenuIcon from '@mui/icons-material/Menu';
-
-const darkTheme = createTheme({
-  palette: {
-    mode: 'dark',
-  },
-});
+import { createTheme, CssBaseline, ThemeProvider } from '@mui/material';
+import { ThemeColorModeContext } from './common/contexts/ThemeColorModeContext';
+import { NavigationBar } from './components/NavigationBar';
 
 function App() {
+  const [themeColor, setThemeColor] = React.useState<'light' | 'dark'>('dark');
+  const theme = createTheme({
+    palette: {
+      mode: themeColor,
+    },
+  });
+
+  const handler = React.useMemo(
+    () => ({
+      toggleThemeColor: () => {
+        setThemeColor((prevMode) => (prevMode === 'light' ? 'dark' : 'light'));
+      },
+    }),
+    [],
+  );
+
   return (
     // navバー
-    <ThemeProvider theme={darkTheme}>
-      <CssBaseline />
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
 
-      <AppBar position="static">
-        <Toolbar>
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            sx={{ mr: 2 }}
-          >
-            <MenuIcon />
-          </IconButton>
-        </Toolbar>
-      </AppBar>
+        <ThemeColorModeContext.Provider value={handler}>
+          <NavigationBar />
+        </ThemeColorModeContext.Provider>
 
-      <UnitBase />
-      {/* <Test /> */}
-    </ThemeProvider>
+        <UnitBase />
+        {/* <Test /> */}
+      </ThemeProvider>
   );
 }
 

@@ -6,7 +6,6 @@ import { Box } from '@mui/system';
 import { StyleChip } from './utility/StyleChip';
 import Spacer from './utility/Spacer';
 
-
 export function UnitSelectBox(props: {units: Unit[], onSelected: (s: Unit|null) => void}) {
   const { units, onSelected } = props;
 

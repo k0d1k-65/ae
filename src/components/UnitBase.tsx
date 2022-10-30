@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Accordion, AccordionDetails, AccordionSummary, Divider, Grid, TextField, ToggleButton } from '@mui/material';
+import { Accordion, AccordionDetails, AccordionSummary, Divider, Grid, Popper, TextField, ToggleButton } from '@mui/material';
 import { Box } from '@mui/system';
 import { getArmourByWeapon } from '../common/constants/ArmourType';
 import { LightShadowType } from '../common/constants/LightShadowType';
@@ -17,6 +17,7 @@ import { UnitWeaponSelectBox } from './UnitWeaponSelect';
 import { UnitArmourSelectBox } from './UnitArmourSelect';
 import { UnitBadgeSelectBox } from './UnitBadgeSelect';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { UnitLightShadow } from './UnitLightShadow';
 
 export default function UnitBase() {
   const unitData = fetchUnits();
@@ -26,9 +27,6 @@ export default function UnitBase() {
 
   const [unit, setUnit] = React.useState<Unit|null>(null);
   const [unitDetailOpened, setUnitDetailOpened] = React.useState(false);
-
-  const [unitLightShadow, setUnitLightShadow] = React.useState<LightShadowType|null>(null);
-  const [unitLightShadowNumber, setUnitLightShadowNumber] = React.useState<number>(0);
 
   const [calcStatAuto, setCalcStatAuto] = React.useState(true);
   const [statusHp, setStatusHp] = React.useState<number>(0);
@@ -47,10 +45,6 @@ export default function UnitBase() {
   const [weapon, setWeapon] = React.useState<Equipment|null>(null);
   const [armour, setArmour] = React.useState<Equipment|null>(null);
   const [badge, setBadge] = React.useState<Equipment|null>(null);
-
-  React.useEffect(() => {
-    setUnitLightShadow(!!unit ? unit.lightShadow : null);
-  }, [unit]);
 
   // Stat 再計算
   React.useEffect(() => {
@@ -243,18 +237,7 @@ export default function UnitBase() {
             </Grid>
             <Grid item xs={4}>
               {/* 天冥 */}
-              <TextField
-                id="filled-number"
-                // variant="filled"
-                type="number"
-                InputLabelProps={{
-                  shrink: true,
-                }}
-                label={unitLightShadow || "-"}
-                value={unitLightShadowNumber}
-                onChange={e => setUnitLightShadowNumber(Number(e.target.value))}
-                size={'small'}
-              />
+              <UnitLightShadow unit={unit} />
             </Grid>
             <Grid item xs={4}>
               {/* 魔攻 */}

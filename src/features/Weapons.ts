@@ -15,6 +15,16 @@ const weapons = (() => {
       })
     },
     {
+      name: "復元せし時刻みの杖",
+      type: EquipmentType.Weapon,
+      weaponType: WeaponType.Lod,
+      stat: new UnitStat({
+        atk: 20,
+        matk: 165,
+        mp: 100,
+      })
+    },
+    {
       name: "復元せし時刻みの剣",
       type: EquipmentType.Weapon,
       weaponType: WeaponType.Sward,

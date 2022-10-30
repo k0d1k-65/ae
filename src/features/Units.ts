@@ -139,6 +139,50 @@ const units: Unit[] = (() => {
       }),
       lsBonus: [],
     },
+    {
+      weapon: WeaponType.Lance,
+      name: "フォラン",
+      namekana: "フォラン",
+      lightShadow: LightShadowType.Light,
+      className: "ハスタアンティカ",
+      styleType: StyleType.AS,
+      stat: new UnitStat({
+        hp: 3142,
+        mp: 512,
+        power: 241,
+        endure: 166,
+        luck: 163,
+        intelligence: 152,
+        split: 178,
+        speed: 246,
+      }),
+      lsBonus: [
+        {
+          lightShadow: 5,
+          statType: "LUC",
+          amount: 5,
+          pattern: "additional",
+        },
+        {
+          lightShadow: 15,
+          statType: "HP",
+          amount: 200,
+          pattern: "additional",
+        },
+        {
+          lightShadow: 30,
+          statType: "MP",
+          amount: 40,
+          pattern: "additional",
+        },
+        {
+          lightShadow: 50,
+          statType: "INT",
+          amount: 15,
+          pattern: "additional",
+        },
+      ],
+    },
   ];
 
   return _units

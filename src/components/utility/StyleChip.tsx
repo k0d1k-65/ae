@@ -1,5 +1,5 @@
 import { Chip } from "@mui/material";
-import { StyleType } from "../../common/constants/StyleType";
+import { StyleType, StyleTypeColor } from "../../common/constants/StyleType";
 
 export function StyleChip(props: {styleType: StyleType|null}) {
   if (props.styleType == null) {
@@ -8,10 +8,10 @@ export function StyleChip(props: {styleType: StyleType|null}) {
 
   const chipColor =
     props.styleType === StyleType.ES
-    ? "success"
+    ? StyleTypeColor.ES
     : props.styleType === StyleType.AS
-    ? "error"
-    : "warning";
+    ? StyleTypeColor.AS
+    : StyleTypeColor.NS;
 
     return (<Chip label={props.styleType} color={chipColor} size="small" sx={{ml: .5, mr: .5}}/>);
 }

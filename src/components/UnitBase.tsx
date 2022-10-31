@@ -18,6 +18,7 @@ import { UnitArmourSelectBox } from './UnitArmourSelect';
 import { UnitBadgeSelectBox } from './UnitBadgeSelect';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { UnitLightShadow } from './UnitLightShadow';
+import { StyleType, StyleTypeColor } from '../common/constants/StyleType';
 
 export default function UnitBase() {
   const unitData = fetchUnits();
@@ -27,6 +28,10 @@ export default function UnitBase() {
 
   const [unit, setUnit] = React.useState<Unit|null>(null);
   const [unitDetailOpened, setUnitDetailOpened] = React.useState(false);
+
+  const [hasNSBonus, setHasNSBonus] = React.useState(false);
+  const [hasASBonus, setHasASBonus] = React.useState(false);
+  const [hasESBonus, setHasESBonus] = React.useState(false);
 
   const [calcStatAuto, setCalcStatAuto] = React.useState(true);
   const [statusHp, setStatusHp] = React.useState<number>(0);
@@ -130,43 +135,18 @@ export default function UnitBase() {
       >
         <AccordionSummary style={{display: 'none'}}>
         </AccordionSummary>
+
         <AccordionDetails
           sx={{ margin: '.5rem 0' }}
         >
-          {/* スタイルボーナスONOFF指定チェックボックス */}
-          {/*
-            <span>スタイルボーナス</span>
-            <ToggleButton
-              value={StyleType.NS}
-              selected={hasStyleBonus[StyleType.NS]}
-              onChange={handleChangeHasStyleBonus}
-              disabled={!(!!unit && !!unit.className[StyleType.NS])}
-            >
-              {StyleType.NS}
-            </ToggleButton>
-            <ToggleButton
-              value={StyleType.AS}
-              selected={hasStyleBonus[StyleType.AS]}
-              onChange={handleChangeHasStyleBonus}
-              disabled={!(!!unit && !!unit.className[StyleType.AS])}
-            >
-              {StyleType.AS}
-            </ToggleButton>
-            <ToggleButton
-              value={StyleType.ES}
-              selected={hasStyleBonus[StyleType.ES]}
-              onChange={handleChangeHasStyleBonus}
-              disabled={!(!!unit && !!unit.className[StyleType.ES])}
-            >
-              {StyleType.ES}
-            </ToggleButton>
-          */}
 
           <Grid container spacing={1}>
             {/* クラス名テキスト */}
-            <Grid item xs={12} sx={{ position: 'relative' }}>
-              <span style={{fontSize: '80%'}}>Class : {!!unit ? unit.className : "-"}</span>
-              <StyleChip styleType={!!unit ? unit.styleType : null}/>
+            <Grid item xs={12} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', }}>
+              <div>
+                <span style={{fontSize: '80%'}}>Class : {!!unit ? unit.className : "-"}</span>
+                <StyleChip styleType={!!unit ? unit.styleType : null}/>
+              </div>
 
               {/* auto計算 */}
               <ToggleButton
@@ -175,7 +155,6 @@ export default function UnitBase() {
                 onChange={() => setCalcStatAuto(!calcStatAuto)}
                 size={'small'}
                 color={'warning'}
-                sx={{ position: 'absolute', right: 0 }}
               >
                 <>auto計算</>
               </ToggleButton>
@@ -192,10 +171,36 @@ export default function UnitBase() {
               />
             </Grid>
 
-            <Grid item xs={4}>
-            </Grid>
-
-            <Grid item xs={4}>
+            {/* スタイルボーナスONOFF指定チェックボックス */}
+            <Grid item xs={8}>
+              <span style={{fontSize: '80%'}}>StyleBonus : </span>
+              <ToggleButton
+                value=""
+                selected={hasNSBonus}
+                onChange={() => {setHasNSBonus(!hasNSBonus)}}
+                size={'small'}
+                color={StyleTypeColor.NS}
+              >
+                {StyleType.NS}
+              </ToggleButton>
+              <ToggleButton
+                value=""
+                selected={hasASBonus}
+                onChange={() => {setHasASBonus(!hasASBonus)}}
+                size={'small'}
+                color={StyleTypeColor.AS}
+              >
+                {StyleType.AS}
+              </ToggleButton>
+              <ToggleButton
+                value=""
+                selected={hasESBonus}
+                onChange={() => {setHasESBonus(!hasESBonus)}}
+                size={'small'}
+                color={StyleTypeColor.ES}
+              >
+                {StyleType.ES}
+              </ToggleButton>
             </Grid>
 
             <Grid item xs={4}>
@@ -360,6 +365,7 @@ export default function UnitBase() {
             selecting={badge}
             onSelected={setBadge}
           />
+
         </AccordionDetails>
       </Accordion>
     </Box>

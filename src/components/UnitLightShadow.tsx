@@ -4,16 +4,61 @@ import { Box } from "@mui/system";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { LightShadowType } from "../common/constants/LightShadowType";
 import { Unit } from '../common/types/Unit';
+import { UnitStatType } from '../common/constants/UnitStatType';
 
 export function UnitLightShadow(props: {
   unit: Unit | null,
+  currentLs: number,
+  setLightShadow: (ls: number) => void,
 }) {
-  const { unit } = props;
+  const { unit, currentLs, setLightShadow } = props;
 
-  const [unitLightShadowNumber, setUnitLightShadowNumber] = React.useState<number>(0);
   const [opened, setOpened] = React.useState<boolean>(false);
 
   const anchor = React.useRef(null);
+
+  const bonuses = unit?.lsBonus.map(b => {
+    let statType = "";
+    let statAmount = 0;
+    if (b.stat.hp > 0) {
+      statType = UnitStatType.HP;
+      statAmount = b.stat.hp;
+    }
+    else if (b.stat.mp > 0) {
+      statType = UnitStatType.MP;
+      statAmount = b.stat.mp;
+    }
+    else if (b.stat.power > 0) {
+      statType = UnitStatType.POWER;
+      statAmount = b.stat.power;
+    }
+    else if (b.stat.endure > 0) {
+      statType = UnitStatType.ENDURE;
+      statAmount = b.stat.endure;
+    }
+    else if (b.stat.luck > 0) {
+      statType = UnitStatType.LUCK;
+      statAmount = b.stat.luck;
+    }
+    else if (b.stat.intelligence > 0) {
+      statType = UnitStatType.INTELLIGENCE;
+      statAmount = b.stat.intelligence;
+    }
+    else if (b.stat.split > 0) {
+      statType = UnitStatType.SPEED;
+      statAmount = b.stat.split;
+    }
+    else if (b.stat.speed > 0) {
+      statType = UnitStatType.SPLIT;
+      statAmount = b.stat.speed;
+    }
+
+    return {
+      lightShadow: b.lightShadow,
+      statType,
+      statAmount,
+    };
+  });
 
   return (
     <Box sx={{ display: 'flex' }}>
@@ -25,9 +70,9 @@ export function UnitLightShadow(props: {
           shrink: true,
         }}
         label={!!unit ? unit.lightShadow : "-"}
-        value={unitLightShadowNumber}
+        value={currentLs}
         onChange={e => {
-          setUnitLightShadowNumber(Number(e.target.value))
+          setLightShadow(Number(e.target.value));
         }}
         size={'small'}
       />
@@ -63,10 +108,10 @@ export function UnitLightShadow(props: {
                   borderColor: 'text',
                 }}>
                   {
-                    !!unit
-                    ? unit.lsBonus.map(b =>
+                    !!unit && !!bonuses
+                    ? bonuses.map(b =>
                         <Grid item xs={6}>
-                          <span>{unit.lightShadow}{b.lightShadow} {b.statType}+{b.amount}</span>
+                          <span>{unit.lightShadow}{b.lightShadow} {b.statType}+{b.statAmount}</span>
                         </Grid>
                     )
                     : <></>

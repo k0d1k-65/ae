@@ -4,7 +4,7 @@ import { Box } from '@mui/system';
 import { getArmourByWeapon } from '../common/constants/ArmourType';
 import { LightShadowType } from '../common/constants/LightShadowType';
 import { Equipment } from '../common/types/Equiqment';
-import { Unit } from '../common/types/Unit';
+import { findStyles, Unit } from '../common/types/Unit';
 import { UnitStat } from '../common/types/UnitStat';
 import { fetchArmours } from '../features/Armour';
 import { fetchBadges } from '../features/Badges';
@@ -29,6 +29,9 @@ export default function UnitBase() {
   const [unit, setUnit] = React.useState<Unit|null>(null);
   const [unitDetailOpened, setUnitDetailOpened] = React.useState(false);
 
+  const [nsBonus, setNSBonus] = React.useState<Unit|null>(null);
+  const [asBonus, setASBonus] = React.useState<Unit|null>(null);
+  const [esBonus, setESBonus] = React.useState<Unit|null>(null);
   const [hasNSBonus, setHasNSBonus] = React.useState(false);
   const [hasASBonus, setHasASBonus] = React.useState(false);
   const [hasESBonus, setHasESBonus] = React.useState(false);
@@ -47,9 +50,28 @@ export default function UnitBase() {
   const [statusSplit, setStatusSplit] = React.useState<number>(0);
   const [statusSpeed, setStatusSpeed] = React.useState<number>(0);
 
+  const [unitLightShadowNumber, setUnitLightShadowNumber] = React.useState<number>(0);
+
   const [weapon, setWeapon] = React.useState<Equipment|null>(null);
   const [armour, setArmour] = React.useState<Equipment|null>(null);
   const [badge, setBadge] = React.useState<Equipment|null>(null);
+
+  // スタイルボーナス リセット
+  React.useEffect(() => {
+    setNSBonus(null);
+    setASBonus(null);
+    setESBonus(null);
+    setHasNSBonus(false);
+    setHasASBonus(false);
+    setHasESBonus(false);
+
+    if (!!unit) {
+      const otherStyles = findStyles(unitData, unit);
+      setNSBonus(otherStyles.find(x => x.styleType === StyleType.NS) || null);
+      setASBonus(otherStyles.find(x => x.styleType === StyleType.AS) || null);
+      setESBonus(otherStyles.find(x => x.styleType === StyleType.ES) || null);
+    }
+  }, [unit]);
 
   // Stat 再計算
   React.useEffect(() => {
@@ -70,6 +92,23 @@ export default function UnitBase() {
       weapon && stat.integrateStats(weapon.stat);
       armour && stat.integrateStats(armour.stat);
       badge && stat.integrateStats(badge.stat);
+
+      for (const lsBonus of unit.lsBonus) {
+        console.log({unitLightShadowNumber, b: lsBonus.stat});
+        if (unitLightShadowNumber >= lsBonus.lightShadow) {
+          stat.integrateStats(lsBonus.stat);
+        }
+      }
+    }
+
+    if (!!nsBonus && !!nsBonus.styleBonus && hasNSBonus) {
+      stat.integrateStats(nsBonus.styleBonus);
+    }
+    if (!!asBonus && !!asBonus.styleBonus && hasASBonus) {
+      stat.integrateStats(asBonus.styleBonus);
+    }
+    if (!!esBonus && !!esBonus.styleBonus && hasESBonus) {
+      stat.integrateStats(esBonus.styleBonus);
     }
 
     setStatusHp(stat.hp);
@@ -84,8 +123,9 @@ export default function UnitBase() {
     setStatusIntelligence(stat.intelligence);
     setStatusSplit(stat.split);
     setStatusSpeed(stat.speed);
-  }, [unit, weapon, armour, badge, calcStatAuto]);
+  }, [unit, weapon, armour, badge, calcStatAuto, unitLightShadowNumber, hasNSBonus, hasASBonus, hasESBonus]);
 
+  // 装備品 リセット
   React.useEffect(() => {
     // 選択ユニットの武器種が変わったら、武器selectをリセット
     setWeapon(null);
@@ -173,34 +213,59 @@ export default function UnitBase() {
 
             {/* スタイルボーナスONOFF指定チェックボックス */}
             <Grid item xs={8}>
-              <span style={{fontSize: '80%'}}>StyleBonus : </span>
-              <ToggleButton
-                value=""
-                selected={hasNSBonus}
-                onChange={() => {setHasNSBonus(!hasNSBonus)}}
-                size={'small'}
-                color={StyleTypeColor.NS}
-              >
-                {StyleType.NS}
-              </ToggleButton>
-              <ToggleButton
-                value=""
-                selected={hasASBonus}
-                onChange={() => {setHasASBonus(!hasASBonus)}}
-                size={'small'}
-                color={StyleTypeColor.AS}
-              >
-                {StyleType.AS}
-              </ToggleButton>
-              <ToggleButton
-                value=""
-                selected={hasESBonus}
-                onChange={() => {setHasESBonus(!hasESBonus)}}
-                size={'small'}
-                color={StyleTypeColor.ES}
-              >
-                {StyleType.ES}
-              </ToggleButton>
+              {
+                !!nsBonus || !!asBonus || !!esBonus
+                ?
+                <span style={{fontSize: '80%'}}>StyleBonus : </span>
+                :
+                <></>
+              }
+
+              {
+                !!nsBonus
+                ?
+                <ToggleButton
+                  value=""
+                  selected={hasNSBonus}
+                  onChange={() => {setHasNSBonus(!hasNSBonus)}}
+                  size={'small'}
+                  color={StyleTypeColor.NS}
+                >
+                  {StyleType.NS}
+                </ToggleButton>
+                :
+                <></>
+              }
+              {
+                !!asBonus
+                ?
+                <ToggleButton
+                  value=""
+                  selected={hasASBonus}
+                  onChange={() => {setHasASBonus(!hasASBonus)}}
+                  size={'small'}
+                  color={StyleTypeColor.AS}
+                >
+                  {StyleType.AS}
+                </ToggleButton>
+                :
+                <></>
+              }
+              {
+                !!esBonus
+                ?
+                <ToggleButton
+                  value=""
+                  selected={hasESBonus}
+                  onChange={() => {setHasESBonus(!hasESBonus)}}
+                  size={'small'}
+                  color={StyleTypeColor.ES}
+                >
+                  {StyleType.ES}
+                </ToggleButton>
+                :
+                <></>
+              }
             </Grid>
 
             <Grid item xs={4}>
@@ -242,7 +307,11 @@ export default function UnitBase() {
             </Grid>
             <Grid item xs={4}>
               {/* 天冥 */}
-              <UnitLightShadow unit={unit} />
+              <UnitLightShadow
+                unit={unit}
+                currentLs={unitLightShadowNumber}
+                setLightShadow={setUnitLightShadowNumber}
+              />
             </Grid>
             <Grid item xs={4}>
               {/* 魔攻 */}

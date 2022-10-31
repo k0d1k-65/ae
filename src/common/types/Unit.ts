@@ -21,4 +21,12 @@ export type Unit = {
   stat: UnitStat,
   // 天冥ボーナス
   lsBonus: LightShadowBonus[],
+  // スタイルコンプリートボーナス
+  styleBonus?: UnitStat,
 };
+
+export function findStyles(units: Unit[], needle: Unit) {
+  const others = units.filter(x => x.name === needle.name && x.styleType !== needle.styleType);
+
+  return others;
+}

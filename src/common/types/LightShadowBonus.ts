@@ -1,8 +1,6 @@
-import { UnitStatType } from "../constants/UnitStatType";
+import { UnitStat } from "./UnitStat";
 
 export type LightShadowBonus = {
   lightShadow: number,
-  statType: UnitStatType,
-  pattern: "additional" | "multiple",
-  amount: number,
+  stat: UnitStat,
 };

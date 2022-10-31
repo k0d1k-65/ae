@@ -62,6 +62,7 @@ const units: Unit[] = (() => {
         speed: 202,
       }),
       lsBonus: [],
+      styleBonus: new UnitStat({atk: 10})
     },
     {
       weapon: WeaponType.Fist,
@@ -100,6 +101,7 @@ const units: Unit[] = (() => {
         speed: 202,
       }),
       lsBonus: [],
+      styleBonus: new UnitStat({hp: 200})
     },
     {
       weapon: WeaponType.Katana,
@@ -159,27 +161,19 @@ const units: Unit[] = (() => {
       lsBonus: [
         {
           lightShadow: 5,
-          statType: "LUC",
-          amount: 5,
-          pattern: "additional",
+          stat: new UnitStat({luck: 5}),
         },
         {
           lightShadow: 15,
-          statType: "HP",
-          amount: 200,
-          pattern: "additional",
+          stat: new UnitStat({hp: 100}),
         },
         {
           lightShadow: 30,
-          statType: "MP",
-          amount: 40,
-          pattern: "additional",
+          stat: new UnitStat({mp: 40}),
         },
         {
           lightShadow: 50,
-          statType: "INT",
-          amount: 15,
-          pattern: "additional",
+          stat: new UnitStat({intelligence: 10}),
         },
       ],
     },

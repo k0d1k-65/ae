@@ -1,16 +1,16 @@
 export const UnitStatType = {
   HP: "HP",
   MP: "MP",
-  ATK: "ATK",
-  DEF: "DEF",
-  MATK: "MATK",
-  MDEF: "MDEF",
-  POWER: "POW",
-  ENDURE: "END",
-  LUCK: "LUC",
-  INTELLIGENCE: "INT",
-  SPLIT: "SPL",
-  SPEED: "SPE",
+  ATK: "攻撃",
+  DEF: "防御",
+  MATK: "魔力",
+  MDEF: "魔防",
+  POWER: "腕力",
+  ENDURE: "耐久",
+  LUCK: "幸運",
+  INTELLIGENCE: "知性",
+  SPEED: "速度",
+  SPLIT: "精神",
 } as const;
 
 export type UnitStatType = typeof UnitStatType[keyof typeof UnitStatType];

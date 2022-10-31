@@ -19,6 +19,7 @@ import { UnitBadgeSelectBox } from './UnitBadgeSelect';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { UnitLightShadow } from './UnitLightShadow';
 import { StyleType, StyleTypeColor } from '../common/constants/StyleType';
+import { UnitStatType } from '../common/constants/UnitStatType';
 
 export default function UnitBase() {
   const unitData = fetchUnits();
@@ -203,7 +204,7 @@ export default function UnitBase() {
             <Grid item xs={4}>
               <TextField
                 type="number"
-                label="HP"
+                label={UnitStatType.HP}
                 value={statusHp}
                 disabled={calcStatAuto}
                 onChange={e => setStatusHp(Number(e.target.value))}
@@ -271,7 +272,7 @@ export default function UnitBase() {
             <Grid item xs={4}>
               <TextField
                 type="number"
-                label="MP"
+                label={UnitStatType.MP}
                 value={statusMp}
                 disabled={calcStatAuto}
                 onChange={e => setStatusMp(Number(e.target.value))}
@@ -287,7 +288,7 @@ export default function UnitBase() {
               {/* 攻撃 */}
               <TextField
                 type="number"
-                label="攻撃"
+                label={UnitStatType.ATK}
                 value={statusAtk}
                 disabled={calcStatAuto}
                 onChange={e => setStatusAtk(Number(e.target.value))}
@@ -298,7 +299,7 @@ export default function UnitBase() {
               {/* 防御 */}
               <TextField
                 type="number"
-                label="防御"
+                label={UnitStatType.DEF}
                 value={statusDef}
                 disabled={calcStatAuto}
                 onChange={e => setStatusDef(Number(e.target.value))}
@@ -317,7 +318,7 @@ export default function UnitBase() {
               {/* 魔攻 */}
               <TextField
                 type="number"
-                label="魔力"
+                label={UnitStatType.MATK}
                 value={statusMatk}
                 disabled={calcStatAuto}
                 onChange={e => setStatusMatk(Number(e.target.value))}
@@ -328,7 +329,7 @@ export default function UnitBase() {
               {/* 魔防 */}
               <TextField
                 type="number"
-                label="魔防"
+                label={UnitStatType.MDEF}
                 value={statusMdef}
                 disabled={calcStatAuto}
                 onChange={e => setStatusMdef(Number(e.target.value))}
@@ -343,7 +344,7 @@ export default function UnitBase() {
             <Grid item xs={4}>
               <TextField
                 type="number"
-                label="腕力"
+                label={UnitStatType.POWER}
                 value={statusPower}
                 disabled={calcStatAuto}
                 onChange={e => setStatusPower(Number(e.target.value))}
@@ -353,7 +354,7 @@ export default function UnitBase() {
             <Grid item xs={4}>
               <TextField
                 type="number"
-                label="耐久"
+                label={UnitStatType.ENDURE}
                 value={statusEndure}
                 disabled={calcStatAuto}
                 onChange={e => setStatusEndure(Number(e.target.value))}
@@ -363,7 +364,7 @@ export default function UnitBase() {
             <Grid item xs={4}>
               <TextField
                 type="number"
-                label="幸運"
+                label={UnitStatType.LUCK}
                 value={statusLuck}
                 disabled={calcStatAuto}
                 onChange={e => setStatusLuck(Number(e.target.value))}
@@ -373,7 +374,7 @@ export default function UnitBase() {
             <Grid item xs={4}>
               <TextField
                 type="number"
-                label="知性"
+                label={UnitStatType.INTELLIGENCE}
                 value={statusIntelligence}
                 disabled={calcStatAuto}
                 onChange={e => setStatusIntelligence(Number(e.target.value))}
@@ -383,7 +384,7 @@ export default function UnitBase() {
             <Grid item xs={4}>
               <TextField
                 type="number"
-                label="速度"
+                label={UnitStatType.SPEED}
                 value={statusSpeed}
                 disabled={calcStatAuto}
                 onChange={e => setStatusSpeed(Number(e.target.value))}
@@ -393,7 +394,7 @@ export default function UnitBase() {
             <Grid item xs={4}>
               <TextField
                 type="number"
-                label="精神"
+                label={UnitStatType.SPLIT}
                 value={statusSplit}
                 disabled={calcStatAuto}
                 onChange={e => setStatusSplit(Number(e.target.value))}

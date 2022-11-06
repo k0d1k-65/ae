@@ -25,6 +25,22 @@ const weapons = (() => {
       })
     },
     {
+      name: "オーガペイン・天",
+      type: EquipmentType.Weapon,
+      weaponType: WeaponType.Sward,
+      stat: new UnitStat({
+        atk: 190,
+        matk: 23,
+      }),
+      equipOnly: {
+        targets: ["ドラゴンベアラー"],
+      },
+      effectOnly: {
+        targets: ["ドラゴンベアラー"],
+        effects: new UnitStat({atk: 999}),
+      }
+    },
+    {
       name: "復元せし時刻みの剣",
       type: EquipmentType.Weapon,
       weaponType: WeaponType.Sward,

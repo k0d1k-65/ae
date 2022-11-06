@@ -2,7 +2,6 @@ import * as React from 'react';
 import { Accordion, AccordionDetails, AccordionSummary, Divider, Grid, Popper, TextField, ToggleButton } from '@mui/material';
 import { Box } from '@mui/system';
 import { getArmourByWeapon } from '../common/constants/ArmourType';
-import { LightShadowType } from '../common/constants/LightShadowType';
 import { Equipment } from '../common/types/Equiqment';
 import { findStyles, Unit } from '../common/types/Unit';
 import { UnitStat } from '../common/types/UnitStat';
@@ -54,7 +53,9 @@ export default function UnitBase() {
   const [unitLightShadowNumber, setUnitLightShadowNumber] = React.useState<number>(0);
 
   const [weapon, setWeapon] = React.useState<Equipment|null>(null);
+  const [selectableWeapons, setSelectableWeapons] = React.useState<Equipment[]>([]);
   const [armour, setArmour] = React.useState<Equipment|null>(null);
+  const [selectableArmours, setSelectableArmours] = React.useState<Equipment[]>([]);
   const [badge, setBadge] = React.useState<Equipment|null>(null);
 
   // スタイルボーナス リセット
@@ -91,6 +92,7 @@ export default function UnitBase() {
     if (unit) {
       stat.integrateStats(unit.stat);
       weapon && stat.integrateStats(weapon.stat);
+      weapon && weapon.effectOnly && stat.integrateStats(weapon.effectOnly.effects);
       armour && stat.integrateStats(armour.stat);
       badge && stat.integrateStats(badge.stat);
 
@@ -128,16 +130,59 @@ export default function UnitBase() {
 
   // 装備品 リセット
   React.useEffect(() => {
-    // 選択ユニットの武器種が変わったら、武器selectをリセット
-    setWeapon(null);
+    /**
+     * 選択ユニットが変わったら、武器selectをリセット
+     * - ユニット選択状態のとき
+     *   ユニットの武器種の装備だけをリストする
+     *   リストされた武器であれば、その選択状態は維持
+     * - ユニット非選択状態のとき
+     *   ユニットの武器リスト、選択武器をリセット
+     */
+    if (!!unit) {
+      const options = weaponData
+        .filter(option => option.weaponType === unit.weapon)
+        .filter(option =>
+          !!option.equipOnly
+          ? option.equipOnly.targets.includes(unit.className)
+          : true
+        );
+      setSelectableWeapons(options);
 
-    // 選択ユニットの防具種が変わったら、防具selectをリセット
-    if (unit == null || armour && armour.armourType !== getArmourByWeapon(unit.weapon)) {
-      setArmour(null);
+      if (!weapon || !options.includes(weapon)) {
+        setWeapon(null);
+      }
+    } else {
+      setSelectableWeapons([]);
+      setWeapon(null);
     }
 
-    // TODO: 専用装備判定とか。
-  }, [unit?.weapon]);
+    /**
+     * 選択ユニットが変わったら、防具selectをリセット
+     * - ユニット選択状態のとき
+     *   ユニットの武器種の装備だけをリストする
+     *   リストされた防具であれば、その選択状態は維持
+     * - ユニット非選択状態のとき
+     *   ユニットの防具リスト、選択防具をリセット
+     */
+    if (!!unit) {
+      const armourType = getArmourByWeapon(unit.weapon);
+      const options = armourData
+        .filter(option => option.armourType === armourType)
+        .filter(option =>
+          !!option.equipOnly
+          ? option.equipOnly.targets.includes(unit.className)
+          : true
+        );
+      setSelectableArmours(options);
+
+      if (!armour || !options.includes(armour)) {
+        setArmour(null);
+      }
+    } else {
+      setSelectableArmours([]);
+      setArmour(null);
+    }
+  }, [unit]);
 
   return (
     <Box
@@ -409,9 +454,8 @@ export default function UnitBase() {
           {/* 武器選択ボックス */}
           <UnitWeaponSelectBox
             labelTitle='Weapon'
-            wType={!!unit ? unit.weapon : null}
-            items={weaponData}
             selecting={weapon}
+            items={selectableWeapons}
             onSelected={setWeapon}
           />
 
@@ -420,9 +464,8 @@ export default function UnitBase() {
           {/* 防具選択ボックス */}
           <UnitArmourSelectBox
             labelTitle='Armour'
-            wType={!!unit ? unit.weapon : null}
-            items={armourData}
             selecting={armour}
+            items={selectableArmours}
             onSelected={setArmour}
           />
 

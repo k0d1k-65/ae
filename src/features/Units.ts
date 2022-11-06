@@ -104,6 +104,25 @@ const units: Unit[] = (() => {
       styleBonus: new UnitStat({hp: 200})
     },
     {
+      weapon: WeaponType.Sward,
+      name: "アルド",
+      namekana: "アルド",
+      lightShadow: LightShadowType.Light,
+      className: "ドラゴンベアラー",
+      styleType: StyleType.NS,
+      stat: new UnitStat({
+        hp: 3444,
+        mp: 655,
+        power: 211,
+        endure: 190,
+        luck: 180,
+        intelligence: 182,
+        split: 190,
+        speed: 202,
+      }),
+      lsBonus: [],
+    },
+    {
       weapon: WeaponType.Katana,
       name: "黒衣の刀使い",
       namekana: "コクイノカタナツカイ",

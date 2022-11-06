@@ -1,28 +1,14 @@
 import { Autocomplete, TextField } from "@mui/material";
-import { getArmourByWeapon } from "../common/constants/ArmourType";
-import { WeaponType } from "../common/constants/WeaponType";
 import { Equipment } from "../common/types/Equiqment";
 
 // 防具
 export function UnitArmourSelectBox(props: {
   labelTitle: string,
-  wType: WeaponType|null,
   items: Equipment[],
   selecting: Equipment|null,
   onSelected: (s: Equipment|null) => void,
 }) {
-  const { labelTitle, wType, items, selecting, onSelected } = props;
-
-  const aType = wType != null && getArmourByWeapon(wType);
-  const options = items
-    .filter(option => {
-      return option.armourType === aType
-    })
-    .map((option) => {
-      return {
-        ...option,
-      };
-    });
+  const { labelTitle, items, selecting, onSelected } = props;
 
   const handleChange = (_: any, selected: Equipment|null) => {
     onSelected(selected);
@@ -37,7 +23,7 @@ export function UnitArmourSelectBox(props: {
   return (
     <Autocomplete
       id="ArmourSelectBox"
-      options={options}
+      options={items}
       getOptionLabel={(opt) => opt.name}
       value={selecting}
       renderInput={handleRender}

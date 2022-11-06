@@ -212,8 +212,11 @@ export default function UnitBase() {
 
       <Accordion
         disableGutters
+        elevation={0}
         expanded={unitDetailOpened}
         sx={{
+          border: unitDetailOpened ? 1 : 0,
+          borderColor: 'grey.500',
           '&:before': {
             display: 'none',
           }

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Autocomplete, TextField, ToggleButton, ToggleButtonGroup } from "@mui/material";
+import { Autocomplete, TextField, ToggleButton, ToggleButtonGroup, Paper, ClickAwayListener } from "@mui/material";
 import { getWeaponLabel, getWeaponTypes, WeaponType } from "../common/constants/WeaponType";
 import { Unit } from "../common/types/Unit";
 import { Box } from '@mui/system';
@@ -16,6 +16,8 @@ export function UnitSelectBox(props: {units: Unit[], onSelected: (s: Unit|null) 
     };
   });
   const weapons = getWeaponTypes();
+
+  const [open, setOpen] = React.useState<boolean>(false);
 
   const [selectableUnits, setSelectableUnits] = React.useState<Unit[]>(allUnits);
   const [wTypes, setWTypes] = React.useState<WeaponType[]>([]);
@@ -72,48 +74,64 @@ export function UnitSelectBox(props: {units: Unit[], onSelected: (s: Unit|null) 
     }
   }
 
+  const handleRenderPaperComponent = (paperProps: any) => {
+    return (
+      <Paper {...paperProps}>
+        <div>
+          <Box sx={{display: 'flex'}}>
+            {/* 一括ON/OFF */}
+            <ToggleButton
+              value="bulk"
+              aria-label="bulk"
+              selected={bulkWeapon}
+              onChange={handleWeaponBulkChange}
+              size="small"
+            >
+              <>bulk</>
+            </ToggleButton>
+
+            <Spacer size={8} />
+
+            {/* ユニット一覧絞り込み */}
+            <ToggleButtonGroup
+              value={wTypes}
+              onChange={handleWeaponToggle}
+            >
+              {weapons.map(wt => {
+                return (
+                  <ToggleButton size="small" value={wt.typ} aria-label={wt.lbl}>
+                    <>{wt.lbl}</>
+                  </ToggleButton>
+                );
+              })}
+            </ToggleButtonGroup>
+          </Box>
+
+          {paperProps.children}
+        </div>
+      </Paper>
+    )
+  }
+
   return (
-    <Box display={'flex'} flexDirection={'column'}>
-      {/* ユニット一覧オートコンプリート */}
-      <Autocomplete
-        id="UnitSelectBox"
-        options={selectableUnits}
-        groupBy={(opt) => getWeaponLabel(opt.weapon)}
-        getOptionLabel={(opt) => opt.name}
-        renderOption={handleRenderOption}
-        size={'small'}
-        renderInput={handleRender}
-        onChange={handleUnitChange}
-      />
-
-      <Box sx={{display: 'flex'}}>
-        {/* 一括ON/OFF */}
-        <ToggleButton
-          value="bulk"
-          aria-label="bulk"
-          selected={bulkWeapon}
-          onChange={handleWeaponBulkChange}
-          size="small"
-        >
-          <>bulk</>
-        </ToggleButton>
-
-        <Spacer size={8} />
-
-        {/* ユニット一覧絞り込み */}
-        <ToggleButtonGroup
-          value={wTypes}
-          onChange={handleWeaponToggle}
-        >
-          {weapons.map(wt => {
-            return (
-              <ToggleButton size="small" value={wt.typ} aria-label={wt.lbl}>
-                <>{wt.lbl}</>
-              </ToggleButton>
-            );
-          })}
-        </ToggleButtonGroup>
+    <ClickAwayListener onClickAway={() => {setOpen(false)}}>
+      <Box display={'flex'} flexDirection={'column'}>
+        {/* ユニット一覧オートコンプリート */}
+        <Autocomplete
+          // id="UnitSelectBox"
+          options={selectableUnits}
+          groupBy={(opt) => getWeaponLabel(opt.weapon)}
+          getOptionLabel={(opt) => opt.name}
+          renderOption={handleRenderOption}
+          size={'small'}
+          renderInput={handleRender}
+          onChange={handleUnitChange}
+          open={open}
+          onOpen={() => {setOpen(true)}}
+          onClose={(_, reason) => {reason !== "blur" && setOpen(false);}}
+          PaperComponent={handleRenderPaperComponent}
+        />
       </Box>
-    </Box>
+    </ClickAwayListener>
   );
 }

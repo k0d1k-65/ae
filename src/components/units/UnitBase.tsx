@@ -1,24 +1,24 @@
 import * as React from 'react';
 import { Accordion, AccordionDetails, AccordionSummary, Divider, Grid, Popper, TextField, ToggleButton } from '@mui/material';
 import { Box } from '@mui/system';
-import { getArmourByWeapon } from '../common/constants/ArmourType';
-import { Equipment } from '../common/types/Equiqment';
-import { findStyles, Unit } from '../common/types/Unit';
-import { UnitStat } from '../common/types/UnitStat';
-import { fetchArmours } from '../features/Armour';
-import { fetchBadges } from '../features/Badges';
-import { fetchUnits } from '../features/Units';
-import { fetchWeapons } from '../features/Weapons';
-import Spacer from './utility/Spacer';
+import { getArmourByWeapon } from '../../common/constants/ArmourType';
+import { Equipment } from '../../common/types/Equiqment';
+import { findStyles, Unit } from '../../common/types/Unit';
+import { UnitStat } from '../../common/types/UnitStat';
+import { fetchArmours } from '../../features/Armour';
+import { fetchBadges } from '../../features/Badges';
+import { fetchUnits } from '../../features/Units';
+import { fetchWeapons } from '../../features/Weapons';
+import Spacer from '../utility/Spacer';
 import { UnitSelectBox } from './UnitSelect';
-import { StyleChip } from './utility/StyleChip';
+import { StyleChip } from '../utility/StyleChip';
 import { UnitWeaponSelectBox } from './UnitWeaponSelect';
 import { UnitArmourSelectBox } from './UnitArmourSelect';
 import { UnitBadgeSelectBox } from './UnitBadgeSelect';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { UnitLightShadow } from './UnitLightShadow';
-import { StyleType, StyleTypeColor } from '../common/constants/StyleType';
-import { UnitStatType } from '../common/constants/UnitStatType';
+import { StyleType, StyleTypeColor } from '../../common/constants/StyleType';
+import { UnitStatType } from '../../common/constants/UnitStatType';
 
 export default function UnitBase() {
   const unitData = fetchUnits();

@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { Autocomplete, TextField, ToggleButton, ToggleButtonGroup, Paper, ClickAwayListener } from "@mui/material";
-import { getWeaponLabel, getWeaponTypes, WeaponType } from "../common/constants/WeaponType";
-import { Unit } from "../common/types/Unit";
+import { getWeaponLabel, getWeaponTypes, WeaponType } from "../../common/constants/WeaponType";
+import { Unit } from "../../common/types/Unit";
 import { Box } from '@mui/system';
-import { StyleChip } from './utility/StyleChip';
-import Spacer from './utility/Spacer';
+import { StyleChip } from '../utility/StyleChip';
+import Spacer from '../utility/Spacer';
 
 export function UnitSelectBox(props: {units: Unit[], onSelected: (s: Unit|null) => void}) {
   const { units, onSelected } = props;

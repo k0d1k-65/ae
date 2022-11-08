@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { Button, ClickAwayListener, Fade, Popper, TextField } from "@mui/material";
 import { Box } from "@mui/system";
-import { Unit } from '../common/types/Unit';
-import { UnitStatType } from '../common/constants/UnitStatType';
+import { Unit } from '../../common/types/Unit';
+import { UnitStatType } from '../../common/constants/UnitStatType';
 
 export function UnitLightShadow(props: {
   unit: Unit | null,

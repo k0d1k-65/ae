@@ -1,8 +1,6 @@
 import * as React from 'react';
-import { ClickAwayListener, Divider, Fade, Grid, Popper, TextField, ToggleButton } from "@mui/material";
+import { Button, ClickAwayListener, Fade, Popper, TextField } from "@mui/material";
 import { Box } from "@mui/system";
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { LightShadowType } from "../common/constants/LightShadowType";
 import { Unit } from '../common/types/Unit';
 import { UnitStatType } from '../common/constants/UnitStatType';
 
@@ -62,61 +60,64 @@ export function UnitLightShadow(props: {
 
   return (
     <Box sx={{ display: 'flex' }}>
-      {/* 天冥 */}
-      <TextField
-        id="filled-number"
-        type="number"
-        InputLabelProps={{
-          shrink: true,
-        }}
-        label={!!unit ? unit.lightShadow : "-"}
-        value={currentLs}
-        onChange={e => {
-          setLightShadow(Number(e.target.value));
-        }}
-        size={'small'}
-      />
-
       <ClickAwayListener onClickAway={() => setOpened(false)}>
         <div>
-          {/* 天冥ボーナス 表示トグル */}
-          <ToggleButton
-            ref={anchor}
-            value={0}
-            selected={opened}
-            onChange={() => setOpened(!opened)}
+          {/* 天冥 */}
+          <TextField
+            id="filled-number"
+            type="number"
+            InputLabelProps={{
+              shrink: true,
+            }}
+            label={!!unit ? unit.lightShadow : "-"}
+            value={currentLs}
+            onChange={e => {
+              setLightShadow(Number(e.target.value));
+            }}
             size={'small'}
-          >
-            <ExpandMoreIcon />
-          </ToggleButton>
-
-          {/* 天冥ボーナス内容 */}
+            onFocus={() => {setOpened(true)}}
+            ref={anchor}
+          />
 
           <Popper
-            disablePortal
             open={opened}
             anchorEl={anchor?.current ?? null}
-            placement={'right-start'}
+            placement={'bottom-start'}
             transition
           >
             {({ TransitionProps }) => (
               <Fade {...TransitionProps} timeout={100}>
-                <Grid container spacing={1} sx={{
-                  width: 300,
-                  bgcolor: 'background.paper',
-                  border: 1,
-                  borderColor: 'text',
+                <Box sx={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  width: 160,
                 }}>
                   {
                     !!unit && !!bonuses
                     ? bonuses.map(b =>
-                        <Grid item xs={6}>
-                          <span>{unit.lightShadow}{b.lightShadow} {b.statType}+{b.statAmount}</span>
-                        </Grid>
+                      <Button
+                        variant='outlined'
+                        color='inherit'
+                        onClick={() => {
+                          setLightShadow(b.lightShadow);
+                          setOpened(false);
+                        }}
+                      >
+                        <div style={{
+                          display: 'flex',
+                          justifyContent: 'space-around',
+                          fontSize: '90%',
+                          width: '100%',
+                        }}>
+                          <span>{!!unit ? unit.lightShadow: "-"}{b.lightShadow}</span>
+                          <span>{b.statType}+{b.statAmount}</span>
+                        </div>
+                      </Button>
                     )
                     : <></>
                   }
-                </Grid>
+
+                </Box>
               </Fade>
             )}
           </Popper>

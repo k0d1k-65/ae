@@ -1,11 +1,12 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-import UnitBase from './components/units/UnitBase';
+import UnitBase from './components/unit/UnitBase';
 import Test from './components/test';
 import { createTheme, CssBaseline, ThemeProvider } from '@mui/material';
 import { ThemeColorModeContext } from './common/contexts/ThemeColorModeContext';
 import { NavigationBar } from './components/NavigationBar';
+import EffectBase from './components/unit-effect/EffectBase';
 
 function App() {
   const [themeColor, setThemeColor] = React.useState<'light' | 'dark'>('dark');
@@ -34,6 +35,8 @@ function App() {
         </ThemeColorModeContext.Provider>
 
         <UnitBase />
+
+        <EffectBase/>
         {/* <Test /> */}
       </ThemeProvider>
   );

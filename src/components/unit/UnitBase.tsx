@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Accordion, AccordionDetails, AccordionSummary, Divider, Grid, Popper, TextField, ToggleButton } from '@mui/material';
+import { Accordion, AccordionDetails, AccordionSummary, Divider, Grid, TextField, ToggleButton } from '@mui/material';
 import { Box } from '@mui/system';
 import { getArmourByWeapon } from '../../common/constants/ArmourType';
 import { Equipment } from '../../common/types/Equiqment';
@@ -97,7 +97,6 @@ export default function UnitBase() {
       badge && stat.integrateStats(badge.stat);
 
       for (const lsBonus of unit.lsBonus) {
-        console.log({unitLightShadowNumber, b: lsBonus.stat});
         if (unitLightShadowNumber >= lsBonus.lightShadow) {
           stat.integrateStats(lsBonus.stat);
         }

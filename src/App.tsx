@@ -5,8 +5,7 @@ import { createTheme, CssBaseline, ThemeProvider } from '@mui/material';
 import { ThemeColorModeContext } from './common/contexts/ThemeColorModeContext';
 import { NavigationBar } from './components/NavigationBar';
 import UnitBase from './components/unit/UnitBase';
-// import EffectBase from './components/unit-effect/EffectBase';
-// import Test from './components/test';
+import EffectBase from './components/unit-effect/EffectBase';
 
 function App() {
   const [themeColor, setThemeColor] = React.useState<'light' | 'dark'>('dark');
@@ -36,8 +35,7 @@ function App() {
 
         <UnitBase />
 
-        {/* <EffectBase/> */}
-        {/* <Test /> */}
+        <EffectBase/>
       </ThemeProvider>
   );
 }

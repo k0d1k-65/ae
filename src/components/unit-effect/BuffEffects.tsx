@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Box } from '@mui/system';
 import ElementBuff from './parts/ElementBuff';
-import { Autocomplete, InputAdornment, TextField, ToggleButton } from '@mui/material';
+import { Autocomplete, InputAdornment, Grid, TextField, ToggleButton } from '@mui/material';
 import { BuffElementAmount } from '../../common/types/BuffElementAmount';
 import { BuffWeaponAmount } from '../../common/types/BuffWeaponAmount';
 import { EffectType } from '../../common/constants/EffectType';
@@ -80,11 +80,14 @@ export default function BuffEffects() {
 
   return (
     <>
+      {/* 属性 */}
       <ElementBuff
         label={EffectType.enhElement}
         value={enhElement}
         setValue={setEnhElement}
       />
+
+      {/* HP最大時強化 */}
       <Autocomplete
         options={initStrings}
         renderInput={(p) => handleRenderInput(p, EffectType.enhHpMax, 'number')}
@@ -99,6 +102,8 @@ export default function BuffEffects() {
           setEnhHpMax
         )}
       />
+
+      {/* HP低下時強化 */}
       <Autocomplete
         options={initStrings}
         renderInput={(p) => handleRenderInput(p, EffectType.enhHpLower, 'number')}
@@ -113,6 +118,8 @@ export default function BuffEffects() {
           setEnhHpLower
         )}
       />
+
+      {/* 通常攻撃強化 */}
       <Autocomplete
         options={initStrings}
         renderInput={(p) => handleRenderInput(p, EffectType.enhNormalAttack, 'number')}
@@ -128,100 +135,183 @@ export default function BuffEffects() {
         )}
       />
 
+      <Grid container spacing={1} marginTop={.5} marginBottom={.5}>
+        <Grid item xs={4}>
+          {/* ZONE覚醒時強化 */}
+          <div style={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "flex-end"
+          }}>
+            <ToggleButton
+              value="check"
+              selected={enhInAnotherZone}
+              onChange={() => setEnhInAnotherZone(!enhInAnotherZone)}
+              size={'small'}
+              style={{
+                width: "100px",
+                marginRight: "8px",
+                fontSize: "10%",
+                whiteSpace: "nowrap",
+              }}
+            >
+              <>{EffectType.enhInAnotherZone}</>
+            </ToggleButton>
+            <TextField
+              aria-readonly
+              disabled={!enhInAnotherZone}
+              value={50}
+              size={'small'}
+              style={{
+                flex: 1,
+              }}
+              variant="standard"
+            />
+          </div>
 
-      <>
-        <ToggleButton
-          value="check"
-          selected={enhInAnotherZone}
-          onChange={() => setEnhInAnotherZone(!enhInAnotherZone)}
-          size={'small'}
-        >
-          <>{EffectType.enhInAnotherZone}</>
-        </ToggleButton>
-        <TextField
-          aria-readonly
-          disabled={!enhInAnotherZone}
-          value={50}
-          size={'small'}
-          variant="standard"
-        />
-      </>
-      {/* enhGrowth */}
-      {/* enhDespairSword */}
-      {/* enhDespairBracelet */}
-      <>
-        <ToggleButton
-          value="check"
-          selected={enhRage}
-          onChange={() => setEnhRage(!enhRage)}
-          size={'small'}
-        >
-          <>{EffectType.enhRage}</>
-        </ToggleButton>
-        <TextField
-          aria-readonly
-          disabled={!enhRage}
-          value={50}
-          size={'small'}
-          variant="standard"
-        />
-      </>
-      <>
-        <ToggleButton
-          value="check"
-          selected={enhBind}
-          onChange={() => setEnhBind(!enhBind)}
-          size={'small'}
-        >
-          <>{EffectType.enhBind}</>
-        </ToggleButton>
-        <TextField
-          aria-readonly
-          disabled={!enhBind}
-          value={50}
-          size={'small'}
-          variant="standard"
-        />
-      </>
-      <>
-        <ToggleButton
-          value="check"
-          selected={enhPain}
-          onChange={() => setEnhPain(!enhPain)}
-          size={'small'}
-        >
-          <>{EffectType.enhPain}</>
-        </ToggleButton>
-        <TextField
-          aria-readonly
-          disabled={!enhPain}
-          value={50}
-          size={'small'}
-          variant="standard"
-        />
-      </>
-      <>
-        <ToggleButton
-          value="check"
-          selected={enhPoison}
-          onChange={() => setEnhPoison(!enhPoison)}
-          size={'small'}
-        >
-          <>{EffectType.enhPoison}</>
-        </ToggleButton>
-        <TextField
-          aria-readonly
-          disabled={!enhPoison}
-          value={50}
-          size={'small'}
-          variant="standard"
-        />
-      </>
-      {/* enhWeakPoint */}
-      {/* mpConsumption */}
-      {/* enemyNumbers */}
-      {/* enhOutsideAF */}
+        </Grid>
 
+        {/* enhGrowth */}
+        {/* enhDespairSword */}
+        {/* enhDespairBracelet */}
+
+        <Grid item xs={4}>
+          {/* 挑発エンハンス */}
+          <div style={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "flex-end"
+          }}>
+            <ToggleButton
+              value="check"
+              selected={enhRage}
+              onChange={() => setEnhRage(!enhRage)}
+              size={'small'}
+              style={{
+                width: "100px",
+                marginRight: "8px",
+                fontSize: "10%",
+              }}
+            >
+              <>{EffectType.enhRage}</>
+            </ToggleButton>
+            <TextField
+              aria-readonly
+              disabled={!enhRage}
+              value={50}
+              size={'small'}
+              style={{
+                flex: 1,
+              }}
+              variant="standard"
+            />
+          </div>
+        </Grid>
+
+        <Grid item xs={4}>
+          {/* 封印エンハンス */}
+          <div style={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "flex-end"
+          }}>
+            <ToggleButton
+              value="check"
+              selected={enhBind}
+              onChange={() => setEnhBind(!enhBind)}
+              size={'small'}
+              style={{
+                width: "100px",
+                marginRight: "8px",
+                fontSize: "10%",
+              }}
+            >
+              <>{EffectType.enhBind}</>
+            </ToggleButton>
+            <TextField
+              aria-readonly
+              disabled={!enhBind}
+              value={50}
+              size={'small'}
+              style={{
+                flex: 1,
+              }}
+              variant="standard"
+            />
+          </div>
+        </Grid>
+
+        <Grid item xs={4}>
+          {/* ペインエンハンス */}
+          <div style={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "flex-end"
+          }}>
+            <ToggleButton
+              value="check"
+              selected={enhPain}
+              onChange={() => setEnhPain(!enhPain)}
+              size={'small'}
+              style={{
+                width: "100px",
+                marginRight: "8px",
+                fontSize: "10%",
+              }}
+            >
+              <>{EffectType.enhPain}</>
+            </ToggleButton>
+            <TextField
+              aria-readonly
+              disabled={!enhPain}
+              value={50}
+              size={'small'}
+              style={{
+                flex: 1,
+              }}
+              variant="standard"
+            />
+          </div>
+        </Grid>
+
+        <Grid item xs={4}>
+          {/* 毒エンハンス */}
+          <div style={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "flex-end"
+          }}>
+            <ToggleButton
+              value="check"
+              selected={enhPoison}
+              onChange={() => setEnhPoison(!enhPoison)}
+              size={'small'}
+              style={{
+                width: "100px",
+                marginRight: "8px",
+                fontSize: "10%",
+              }}
+            >
+              <>{EffectType.enhPoison}</>
+            </ToggleButton>
+            <TextField
+              aria-readonly
+              disabled={!enhPoison}
+              value={50}
+              size={'small'}
+              style={{
+                flex: 1,
+              }}
+              variant="standard"
+            />
+          </div>
+        </Grid>
+
+        {/* enhWeakPoint */}
+        {/* mpConsumption */}
+        {/* enemyNumbers */}
+        {/* enhOutsideAF */}
+      </Grid>
     </>
   );
 }

@@ -12,15 +12,16 @@ export default function EffectBase() {
   return (
     <Box
       margin={2}
-      maxWidth={400}
+      maxWidth={900}
     >
       {/* 装備による強化 */}
       {<EquipmentEffects />}
+
       {/* スキルによる強化 */}
       {<BuffEffects />}
+
       {/* 装備・スキルで共有の強化 */}
       {<CommonEffects />}
-
     </Box>
   )
 }

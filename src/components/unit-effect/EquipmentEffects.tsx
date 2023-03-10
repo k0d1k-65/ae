@@ -1,6 +1,6 @@
 import * as React from 'react';
 import ElementBuff from './parts/ElementBuff';
-import { Autocomplete, InputAdornment, TextField, ToggleButton } from '@mui/material';
+import { Autocomplete, InputAdornment, Grid, TextField, ToggleButton } from '@mui/material';
 import { BuffElementAmount } from '../../common/types/BuffElementAmount';
 import { BuffWeaponAmount } from '../../common/types/BuffWeaponAmount';
 import { EffectType } from '../../common/constants/EffectType';
@@ -123,6 +123,7 @@ export default function EquipmentEffects() {
         value={elementBuffs}
         setValue={setElementBuffs}
       />
+
       {/* 武器種 */}
       <WeaponBuff
         label={EffectType.weaponTypeBuffs}
@@ -145,76 +146,133 @@ export default function EquipmentEffects() {
           setConcentration
         )}
       />
-      <>
-        <ToggleButton
-          value="check"
-          selected={vigilantly}
-          onChange={() => setVigilantly(!vigilantly)}
-          size={'small'}
-        >
-          <>{EffectType.vigilantly}</>
-        </ToggleButton>
-        <TextField
-          aria-readonly
-          disabled={!vigilantly}
-          value={50}
-          size={'small'}
-          variant="standard"
-        />
-      </>
-      <>
-        <ToggleButton
-          value="check"
-          selected={downhill}
-          onChange={() => setDownhill(!downhill)}
-          size={'small'}
-        >
-          <>{EffectType.downhill}</>
-        </ToggleButton>
-        <TextField
-          aria-readonly
-          disabled={!downhill}
-          value={50}
-          size={'small'}
-          variant="standard"
-        />
-      </>
 
-      <>
-        <ToggleButton
-          value="check"
-          selected={weakPointBuff}
-          onChange={() => setWeakPointBuff(!weakPointBuff)}
-          size={'small'}
-        >
-          <>{EffectType.weakPointBuff}</>
-        </ToggleButton>
-        <TextField
-          aria-readonly
-          disabled={!weakPointBuff}
-          value={50}
-          size={'small'}
-          variant="standard"
-        />
-      </>
-      <>
-        <ToggleButton
-          value="check"
-          selected={multiHitBuff}
-          onChange={() => setMultiHitBuff(!multiHitBuff)}
-          size={'small'}
-        >
-          <>{EffectType.multiHitBuff}</>
-        </ToggleButton>
-        <TextField
-          aria-readonly
-          disabled={!multiHitBuff}
-          value={50}
-          size={'small'}
-          variant="standard"
-        />
-      </>
+      <Grid container spacing={1} marginTop={.5} marginBottom={.5}>
+        <Grid item xs={4}>
+          {/* 虎視眈々 */}
+          <div style={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "flex-end"
+          }}>
+            <ToggleButton
+              value="check"
+              selected={vigilantly}
+              onChange={() => setVigilantly(!vigilantly)}
+              size={'small'}
+              style={{
+                width: "100px",
+                marginRight: "8px",
+              }}
+            >
+              <>{EffectType.vigilantly}</>
+            </ToggleButton>
+            <TextField
+              aria-readonly
+              disabled={!vigilantly}
+              value={50}
+              size={'small'}
+              style={{
+                flex: 1,
+              }}
+              variant="standard"
+            />
+          </div>
+        </Grid>
 
+        <Grid item xs={4}>
+          {/* 下剋上 */}
+          <div style={{
+            display: "flex",
+            flexDirection: "row"
+          }}>
+            <ToggleButton
+              value="check"
+              selected={downhill}
+              onChange={() => setDownhill(!downhill)}
+              size={'small'}
+              style={{
+                width: "100px",
+                marginRight: "8px",
+              }}
+            >
+              <>{EffectType.downhill}</>
+            </ToggleButton>
+            <TextField
+              aria-readonly
+              disabled={!downhill}
+              value={50}
+              size={'small'}
+              style={{
+                flex: 1,
+              }}
+              variant="standard"
+            />
+          </div>
+        </Grid>
+
+        <Grid item xs={4}>
+          {/* 弱点強化 */}
+          <div style={{
+            display: "flex",
+            flexDirection: "row"
+          }}>
+            <ToggleButton
+              value="check"
+              selected={weakPointBuff}
+              onChange={() => setWeakPointBuff(!weakPointBuff)}
+              size={'small'}
+              style={{
+                width: "100px",
+                marginRight: "8px",
+              }}
+            >
+              <>{EffectType.weakPointBuff}</>
+            </ToggleButton>
+            <TextField
+              aria-readonly
+              disabled={!weakPointBuff}
+              value={50}
+              size={'small'}
+              style={{
+                flex: 1,
+              }}
+              variant="standard"
+            />
+          </div>
+        </Grid>
+
+        <Grid item xs={4}>
+          {/* 多段強化 */}
+          <div style={{
+            display: "flex",
+            flexDirection: "row"
+          }}>
+            <ToggleButton
+              value="check"
+              selected={multiHitBuff}
+              onChange={() => setMultiHitBuff(!multiHitBuff)}
+              size={'small'}
+              style={{
+                width: "100px",
+                marginRight: "8px",
+              }}
+            >
+              <>{EffectType.multiHitBuff}</>
+            </ToggleButton>
+            <TextField
+              aria-readonly
+              disabled={!multiHitBuff}
+              value={50}
+              size={'small'}
+              style={{
+                flex: 1,
+              }}
+              variant="standard"
+            />
+          </div>
+        </Grid>
+      </Grid>
     </>
   );
 }

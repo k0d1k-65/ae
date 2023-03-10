@@ -63,6 +63,7 @@ export default function CommonEffects() {
 
   return (
     <>
+      {/* ペイン時強化 */}
       <Autocomplete
         options={initStrings}
         renderInput={(p) => handleRenderInput(p, EffectType.powerOfPain, 'number')}
@@ -77,6 +78,8 @@ export default function CommonEffects() {
           setPowerOfPain
         )}
       />
+
+      {/* 毒時強化 */}
       <Autocomplete
         options={initStrings}
         renderInput={(p) => handleRenderInput(p, EffectType.powerOfPoison, 'number')}
@@ -91,6 +94,8 @@ export default function CommonEffects() {
           setPowerOfPoison
         )}
       />
+
+      {/* Critダメージ強化 */}
       <Autocomplete
         options={initStrings}
         renderInput={(p) => handleRenderInput(p, EffectType.enhCriticalDamage, 'number')}
@@ -105,7 +110,6 @@ export default function CommonEffects() {
           setEnhCriticalDamage
         )}
       />
-
     </>
   );
 }

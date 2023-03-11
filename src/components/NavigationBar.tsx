@@ -1,34 +1,91 @@
-import * as React from 'react';
-import IconButton from '@mui/material/IconButton';
-import Box from '@mui/material/Box';
-import { useTheme, ThemeProvider, createTheme } from '@mui/material/styles';
+import React, { useState } from "react";
+import { useTheme, styled } from '@mui/material/styles';
 import LightMode from '@mui/icons-material/LightMode';
 import DarkMode from '@mui/icons-material/DarkMode';
-import { AppBar, Toolbar } from '@mui/material';
+import {
+  AppBar,
+  Box,
+  Toolbar,
+  IconButton,
+  Drawer,
+  List,
+  ListItem,
+  ListItemText,
+} from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { ThemeColorModeContext } from '../common/contexts/ThemeColorModeContext';
+import { Link } from 'react-router-dom';
+import { AppLinks } from "../common/constants/AppLinks";
 
-export function NavigationBar() {
+const NavigationBar = () => {
   const theme = useTheme();
   const colorMode = React.useContext(ThemeColorModeContext);
-  return (
-    <AppBar position="static">
-      <Toolbar>
-        <IconButton
-          size="large"
-          edge="start"
-          color="inherit"
-          aria-label="menu"
-          sx={{ mr: 2 }}
-        >
-          <MenuIcon />
-        </IconButton>
 
-        <IconButton sx={{ ml: 1 }} onClick={colorMode.toggleThemeColor} color="inherit">
-          {theme.palette.mode === 'light' ? <LightMode /> : <DarkMode />}
-        </IconButton>
+  const CusMenuButton = styled(IconButton)(({theme}) => ({
+    marginRight: theme.spacing(2),
+    [theme.breakpoints.up("md")]: {
+      display: "none",
+    },
+  }));
 
-      </Toolbar>
-    </AppBar>
+  const [open, setOpen] = useState(false);
+
+  const handleDrawerOpen = () => {
+    setOpen(true);
+  };
+
+  const handleDrawerClose = () => {
+    setOpen(false);
+  };
+
+  const drawerItems = (
+    <div>
+    </div>
   );
-}
+
+  return (
+    <>
+      <AppBar position="static">
+        <Toolbar>
+
+          {/* ハンバーガーメニュー */}
+          <CusMenuButton
+            edge="start"
+            color="inherit"
+            aria-label="menu"
+            onClick={handleDrawerOpen}
+          >
+            <MenuIcon />
+          </CusMenuButton>
+
+          <Box
+            flex={1}
+            display={"flex"}
+            alignItems={"center"}
+            justifyContent={"flex-end"}
+          >
+            {Object.entries(AppLinks).map(([key, link]) => (
+              <Link to={link.path} style={{
+                marginRight: "2rem",
+                color: "#90caf9",
+                textDecoration: "none",
+              }}>{link.name}</Link>
+            ))}
+
+            {/* テーマ切り替え */}
+            <IconButton sx={{ ml: 1 }} onClick={colorMode.toggleThemeColor} color="inherit">
+              {theme.palette.mode === 'light' ? <LightMode /> : <DarkMode />}
+            </IconButton>
+          </Box>
+        </Toolbar>
+      </AppBar>
+
+      {/* メニュー */}
+      <Drawer anchor="left" open={open} onClose={handleDrawerClose}>
+        {drawerItems}
+      </Drawer>
+    </>
+  );
+};
+
+export default NavigationBar;

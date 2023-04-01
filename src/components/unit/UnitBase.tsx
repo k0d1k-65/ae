@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Accordion, AccordionDetails, AccordionSummary, Divider, Grid, Popper, TextField, ToggleButton } from '@mui/material';
+import { Accordion, AccordionDetails, AccordionSummary, Divider, Grid, TextField, ToggleButton } from '@mui/material';
 import { Box } from '@mui/system';
 import { getArmourByWeapon } from '../../common/constants/ArmourType';
 import { Equipment } from '../../common/types/Equiqment';
@@ -97,7 +97,6 @@ export default function UnitBase() {
       badge && stat.integrateStats(badge.stat);
 
       for (const lsBonus of unit.lsBonus) {
-        console.log({unitLightShadowNumber, b: lsBonus.stat});
         if (unitLightShadowNumber >= lsBonus.lightShadow) {
           stat.integrateStats(lsBonus.stat);
         }
@@ -250,6 +249,7 @@ export default function UnitBase() {
             </Grid>
 
             <Grid item xs={4}>
+              {/* HP */}
               <TextField
                 type="number"
                 label={UnitStatType.HP}
@@ -318,6 +318,7 @@ export default function UnitBase() {
             </Grid>
 
             <Grid item xs={4}>
+              {/* MP */}
               <TextField
                 type="number"
                 label={UnitStatType.MP}
@@ -390,6 +391,7 @@ export default function UnitBase() {
 
           <Grid container spacing={1}>
             <Grid item xs={4}>
+              {/* 腕力 */}
               <TextField
                 type="number"
                 label={UnitStatType.POWER}
@@ -400,6 +402,7 @@ export default function UnitBase() {
               />
             </Grid>
             <Grid item xs={4}>
+              {/* 耐久 */}
               <TextField
                 type="number"
                 label={UnitStatType.ENDURE}
@@ -410,6 +413,7 @@ export default function UnitBase() {
               />
             </Grid>
             <Grid item xs={4}>
+              {/* 幸運 */}
               <TextField
                 type="number"
                 label={UnitStatType.LUCK}
@@ -420,6 +424,7 @@ export default function UnitBase() {
               />
             </Grid>
             <Grid item xs={4}>
+              {/* 知性 */}
               <TextField
                 type="number"
                 label={UnitStatType.INTELLIGENCE}
@@ -430,6 +435,7 @@ export default function UnitBase() {
               />
             </Grid>
             <Grid item xs={4}>
+              {/* 速度 */}
               <TextField
                 type="number"
                 label={UnitStatType.SPEED}
@@ -440,6 +446,7 @@ export default function UnitBase() {
               />
             </Grid>
             <Grid item xs={4}>
+              {/* 精神 */}
               <TextField
                 type="number"
                 label={UnitStatType.SPLIT}

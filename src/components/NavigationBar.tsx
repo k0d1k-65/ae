@@ -8,9 +8,6 @@ import {
   Toolbar,
   IconButton,
   Drawer,
-  List,
-  ListItem,
-  ListItemText,
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { ThemeColorModeContext } from '../common/contexts/ThemeColorModeContext';
@@ -71,6 +68,11 @@ const NavigationBar = () => {
                 textDecoration: "none",
               }}>{link.name}</Link>
             ))}
+              <Link to='/dev' style={{
+                marginRight: "2rem",
+                color: "#90caf9",
+                textDecoration: "none",
+              }}>dev</Link>
 
             {/* テーマ切り替え */}
             <IconButton sx={{ ml: 1 }} onClick={colorMode.toggleThemeColor} color="inherit">

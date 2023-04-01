@@ -19,4 +19,8 @@ export const AppLinks = {
     path: "/sim/battle",
     name: "バトルシミュレータ",
   },
+  imageOcr: {
+    path: "/util/ocr",
+    name: "OCR",
+  },
 };

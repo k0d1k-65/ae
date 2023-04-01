@@ -9,6 +9,7 @@ import SamplePage1 from "./pages/SamplePage1";
 import UnitBase from './components/unit/UnitBase';
 import NotFound from "./pages/NotFound";
 import { AppLinks } from './common/constants/AppLinks';
+import Ocr from './components/ocr';
 
 function App() {
   const [themeColor, setThemeColor] = React.useState<'light' | 'dark'>('dark');
@@ -45,7 +46,8 @@ function App() {
           <Route path={AppLinks.units.path} element={<SamplePage1 />} />
           <Route path={AppLinks.damageCalc.path} element={<SamplePage1 />} />
           <Route path={AppLinks.battleCalc.path} element={<SamplePage1 />} />
-          <Route path="/sample" element={<UnitBase />} />
+          <Route path={AppLinks.imageOcr.path} element={<Ocr />} />
+          <Route path="/dev" element={<UnitBase />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
 

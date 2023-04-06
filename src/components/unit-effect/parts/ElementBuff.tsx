@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Autocomplete, Chip, InputAdornment, TextField } from '@mui/material';
-import { ElementType } from '../../../constants/units/ElementType';
+import { ElementType } from '../../../constants/common/ElementType';
 import { BuffElementAmount } from '../../../types/units/BuffElementAmount';
 import { ElementSelect } from '../../common/ElementSelect';
 

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Accordion, AccordionDetails, AccordionSummary, Divider, Grid, TextField, ToggleButton } from '@mui/material';
 import { Box } from '@mui/system';
-import { getArmourByWeapon } from '../../constants/units/ArmourType';
+import { getArmourByWeapon } from '../../constants/common/ArmourType';
 import { Equipment } from '../../types/units/Equiqment';
 import { findStyles, Unit } from '../../types/units/Unit';
 import { UnitStat } from '../../types/units/UnitStat';
@@ -17,8 +17,8 @@ import { UnitArmourSelectBox } from './UnitArmourSelect';
 import { UnitBadgeSelectBox } from './UnitBadgeSelect';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { UnitLightShadow } from './UnitLightShadow';
-import { StyleType, StyleTypeColor } from '../../constants/units/StyleType';
-import { UnitStatType } from '../../constants/units/UnitStatType';
+import { StyleType, StyleTypeColor } from '../../constants/common/StyleType';
+import { UnitStatType } from '../../constants/common/UnitStatType';
 
 export default function UnitBase() {
   const unitData = fetchUnits();

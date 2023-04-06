@@ -1,4 +1,4 @@
-import { WeaponType } from "../../constants/units/WeaponType";
+import { WeaponType } from "../../constants/common/WeaponType";
 
 export type BuffWeaponAmount = {
   label: string,

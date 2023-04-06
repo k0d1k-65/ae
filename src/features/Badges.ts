@@ -1,4 +1,4 @@
-import { EquipmentType } from "../constants/units/EquipmentType";
+import { EquipmentType } from "../constants/common/EquipmentType";
 import { Equipment } from "../types/units/Equiqment";
 import { UnitStat } from "../types/units/UnitStat";
 

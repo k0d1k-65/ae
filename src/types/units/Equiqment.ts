@@ -1,6 +1,6 @@
-import { ArmourType } from "../../constants/units/ArmourType";
-import { EquipmentType } from "../../constants/units/EquipmentType";
-import { WeaponType } from "../../constants/units/WeaponType";
+import { ArmourType } from "../../constants/common/ArmourType";
+import { EquipmentType } from "../../constants/common/EquipmentType";
+import { WeaponType } from "../../constants/common/WeaponType";
 import { UnitStat } from "./UnitStat";
 
 export type Equipment = {

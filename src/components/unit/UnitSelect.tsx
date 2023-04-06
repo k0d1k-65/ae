@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Autocomplete, TextField, ToggleButton, ToggleButtonGroup, Paper, ClickAwayListener } from "@mui/material";
-import { WeaponType } from "../../constants/units/WeaponType";
+import { WeaponType } from "../../constants/common/WeaponType";
 import { Unit } from '../../types/units/Unit';
 import { Box } from '@mui/system';
 import { StyleChip } from '../common/StyleChip';

@@ -1,5 +1,5 @@
-import { ArmourType } from "../constants/units/ArmourType";
-import { EquipmentType } from "../constants/units/EquipmentType";
+import { ArmourType } from "../constants/common/ArmourType";
+import { EquipmentType } from "../constants/common/EquipmentType";
 import { Equipment } from "../types/units/Equiqment";
 import { UnitStat } from "../types/units/UnitStat";
 

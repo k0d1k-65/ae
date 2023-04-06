@@ -1,5 +1,5 @@
 import { ListItemText, MenuItem, Select } from "@mui/material";
-import { ElementType } from "../../constants/units/ElementType";
+import { ElementType } from "../../constants/common/ElementType";
 
 /** 属性セレクトボックス */
 export const ElementSelect = (props: {

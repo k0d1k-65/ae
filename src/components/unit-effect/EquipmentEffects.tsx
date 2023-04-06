@@ -3,7 +3,7 @@ import ElementBuff from './parts/ElementBuff';
 import { Autocomplete, InputAdornment, Grid, TextField, ToggleButton } from '@mui/material';
 import { BuffElementAmount } from '../../types/units/BuffElementAmount';
 import { BuffWeaponAmount } from '../../types/units/BuffWeaponAmount';
-import { EffectType } from '../../constants/units/EffectType';
+import { EffectType } from '../../constants/common/EffectType';
 import WeaponBuff from './parts/WeaponBuff';
 
 export default function EquipmentEffects() {

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Autocomplete, Chip, InputAdornment, TextField } from '@mui/material';
 import { BuffWeaponAmount } from '../../../types/units/BuffWeaponAmount';
-import { WeaponType } from '../../../constants/units/WeaponType';
+import { WeaponType } from '../../../constants/common/WeaponType';
 import WeaponSelect from '../../common/WeaponSelect';
 
 export default function WeaponBuff(props: {

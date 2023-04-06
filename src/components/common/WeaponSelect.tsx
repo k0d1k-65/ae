@@ -1,5 +1,5 @@
 import { ListItemText, MenuItem, Select } from "@mui/material";
-import { WeaponType } from "../../constants/units/WeaponType";
+import { WeaponType } from "../../constants/common/WeaponType";
 
 /** 武器種セレクトボックス */
 const WeaponSelect = (props: {

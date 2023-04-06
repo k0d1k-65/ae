@@ -1,4 +1,4 @@
-import { ElementType } from "../../constants/units/ElementType";
+import { ElementType } from "../../constants/common/ElementType";
 
 export type BuffElementAmount = {
   label: string,

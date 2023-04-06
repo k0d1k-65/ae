@@ -2,7 +2,7 @@ import { LightShadowType } from "../constants/common/LightShadowType"
 import { StyleType } from "../constants/common/StyleType"
 import { WeaponType } from "../constants/common/WeaponType"
 import { Unit } from "../types/units/Unit"
-import { UnitStat } from "../types/units/UnitStat"
+import { UnitStatModel } from "../types/models/UnitStatModel"
 
 const units: Unit[] = (() => {
   const _units: Unit[] = [
@@ -13,7 +13,7 @@ const units: Unit[] = (() => {
       lightShadow: LightShadowType.Light,
       className: "ハイエロファント",
       styleType: StyleType.NS,
-      stat: new UnitStat({
+      stat: new UnitStatModel({
         hp: 3444,
         mp: 655,
         power: 211,
@@ -32,7 +32,7 @@ const units: Unit[] = (() => {
       lightShadow: LightShadowType.Shadow,
       className: "グレイハウンド",
       styleType: StyleType.NS,
-      stat: new UnitStat({
+      stat: new UnitStatModel({
         hp: 3444,
         mp: 655,
         power: 211,
@@ -51,7 +51,7 @@ const units: Unit[] = (() => {
       lightShadow: LightShadowType.Light,
       className: "アドミラル",
       styleType: StyleType.NS,
-      stat: new UnitStat({
+      stat: new UnitStatModel({
         hp: 3444,
         mp: 655,
         power: 211,
@@ -62,7 +62,7 @@ const units: Unit[] = (() => {
         speed: 202,
       }),
       lsBonus: [],
-      styleBonus: new UnitStat({atk: 10})
+      styleBonus: new UnitStatModel({atk: 10})
     },
     {
       weapon: WeaponType.Fist,
@@ -71,7 +71,7 @@ const units: Unit[] = (() => {
       lightShadow: LightShadowType.Light,
       className: "フィエルテベート",
       styleType: StyleType.AS,
-      stat: new UnitStat({
+      stat: new UnitStatModel({
         hp: 3444,
         mp: 655,
         power: 211,
@@ -90,7 +90,7 @@ const units: Unit[] = (() => {
       lightShadow: LightShadowType.Light,
       className: "ユースティティア",
       styleType: StyleType.ES,
-      stat: new UnitStat({
+      stat: new UnitStatModel({
         hp: 3444,
         mp: 655,
         power: 211,
@@ -101,7 +101,7 @@ const units: Unit[] = (() => {
         speed: 202,
       }),
       lsBonus: [],
-      styleBonus: new UnitStat({hp: 200})
+      styleBonus: new UnitStatModel({hp: 200})
     },
     {
       weapon: WeaponType.Sward,
@@ -110,7 +110,7 @@ const units: Unit[] = (() => {
       lightShadow: LightShadowType.Light,
       className: "ドラゴンベアラー",
       styleType: StyleType.NS,
-      stat: new UnitStat({
+      stat: new UnitStatModel({
         hp: 3444,
         mp: 655,
         power: 211,
@@ -129,7 +129,7 @@ const units: Unit[] = (() => {
       lightShadow: LightShadowType.Shadow,
       className: "ユダ",
       styleType: StyleType.NS,
-      stat: new UnitStat({
+      stat: new UnitStatModel({
         hp: 3444,
         mp: 655,
         power: 211,
@@ -148,7 +148,7 @@ const units: Unit[] = (() => {
       lightShadow: LightShadowType.Shadow,
       className: "ソウルブリンガー",
       styleType: StyleType.NS,
-      stat: new UnitStat({
+      stat: new UnitStatModel({
         hp: 3444,
         mp: 655,
         power: 211,
@@ -167,7 +167,7 @@ const units: Unit[] = (() => {
       lightShadow: LightShadowType.Light,
       className: "ハスタアンティカ",
       styleType: StyleType.AS,
-      stat: new UnitStat({
+      stat: new UnitStatModel({
         hp: 3142,
         mp: 512,
         power: 241,
@@ -180,19 +180,19 @@ const units: Unit[] = (() => {
       lsBonus: [
         {
           lightShadow: 5,
-          stat: new UnitStat({luck: 5}),
+          stat: new UnitStatModel({luck: 5}),
         },
         {
           lightShadow: 15,
-          stat: new UnitStat({hp: 100}),
+          stat: new UnitStatModel({hp: 100}),
         },
         {
           lightShadow: 30,
-          stat: new UnitStat({mp: 40}),
+          stat: new UnitStatModel({mp: 40}),
         },
         {
           lightShadow: 50,
-          stat: new UnitStat({intelligence: 10}),
+          stat: new UnitStatModel({intelligence: 10}),
         },
       ],
     },

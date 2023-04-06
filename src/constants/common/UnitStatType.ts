@@ -1,3 +1,4 @@
+/** ステータス */
 export enum UnitStatType {
   HP = "HP",
   MP = "MP",
@@ -9,6 +10,6 @@ export enum UnitStatType {
   ENDURE = "耐久",
   LUCK = "幸運",
   INTELLIGENCE = "知性",
-  SPEED = "速度",
   SPLIT = "精神",
+  SPEED = "速度",
 }

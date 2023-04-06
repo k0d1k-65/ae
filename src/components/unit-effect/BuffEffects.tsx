@@ -1,14 +1,11 @@
 import * as React from 'react';
-import { Box } from '@mui/system';
 import ElementBuff from './parts/ElementBuff';
 import { Autocomplete, InputAdornment, Grid, TextField, ToggleButton } from '@mui/material';
-import { BuffElementAmount } from '../../types/units/BuffElementAmount';
-import { BuffWeaponAmount } from '../../types/units/BuffWeaponAmount';
+import { BuffElementPercent } from '../../types/common/BuffElementPercent';
 import { EffectType } from '../../constants/common/EffectType';
-import WeaponBuff from './parts/WeaponBuff';
 
 export default function BuffEffects() {
-  const [enhElement, setEnhElement] = React.useState<BuffElementAmount[]>([]);
+  const [enhElement, setEnhElement] = React.useState<BuffElementPercent[]>([]);
   const [enhHpMax, setEnhHpMax] = React.useState<number[]>([]);
   const [enhHpLower, setEnhHpLower] = React.useState<number[]>([]);
   const [enhNormalAttack, setEnhNormalAttack] = React.useState<number[]>([]);

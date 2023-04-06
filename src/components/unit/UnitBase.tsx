@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { Accordion, AccordionDetails, AccordionSummary, Divider, Grid, TextField, ToggleButton } from '@mui/material';
 import { Box } from '@mui/system';
-import { getArmourByWeapon } from '../../constants/common/ArmourType';
-import { Equipment } from '../../types/units/Equiqment';
-import { findStyles, Unit } from '../../types/units/Unit';
-import { UnitStat } from '../../types/units/UnitStat';
+import { getArmourByWeapon } from '../../utils/Utils';
+import { Equipment } from '../../types/common/Equiqment';
+import { findOtherStyles, Unit } from '../../types/units/Unit';
+import { UnitStatModel } from '../../types/models/UnitStatModel';
 import { fetchArmours } from '../../features/Armour';
 import { fetchBadges } from '../../features/Badges';
 import { fetchUnits } from '../../features/Units';
@@ -68,7 +68,7 @@ export default function UnitBase() {
     setHasESBonus(false);
 
     if (!!unit) {
-      const otherStyles = findStyles(unitData, unit);
+      const otherStyles = findOtherStyles(unitData, unit);
       setNSBonus(otherStyles.find(x => x.styleType === StyleType.NS) || null);
       setASBonus(otherStyles.find(x => x.styleType === StyleType.AS) || null);
       setESBonus(otherStyles.find(x => x.styleType === StyleType.ES) || null);
@@ -87,7 +87,7 @@ export default function UnitBase() {
       return;
     }
 
-    const stat = new UnitStat();
+    const stat = new UnitStatModel();
 
     if (unit) {
       stat.integrateStats(unit.stat);

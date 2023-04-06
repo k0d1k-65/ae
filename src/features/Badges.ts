@@ -1,13 +1,13 @@
 import { EquipmentType } from "../constants/common/EquipmentType";
-import { Equipment } from "../types/units/Equiqment";
-import { UnitStat } from "../types/units/UnitStat";
+import { Equipment } from "../types/common/Equiqment";
+import { UnitStatModel } from "../types/models/UnitStatModel";
 
 const badges = (() => {
   const _badges: Equipment[] = [
     {
       name: "HP+1000",
       type: EquipmentType.Badge,
-      stat: new UnitStat({
+      stat: new UnitStatModel({
         hp: 1000,
       })
     },

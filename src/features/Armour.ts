@@ -1,7 +1,7 @@
 import { ArmourType } from "../constants/common/ArmourType";
 import { EquipmentType } from "../constants/common/EquipmentType";
-import { Equipment } from "../types/units/Equiqment";
-import { UnitStat } from "../types/units/UnitStat";
+import { Equipment } from "../types/common/Equiqment";
+import { UnitStatModel } from "../types/models/UnitStatModel";
 
 const armours = (() => {
   const _armours: Equipment[] = [
@@ -9,7 +9,7 @@ const armours = (() => {
       name: "降魔の腕輪",
       type: EquipmentType.Armour,
       armourType: ArmourType.bracelet,
-      stat: new UnitStat({
+      stat: new UnitStatModel({
         def: 180,
         mdef: 150,
       })
@@ -18,7 +18,7 @@ const armours = (() => {
       name: "可惜夜の首輪",
       type: EquipmentType.Armour,
       armourType: ArmourType.neckless,
-      stat: new UnitStat({
+      stat: new UnitStatModel({
         def: 160,
         mdef: 160,
       })
@@ -27,7 +27,7 @@ const armours = (() => {
       name: "フェザーリング",
       type: EquipmentType.Armour,
       armourType: ArmourType.ring,
-      stat: new UnitStat({
+      stat: new UnitStatModel({
         def: 135,
         mdef: 158,
       })

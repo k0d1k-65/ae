@@ -1,11 +1,6 @@
 import * as React from 'react';
-import { Box } from '@mui/system';
-import ElementBuff from './parts/ElementBuff';
 import { Autocomplete, InputAdornment, TextField, ToggleButton } from '@mui/material';
-import { BuffElementAmount } from '../../types/units/BuffElementAmount';
-import { BuffWeaponAmount } from '../../types/units/BuffWeaponAmount';
 import { EffectType } from '../../constants/common/EffectType';
-import WeaponBuff from './parts/WeaponBuff';
 
 export default function CommonEffects() {
   const [powerOfPain, setPowerOfPain] = React.useState<number[]>([]);

@@ -1,5 +1,5 @@
 import { Autocomplete, TextField } from "@mui/material";
-import { Equipment } from "../../types/units/Equiqment";
+import { Equipment } from "../../types/common/Equiqment";
 
 // 防具
 export function UnitArmourSelectBox(props: {

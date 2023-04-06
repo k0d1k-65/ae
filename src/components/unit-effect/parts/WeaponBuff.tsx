@@ -1,17 +1,17 @@
 import * as React from 'react';
 import { Autocomplete, Chip, InputAdornment, TextField } from '@mui/material';
-import { BuffWeaponAmount } from '../../../types/units/BuffWeaponAmount';
+import { BuffWeaponPercent } from '../../../types/common/BuffWeaponPercent';
 import { WeaponType } from '../../../constants/common/WeaponType';
 import WeaponSelect from '../../common/WeaponSelect';
 
 export default function WeaponBuff(props: {
   label: string,
-  value: BuffWeaponAmount[],
-  setValue: (x: BuffWeaponAmount[]) => void,
+  value: BuffWeaponPercent[],
+  setValue: (x: BuffWeaponPercent[]) => void,
 }) {
   const { label, value: buffs, setValue: setBuffs } = props;
 
-  const [selectWeapon, setSelectWeapon] = React.useState<WeaponType | "all">("all");
+  const [selectWeapon, setSelectWeapon] = React.useState<WeaponType>(WeaponType.All);
 
   const handleRenderInput = (params: any) => {
     return (
@@ -43,17 +43,16 @@ export default function WeaponBuff(props: {
   const handleChange = (reason: string, value: any) => {
     if (reason === 'createOption') {
       if (!!value && typeof value === "string") {
-        const item: BuffWeaponAmount = {
-          label: selectWeapon === "all" ? "全" : selectWeapon,
+        const item: BuffWeaponPercent = {
+          type: selectWeapon,
           amount: Number(value),
-          wpType: selectWeapon,
         };
         setBuffs([...buffs, item]);
       }
     }
     else if (reason === 'removeOption') {
       if (!!value && typeof value === "object") {
-        const index = buffs.findIndex(x => x.amount === value.amount && x.wpType === value.wpType);
+        const index = buffs.findIndex(x => x.amount === value.amount && x.type === value.type);
         if (index > -1) {
           const _buffs = [...buffs];
           _buffs.splice(index, 1);
@@ -68,11 +67,11 @@ export default function WeaponBuff(props: {
 
   return (
     <Autocomplete
-      options={new Array<BuffWeaponAmount>()}
+      options={new Array<BuffWeaponPercent>()}
       renderInput={handleRenderInput}
       renderTags={(tagValue, getTagProps) => {
         return tagValue.map((option, index) => (
-          <Chip {...getTagProps({ index })} label={option.label + option.amount} />
+          <Chip {...getTagProps({ index })} label={option.type + option.amount} />
         ));
       }}
       multiple

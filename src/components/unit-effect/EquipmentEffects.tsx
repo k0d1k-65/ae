@@ -1,8 +1,8 @@
 import * as React from 'react';
 import ElementBuff from './parts/ElementBuff';
 import { Autocomplete, InputAdornment, Grid, TextField, ToggleButton } from '@mui/material';
-import { BuffElementAmount } from '../../types/units/BuffElementAmount';
-import { BuffWeaponAmount } from '../../types/units/BuffWeaponAmount';
+import { BuffElementPercent } from '../../types/common/BuffElementPercent';
+import { BuffWeaponPercent } from '../../types/common/BuffWeaponPercent';
 import { EffectType } from '../../constants/common/EffectType';
 import WeaponBuff from './parts/WeaponBuff';
 
@@ -11,8 +11,8 @@ export default function EquipmentEffects() {
   const [intBuffs, setIntBuffs] = React.useState<number[]>([]);
   const [speedBuffs, setSpeedBuffs] = React.useState<number[]>([]);
 
-  const [elementBuffs, setElementBuffs] = React.useState<BuffElementAmount[]>([]);
-  const [weaponTypeBuffs, setWeaponTypeBuffs] = React.useState<BuffWeaponAmount[]>([]);
+  const [elementBuffs, setElementBuffs] = React.useState<BuffElementPercent[]>([]);
+  const [weaponTypeBuffs, setWeaponTypeBuffs] = React.useState<BuffWeaponPercent[]>([]);
 
   const [concentration, setConcentration] = React.useState<number[]>([]);
   const [vigilantly, setVigilantly] = React.useState<boolean>(false);

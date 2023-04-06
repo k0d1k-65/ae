@@ -1,17 +1,17 @@
 import * as React from 'react';
 import { Autocomplete, Chip, InputAdornment, TextField } from '@mui/material';
 import { ElementType } from '../../../constants/common/ElementType';
-import { BuffElementAmount } from '../../../types/units/BuffElementAmount';
+import { BuffElementPercent } from '../../../types/common/BuffElementPercent';
 import { ElementSelect } from '../../common/ElementSelect';
 
 export default function ElementBuff(props: {
   label: string,
-  value: BuffElementAmount[],
-  setValue: (x: BuffElementAmount[]) => void,
+  value: BuffElementPercent[],
+  setValue: (x: BuffElementPercent[]) => void,
 }) {
   const { label, value: buffs, setValue: setBuffs } = props;
 
-  const [selectElement, setSelectElement] = React.useState<ElementType | "all">("all");
+  const [selectElement, setSelectElement] = React.useState<ElementType>(ElementType.All);
 
   const handleRenderInput = (params: any) => {
     return (
@@ -43,17 +43,16 @@ export default function ElementBuff(props: {
   const handleChange = (reason: string, value: any) => {
     if (reason === 'createOption') {
       if (!!value && typeof value === "string") {
-        const item: BuffElementAmount = {
-          label: (selectElement === "all" ? "全" : selectElement),
+        const item: BuffElementPercent = {
+          type: selectElement,
           amount: Number(value),
-          elType: selectElement,
         };
         setBuffs([...buffs, item]);
       }
     }
     else if (reason === 'removeOption') {
       if (!!value && typeof value === "object") {
-        const index = buffs.findIndex(x => x.amount === value.amount && x.elType === value.elType);
+        const index = buffs.findIndex(x => x.amount === value.amount && x.type === value.type);
         if (index > -1) {
           const _buffs = [...buffs];
           _buffs.splice(index, 1);
@@ -62,18 +61,18 @@ export default function ElementBuff(props: {
       }
     }
     else if (reason === 'clear') {
-      const init: BuffElementAmount[] = [];
+      const init: BuffElementPercent[] = [];
       setBuffs(init);
     }
   }
 
   return (
     <Autocomplete
-      options={new Array<BuffElementAmount>()}
+      options={new Array<BuffElementPercent>()}
       renderInput={handleRenderInput}
       renderTags={(tagValue, getTagProps) => {
         return tagValue.map((option, index) => (
-          <Chip {...getTagProps({ index })} label={option.label + option.amount} />
+          <Chip {...getTagProps({ index })} label={option.type + option.amount} />
         ));
       }}
       multiple

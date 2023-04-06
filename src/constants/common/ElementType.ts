@@ -1,4 +1,5 @@
 export enum ElementType {
+  All = "全",
   None = "無",
   Fire = "火",
   Water = "水",

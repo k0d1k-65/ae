@@ -1,6 +1,6 @@
-import Ocr from "../components/ocr";
-import Home from "../pages/Home";
-import SamplePage1 from "../pages/SamplePage1";
+import { Ocr } from "../components/Ocr"
+import Home from "../components/Home";
+import { Test } from "../components/Test";
 
 export const AppRoutes = [
   {
@@ -10,22 +10,22 @@ export const AppRoutes = [
   },
   {
     path: "/unit/master",
-    component: SamplePage1,
+    component: Test,
     exact: true
   },
   {
     path: "/unit/skill",
-    component: SamplePage1,
+    component: Test,
     exact: true
   },
   {
     path: "/sim/damage",
-    component: SamplePage1,
+    component: Test,
     exact: true
   },
   {
     path: "/sim/battle",
-    component: SamplePage1,
+    component: Test,
     exact: true
   },
   {

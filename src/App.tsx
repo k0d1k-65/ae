@@ -4,12 +4,10 @@ import { createTheme, CssBaseline, ThemeProvider } from '@mui/material';
 import { ThemeColorModeContext } from './contexts/common/ThemeColorModeContext';
 import { NavigationBar } from './components/common/NavigationBar';
 
-import Home from './pages/Home';
-import SamplePage1 from "./pages/SamplePage1";
+import Home from './components/Home';
 import UnitBase from './components/unit/UnitBase';
-import NotFound from "./pages/NotFound";
+import NotFound from "./components/NotFound";
 import { AppRoutes } from './routes/Routes';
-import Ocr from './components/ocr';
 
 function App() {
   const [themeColor, setThemeColor] = React.useState<'light' | 'dark'>('dark');

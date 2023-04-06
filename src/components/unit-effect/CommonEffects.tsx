@@ -2,9 +2,9 @@ import * as React from 'react';
 import { Box } from '@mui/system';
 import ElementBuff from './parts/ElementBuff';
 import { Autocomplete, InputAdornment, TextField, ToggleButton } from '@mui/material';
-import { BuffElementAmount } from '../../common/types/BuffElementAmount';
-import { BuffWeaponAmount } from '../../common/types/BuffWeaponAmount';
-import { EffectType } from '../../common/constants/EffectType';
+import { BuffElementAmount } from '../../types/units/BuffElementAmount';
+import { BuffWeaponAmount } from '../../types/units/BuffWeaponAmount';
+import { EffectType } from '../../constants/units/EffectType';
 import WeaponBuff from './parts/WeaponBuff';
 
 export default function CommonEffects() {

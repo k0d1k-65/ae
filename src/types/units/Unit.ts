@@ -1,6 +1,6 @@
-import { LightShadowType } from "../constants/LightShadowType";
-import { StyleType } from "../constants/StyleType";
-import { WeaponType } from "../constants/WeaponType";
+import { LightShadowType } from "../../constants/units/LightShadowType";
+import { StyleType } from "../../constants/units/StyleType";
+import { WeaponType } from "../../constants/units/WeaponType";
 import { LightShadowBonus } from "./LightShadowBonus";
 import { UnitStat } from "./UnitStat";
 

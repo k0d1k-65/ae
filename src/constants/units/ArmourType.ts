@@ -1,12 +1,12 @@
 import { WeaponType } from "./WeaponType";
 
-export const ArmourType = {
-  bracelet: "腕輪",
-  neckless: "首輪",
-  ring: "指輪",
-} as const;
+enum ArmourType {
+  bracelet = "腕輪",
+  neckless = "首輪",
+  ring = "指輪",
+}
 
-export type ArmourType = typeof ArmourType[keyof typeof ArmourType];
+export { ArmourType };
 
 export function getArmourByWeapon (weapon: WeaponType) {
   switch (weapon) {

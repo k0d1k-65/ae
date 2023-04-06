@@ -1,6 +1,6 @@
-import { EquipmentType } from "../common/constants/EquipmentType";
-import { Equipment } from "../common/types/Equiqment";
-import { UnitStat } from "../common/types/UnitStat";
+import { EquipmentType } from "../constants/units/EquipmentType";
+import { Equipment } from "../types/units/Equiqment";
+import { UnitStat } from "../types/units/UnitStat";
 
 const badges = (() => {
   const _badges: Equipment[] = [

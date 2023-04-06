@@ -1,8 +1,8 @@
-import { LightShadowType } from "../common/constants/LightShadowType";
-import { StyleType } from "../common/constants/StyleType";
-import { WeaponType } from "../common/constants/WeaponType";
-import { Unit } from "../common/types/Unit";
-import { UnitStat } from "../common/types/UnitStat";
+import { LightShadowType } from "../constants/units/LightShadowType"
+import { StyleType } from "../constants/units/StyleType"
+import { WeaponType } from "../constants/units/WeaponType"
+import { Unit } from "../types/units/Unit"
+import { UnitStat } from "../types/units/UnitStat"
 
 const units: Unit[] = (() => {
   const _units: Unit[] = [

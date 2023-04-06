@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Autocomplete, TextField, ToggleButton, ToggleButtonGroup, Paper, ClickAwayListener } from "@mui/material";
-import { getWeaponLabel, getWeaponTypes, WeaponType } from "../../common/constants/WeaponType";
-import { Unit } from "../../common/types/Unit";
+import { WeaponType } from "../../constants/units/WeaponType";
+import { Unit } from '../../types/units/Unit';
 import { Box } from '@mui/system';
 import { StyleChip } from '../utility/StyleChip';
 import Spacer from '../utility/Spacer';
@@ -15,7 +15,7 @@ export function UnitSelectBox(props: {units: Unit[], onSelected: (s: Unit|null) 
       ...option,
     };
   });
-  const weapons = getWeaponTypes();
+  const weapons = Object.values(WeaponType);
 
   const [open, setOpen] = React.useState<boolean>(false);
 
@@ -70,7 +70,7 @@ export function UnitSelectBox(props: {units: Unit[], onSelected: (s: Unit|null) 
       setWTypes([]);
     } else {
       setBulkWeapon(true);
-      setWTypes(weapons.map(w => w.typ));
+      setWTypes(weapons);
     }
   }
 
@@ -99,8 +99,8 @@ export function UnitSelectBox(props: {units: Unit[], onSelected: (s: Unit|null) 
             >
               {weapons.map(wt => {
                 return (
-                  <ToggleButton size="small" value={wt.typ} aria-label={wt.lbl}>
-                    <>{wt.lbl}</>
+                  <ToggleButton size="small" value={wt} aria-label={wt}>
+                    <>{wt}</>
                   </ToggleButton>
                 );
               })}
@@ -120,7 +120,7 @@ export function UnitSelectBox(props: {units: Unit[], onSelected: (s: Unit|null) 
         <Autocomplete
           // id="UnitSelectBox"
           options={selectableUnits}
-          groupBy={(opt) => getWeaponLabel(opt.weapon)}
+          groupBy={(opt) => opt.weapon}
           getOptionLabel={(opt) => opt.name}
           renderOption={handleRenderOption}
           size={'small'}

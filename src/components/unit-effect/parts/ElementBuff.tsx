@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Autocomplete, Chip, InputAdornment, TextField } from '@mui/material';
-import { ElementType, getElementLabel } from '../../../common/constants/ElementType';
-import { BuffElementAmount } from '../../../common/types/BuffElementAmount';
+import { ElementType } from '../../../constants/units/ElementType';
+import { BuffElementAmount } from '../../../types/units/BuffElementAmount';
 import ElementSelect from '../../utility/ElementSelect';
 
 export default function ElementBuff(props: {
@@ -44,7 +44,7 @@ export default function ElementBuff(props: {
     if (reason === 'createOption') {
       if (!!value && typeof value === "string") {
         const item: BuffElementAmount = {
-          label: selectElement === "all" ? "全" : getElementLabel(selectElement),
+          label: (selectElement === "all" ? "全" : selectElement),
           amount: Number(value),
           elType: selectElement,
         };

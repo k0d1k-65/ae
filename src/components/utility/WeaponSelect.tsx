@@ -1,5 +1,5 @@
 import { ListItemText, MenuItem, Select } from '@mui/material';
-import { getWeaponTypes, WeaponType } from '../../common/constants/WeaponType';
+import { WeaponType } from '../../constants/units/WeaponType';
 
 const WeaponSelect = (props: {
   value: WeaponType | "all",
@@ -9,7 +9,7 @@ const WeaponSelect = (props: {
 }) => {
   const { value, handleSelect, size, variant } = props;
 
-  const weaponTypes = getWeaponTypes();
+  const weaponTypes = Object.values(WeaponType);
 
   return (
     <Select
@@ -21,8 +21,8 @@ const WeaponSelect = (props: {
       variant={variant}
     >
       {weaponTypes.map(wType => (
-        <MenuItem value={wType.typ}>
-          <ListItemText primary={wType.lbl} />
+        <MenuItem value={wType}>
+          <ListItemText primary={wType} />
         </MenuItem>
       ))}
       <MenuItem value="all">

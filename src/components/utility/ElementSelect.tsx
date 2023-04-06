@@ -1,5 +1,5 @@
 import { ListItemText, MenuItem, Select } from '@mui/material';
-import { ElementType, getElementTypes } from '../../common/constants/ElementType';
+import { ElementType } from '../../constants/units/ElementType';
 
 const ElementSelect = (props: {
   value: ElementType | "all",
@@ -8,8 +8,6 @@ const ElementSelect = (props: {
   variant?: "standard" | "outlined" | "filled" | undefined
 }) => {
   const { value, handleSelect, size, variant } = props;
-
-  const elementTypes = getElementTypes();
 
   return (
     <Select
@@ -20,9 +18,9 @@ const ElementSelect = (props: {
       size={size}
       variant={variant}
     >
-      {elementTypes.map(eType => (
-        <MenuItem value={eType.typ}>
-          <ListItemText primary={eType.lbl} />
+      {Object.values(ElementType).map(eType => (
+        <MenuItem value={eType}>
+          <ListItemText primary={eType} />
         </MenuItem>
       ))}
       <MenuItem value="all">

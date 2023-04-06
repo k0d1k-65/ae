@@ -1,5 +1,5 @@
 import { Chip } from "@mui/material";
-import { StyleType, StyleTypeColor } from "../../common/constants/StyleType";
+import { StyleType, StyleTypeColor } from "../../constants/units/StyleType";
 
 export function StyleChip(props: {styleType: StyleType|null}) {
   if (props.styleType == null) {

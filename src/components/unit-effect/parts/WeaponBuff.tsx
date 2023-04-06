@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Autocomplete, Chip, InputAdornment, TextField } from '@mui/material';
-import { BuffWeaponAmount } from '../../../common/types/BuffWeaponAmount';
-import { getWeaponLabel, WeaponType } from '../../../common/constants/WeaponType';
+import { BuffWeaponAmount } from '../../../types/units/BuffWeaponAmount';
+import { WeaponType } from '../../../constants/units/WeaponType';
 import WeaponSelect from '../../utility/WeaponSelect';
 
 export default function WeaponBuff(props: {
@@ -44,7 +44,7 @@ export default function WeaponBuff(props: {
     if (reason === 'createOption') {
       if (!!value && typeof value === "string") {
         const item: BuffWeaponAmount = {
-          label: selectWeapon === "all" ? "全" : getWeaponLabel(selectWeapon),
+          label: selectWeapon === "all" ? "全" : selectWeapon,
           amount: Number(value),
           wpType: selectWeapon,
         };

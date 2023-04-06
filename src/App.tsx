@@ -1,14 +1,14 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { createTheme, CssBaseline, ThemeProvider } from '@mui/material';
-import { ThemeColorModeContext } from './common/contexts/ThemeColorModeContext';
+import { ThemeColorModeContext } from './contexts/common/ThemeColorModeContext';
 import NavigationBar from './components/NavigationBar';
 
 import Home from './pages/Home';
 import SamplePage1 from "./pages/SamplePage1";
 import UnitBase from './components/unit/UnitBase';
 import NotFound from "./pages/NotFound";
-import { AppLinks } from './common/constants/AppLinks';
+import { AppRoutes } from './routes/Routes';
 import Ocr from './components/ocr';
 
 function App() {
@@ -42,11 +42,9 @@ function App() {
 
         <Routes>
           <Route index element={<Home />} />
-          <Route path={AppLinks.master.path} element={<SamplePage1 />} />
-          <Route path={AppLinks.units.path} element={<SamplePage1 />} />
-          <Route path={AppLinks.damageCalc.path} element={<SamplePage1 />} />
-          <Route path={AppLinks.battleCalc.path} element={<SamplePage1 />} />
-          <Route path={AppLinks.imageOcr.path} element={<Ocr />} />
+          {AppRoutes.map(appRoute => (
+            <Route path={appRoute.path} element={<appRoute.component />} />
+          ))}
           <Route path="/dev" element={<UnitBase />} />
           <Route path="*" element={<NotFound />} />
         </Routes>

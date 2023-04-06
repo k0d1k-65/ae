@@ -10,9 +10,9 @@ import {
   Drawer,
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-import { ThemeColorModeContext } from '../common/contexts/ThemeColorModeContext';
+import { ThemeColorModeContext } from '../contexts/common/ThemeColorModeContext';
 import { Link } from 'react-router-dom';
-import { AppLinks } from "../common/constants/AppLinks";
+import { NavLinks } from "../routes/Routes";
 
 const NavigationBar = () => {
   const theme = useTheme();
@@ -61,12 +61,12 @@ const NavigationBar = () => {
             alignItems={"center"}
             justifyContent={"flex-end"}
           >
-            {Object.entries(AppLinks).map(([key, link]) => (
-              <Link to={link.path} style={{
+            {Object.values(NavLinks).map(navLink => (
+              <Link to={navLink.path} style={{
                 marginRight: "2rem",
                 color: "#90caf9",
                 textDecoration: "none",
-              }}>{link.name}</Link>
+              }}>{navLink.name}</Link>
             ))}
               <Link to='/dev' style={{
                 marginRight: "2rem",

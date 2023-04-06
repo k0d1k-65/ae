@@ -1,7 +1,7 @@
-import { EquipmentType } from "../common/constants/EquipmentType";
-import { WeaponType } from "../common/constants/WeaponType";
-import { Equipment } from "../common/types/Equiqment";
-import { UnitStat } from "../common/types/UnitStat";
+import { EquipmentType } from "../constants/units/EquipmentType";
+import { WeaponType } from "../constants/units/WeaponType";
+import { Equipment } from "../types/units/Equiqment";
+import { UnitStat } from "../types/units/UnitStat";
 
 const weapons = (() => {
   const _weapons: Equipment[] = [

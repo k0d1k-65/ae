@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Autocomplete, Chip, InputAdornment, TextField } from '@mui/material';
 import { ElementType } from '../../../constants/units/ElementType';
 import { BuffElementAmount } from '../../../types/units/BuffElementAmount';
-import ElementSelect from '../../utility/ElementSelect';
+import { ElementSelect } from '../../common/ElementSelect';
 
 export default function ElementBuff(props: {
   label: string,

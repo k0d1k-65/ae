@@ -3,8 +3,8 @@ import { Autocomplete, TextField, ToggleButton, ToggleButtonGroup, Paper, ClickA
 import { WeaponType } from "../../constants/units/WeaponType";
 import { Unit } from '../../types/units/Unit';
 import { Box } from '@mui/system';
-import { StyleChip } from '../utility/StyleChip';
-import Spacer from '../utility/Spacer';
+import { StyleChip } from '../common/StyleChip';
+import Spacer from '../common/Spacer';
 
 export function UnitSelectBox(props: {units: Unit[], onSelected: (s: Unit|null) => void}) {
   const { units, onSelected } = props;

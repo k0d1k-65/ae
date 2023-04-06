@@ -1,11 +1,12 @@
-import { ListItemText, MenuItem, Select } from '@mui/material';
-import { WeaponType } from '../../constants/units/WeaponType';
+import { ListItemText, MenuItem, Select } from "@mui/material";
+import { WeaponType } from "../../constants/units/WeaponType";
 
+/** 武器種セレクトボックス */
 const WeaponSelect = (props: {
-  value: WeaponType | "all",
-  handleSelect: (x: any) => void,
-  size?: "small" | "medium" | undefined,
-  variant?: "standard" | "outlined" | "filled" | undefined
+  value: WeaponType | "all";
+  handleSelect: (x: any) => void;
+  size?: "small" | "medium" | undefined;
+  variant?: "standard" | "outlined" | "filled" | undefined;
 }) => {
   const { value, handleSelect, size, variant } = props;
 
@@ -15,12 +16,12 @@ const WeaponSelect = (props: {
     <Select
       value={value}
       onChange={(ev) => handleSelect(ev.target.value)}
-      sx={{ p: '0 .5rem', minWidth: 50 }}
+      sx={{ p: "0 .5rem", minWidth: 50 }}
       disableUnderline
       size={size}
       variant={variant}
     >
-      {weaponTypes.map(wType => (
+      {weaponTypes.map((wType) => (
         <MenuItem value={wType}>
           <ListItemText primary={wType} />
         </MenuItem>

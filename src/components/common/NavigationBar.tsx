@@ -10,11 +10,11 @@ import {
   Drawer,
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-import { ThemeColorModeContext } from '../contexts/common/ThemeColorModeContext';
+import { ThemeColorModeContext } from '../../contexts/common/ThemeColorModeContext';
 import { Link } from 'react-router-dom';
-import { NavLinks } from "../routes/Routes";
+import { NavLinks } from "../../routes/Routes";
 
-const NavigationBar = () => {
+export const NavigationBar = () => {
   const theme = useTheme();
   const colorMode = React.useContext(ThemeColorModeContext);
 
@@ -89,5 +89,3 @@ const NavigationBar = () => {
     </>
   );
 };
-
-export default NavigationBar;

@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { createTheme, CssBaseline, ThemeProvider } from '@mui/material';
 import { ThemeColorModeContext } from './contexts/common/ThemeColorModeContext';
-import NavigationBar from './components/NavigationBar';
+import { NavigationBar } from './components/common/NavigationBar';
 
 import Home from './pages/Home';
 import SamplePage1 from "./pages/SamplePage1";

@@ -1,6 +1,7 @@
 import { Ocr } from "../components/Ocr"
 import Home from "../components/Home";
 import { Test } from "../components/Test";
+import { TsvMarkdownConverter } from "../components/util/tsvMarkdownConverter";
 
 export const AppRoutes = [
   {
@@ -33,6 +34,11 @@ export const AppRoutes = [
     component: Ocr,
     exact: true
   },
+  {
+    path: "/util/tsv-markdown-converter",
+    component: TsvMarkdownConverter,
+    exact: true
+  },
 ];
 
 export const NavLinks = {
@@ -59,5 +65,9 @@ export const NavLinks = {
   imageOcr: {
     path: "/util/ocr",
     name: "OCR",
+  },
+  tsvMarkdownConverter: {
+    path: "/util/tsv-markdown-converter",
+    name: "TSV-MD変換",
   },
 };

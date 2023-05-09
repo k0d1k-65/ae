@@ -26,9 +26,6 @@ const WeaponSelect = (props: {
           <ListItemText primary={wType} />
         </MenuItem>
       ))}
-      <MenuItem value="all">
-        <ListItemText primary="全" />
-      </MenuItem>
     </Select>
   );
 };

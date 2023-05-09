@@ -24,9 +24,6 @@ export const ElementSelect = (props: {
           <ListItemText primary={eType} />
         </MenuItem>
       ))}
-      <MenuItem value="all">
-        <ListItemText primary="全" />
-      </MenuItem>
     </Select>
   );
 };

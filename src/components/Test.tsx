@@ -6,8 +6,8 @@ import Spacer from "./common/Spacer";
 import WeaponSelect from "./common/WeaponSelect";
 
 export function Test() {
-  const [elm, setElm] = React.useState<"all" | ElementType>("all");
-  const [wpn, setWpn] = React.useState<"all" | WeaponType>("all");
+  const [elm, setElm] = React.useState<ElementType>(ElementType.All);
+  const [wpn, setWpn] = React.useState<WeaponType>(WeaponType.All);
 
   return (
     <>

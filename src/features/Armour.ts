@@ -12,7 +12,7 @@ const armours = (() => {
       stat: new UnitStatModel({
         def: 180,
         mdef: 150,
-      })
+      }),
     },
     {
       name: "可惜夜の首輪",
@@ -21,7 +21,7 @@ const armours = (() => {
       stat: new UnitStatModel({
         def: 160,
         mdef: 160,
-      })
+      }),
     },
     {
       name: "フェザーリング",
@@ -30,7 +30,7 @@ const armours = (() => {
       stat: new UnitStatModel({
         def: 135,
         mdef: 158,
-      })
+      }),
     },
   ];
 

@@ -12,7 +12,7 @@ const weapons = (() => {
       stat: new UnitStatModel({
         atk: 23,
         matk: 190,
-      })
+      }),
     },
     {
       name: "復元せし時刻みの杖",
@@ -22,7 +22,7 @@ const weapons = (() => {
         atk: 20,
         matk: 165,
         mp: 100,
-      })
+      }),
     },
     {
       name: "オーガペイン・天",
@@ -37,8 +37,8 @@ const weapons = (() => {
       },
       effectOnly: {
         targets: ["ドラゴンベアラー"],
-        effects: new UnitStatModel({atk: 999}),
-      }
+        effects: new UnitStatModel({ atk: 999 }),
+      },
     },
     {
       name: "復元せし時刻みの剣",
@@ -49,7 +49,7 @@ const weapons = (() => {
         matk: 20,
         hp: 500,
         mp: 100,
-      })
+      }),
     },
     {
       name: "黎明の刀",
@@ -58,7 +58,7 @@ const weapons = (() => {
       stat: new UnitStatModel({
         atk: 153,
         matk: 25,
-      })
+      }),
     },
   ];
 

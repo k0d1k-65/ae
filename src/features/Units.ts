@@ -1,8 +1,8 @@
-import { LightShadowType } from "../constants/common/LightShadowType"
-import { StyleType } from "../constants/common/StyleType"
-import { WeaponType } from "../constants/common/WeaponType"
-import { Unit } from "../types/units/Unit"
-import { UnitStatModel } from "../types/models/UnitStatModel"
+import { LightShadowType } from "../constants/common/LightShadowType";
+import { StyleType } from "../constants/common/StyleType";
+import { WeaponType } from "../constants/common/WeaponType";
+import { Unit } from "../types/units/Unit";
+import { UnitStatModel } from "../types/models/UnitStatModel";
 
 const units: Unit[] = (() => {
   const _units: Unit[] = [
@@ -62,7 +62,7 @@ const units: Unit[] = (() => {
         speed: 202,
       }),
       lsBonus: [],
-      styleBonus: new UnitStatModel({atk: 10})
+      styleBonus: new UnitStatModel({ atk: 10 }),
     },
     {
       weapon: WeaponType.Fist,
@@ -101,7 +101,7 @@ const units: Unit[] = (() => {
         speed: 202,
       }),
       lsBonus: [],
-      styleBonus: new UnitStatModel({hp: 200})
+      styleBonus: new UnitStatModel({ hp: 200 }),
     },
     {
       weapon: WeaponType.Sward,
@@ -180,27 +180,25 @@ const units: Unit[] = (() => {
       lsBonus: [
         {
           lightShadow: 5,
-          stat: new UnitStatModel({luck: 5}),
+          stat: new UnitStatModel({ luck: 5 }),
         },
         {
           lightShadow: 15,
-          stat: new UnitStatModel({hp: 100}),
+          stat: new UnitStatModel({ hp: 100 }),
         },
         {
           lightShadow: 30,
-          stat: new UnitStatModel({mp: 40}),
+          stat: new UnitStatModel({ mp: 40 }),
         },
         {
           lightShadow: 50,
-          stat: new UnitStatModel({intelligence: 10}),
+          stat: new UnitStatModel({ intelligence: 10 }),
         },
       ],
     },
   ];
 
-  return _units
-    .sort((a, b) => a.namekana >= b.namekana ? 1 : -1)
-    .sort((a, b) => a.weapon >= b.weapon ? 1 : -1);
+  return _units.sort((a, b) => (a.namekana >= b.namekana ? 1 : -1)).sort((a, b) => (a.weapon >= b.weapon ? 1 : -1));
 })();
 
 export function fetchUnits() {

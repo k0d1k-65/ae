@@ -28,9 +28,7 @@ export type Unit = {
 
 // TODO: unit-service内に移動し、引数unitsはインスタンス内を参照するような形式にする。
 export function findOtherStyles(units: Unit[], needle: Unit) {
-  const others = units.filter(
-    (x) => x.name === needle.name && x.styleType !== needle.styleType
-  );
+  const others = units.filter((x) => x.name === needle.name && x.styleType !== needle.styleType);
 
   return others;
 }

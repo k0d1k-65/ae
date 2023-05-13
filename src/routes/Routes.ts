@@ -5,27 +5,27 @@ export const AppRoutes = [
   {
     path: "/",
     component: Home,
-    exact: true
+    exact: true,
   },
   {
     path: "/unit/master",
     component: Test,
-    exact: true
+    exact: true,
   },
   {
     path: "/unit/skill",
     component: Test,
-    exact: true
+    exact: true,
   },
   {
     path: "/sim/damage",
     component: Test,
-    exact: true
+    exact: true,
   },
   {
     path: "/sim/battle",
     component: Test,
-    exact: true
+    exact: true,
   },
 ];
 

@@ -48,10 +48,8 @@ interface ISkill {
   damageSources: Array<IDamageSource>;
   /** 特殊効果 */
   effects: Array<IEffect>;
-};
-const SkillGradeType: Record<string, {value: string, label: string}> = {
-
-} as const;
+}
+const SkillGradeType: Record<string, { value: string; label: string }> = {} as const;
 /** ダメージソース */
 interface IDamageSource {
   /** 威力 */
@@ -72,29 +70,25 @@ interface IDamageSource {
     value: number;
   }>;
 }
-const TargetType: Record<string, {value: string, label: string}> = {
-
+const TargetType: Record<string, { value: string; label: string }> = {} as const;
+const ElementType: Record<string, { value: string; label: string }> = {
+  ALL: { value: "all", label: "全" },
+  NONE: { value: "none", label: "無" },
+  FIRE: { value: "fire", label: "火" },
+  WATER: { value: "water", label: "水" },
+  WIND: { value: "wind", label: "風" },
+  EARTH: { value: "earth", label: "地" },
+  THUNDER: { value: "thunder", label: "雷" },
+  DARK: { value: "yin", label: "陰" },
+  CRYSTAL: { value: "crystal", label: "晶" },
 } as const;
-const ElementType: Record<string, {value: string, label: string}> = {
-  ALL: { value: 'all', label: "全", },
-  NONE: { value: 'none', label: "無", },
-  FIRE: { value: 'fire', label: "火", },
-  WATER: { value: 'water', label: "水", },
-  WIND: { value: 'wind', label: "風", },
-  EARTH: { value: 'earth', label: "地", },
-  THUNDER: { value: 'thunder', label: "雷", },
-  DARK: { value: 'yin', label: "陰", },
-  CRYSTAL: { value: 'crystal', label: "晶", },
+const AttackType: Record<string, { value: string; label: string }> = {
+  SLASH: { value: "slash", label: "斬" },
+  STAB: { value: "stab", label: "突" },
+  STRIKE: { value: "strike", label: "打" },
+  MAGICAL: { value: "magical", label: "魔" },
 } as const;
-const AttackType: Record<string, {value: string, label: string}> = {
-  SLASH: { value: 'slash', label: "斬", },
-  STAB: { value: 'stab', label: "突", },
-  STRIKE: { value: 'strike', label: "打", },
-  MAGICAL: { value: 'magical', label: "魔", },
-} as const;
-const DamageModifierType: Record<string, {value: string, label: string}> = {
-
-} as const;
+const DamageModifierType: Record<string, { value: string; label: string }> = {} as const;
 interface IEffect {
   /** 攻撃対象 */
   target: typeof TargetType;
@@ -109,28 +103,16 @@ interface IEffect {
   /** 敵の耐性無視 */
   ignoreEnemyResistance: boolean;
 }
-const DamageEffectType = {
-
-} as const;
-const ResistEffectType = {
-
-} as const;
-const DisturbEffectType = {
-
-} as const;
-const SupportEffectType = {
-
-} as const;
-const EffectType: Record<string, {value: string, label: string}> = {
+const DamageEffectType = {} as const;
+const ResistEffectType = {} as const;
+const DisturbEffectType = {} as const;
+const SupportEffectType = {} as const;
+const EffectType: Record<string, { value: string; label: string }> = {
   ...DamageEffectType,
   ...ResistEffectType,
   ...DisturbEffectType,
   ...SupportEffectType,
 } as const;
-
-
-
-
 
 /** バトル */
 export interface IBattle {
@@ -150,30 +132,30 @@ interface IField {
   zone: typeof ZoneType;
 }
 /** 環境 */
-const EnvironmentType: Record<string, {value: string, label: string}> = {
-  SMOG: { value: 'smog', label: "スモッグ" },
-  TOXIC_SMOG: { value: 'toxic_smog', label: "強毒性スモッグ" },
-  FOG: { value: 'fog', label: "霧" },
-  HYPNOTIC_FOG: { value: 'hypnotic_fog', label: "幻惑の霧" },
-  GUST: { value: 'gust', label: "突風" },
-  STRONG_GUST: { value: 'strong_gust', label: "大烈風", },
-  OIL: { value: 'oil', label: "オイル" },
-  CONCENTRATED_OIL: { value: 'concentrated_oil', label: "濃縮オイル" },
-  PEACEFUL_SPORES: { value: 'peaceful_spores', label: "安らぎの胞子" },
-  SLEEPY_SPORES: { value: 'sleepy_spores', label: "誘眠の胞子", },
-  BLAZING_SUN: { value: 'blazing_sun', label: "かんかん照り" },
-  HEATWAVE: { value: 'heatwave', label: "極大熱波" },
-  RAIN: { value: 'rain', label: "雨" },
-  FREEZING_TEMPERATURE: { value: 'freezing_temperature', label: "氷点下" },
-  DIAMOND_DUST: { value: 'diamond_dust', label: "ダイヤモンドダスト" },
-  THUNDERSTORM: { value: 'thunderstorm', label: "雷雨" },
-  HEAVY_RAIN: { value: 'heavy_rain', label: "豪雨", },
-  TIME_WARP: { value: 'time_warp', label: "時の乱れ" },
-  CHAOTIC_FLOW: { value: 'chaotic_flow', label: "乱時流" },
-  RAINBOW: { value: 'rainbow', label: "虹" },
+const EnvironmentType: Record<string, { value: string; label: string }> = {
+  SMOG: { value: "smog", label: "スモッグ" },
+  TOXIC_SMOG: { value: "toxic_smog", label: "強毒性スモッグ" },
+  FOG: { value: "fog", label: "霧" },
+  HYPNOTIC_FOG: { value: "hypnotic_fog", label: "幻惑の霧" },
+  GUST: { value: "gust", label: "突風" },
+  STRONG_GUST: { value: "strong_gust", label: "大烈風" },
+  OIL: { value: "oil", label: "オイル" },
+  CONCENTRATED_OIL: { value: "concentrated_oil", label: "濃縮オイル" },
+  PEACEFUL_SPORES: { value: "peaceful_spores", label: "安らぎの胞子" },
+  SLEEPY_SPORES: { value: "sleepy_spores", label: "誘眠の胞子" },
+  BLAZING_SUN: { value: "blazing_sun", label: "かんかん照り" },
+  HEATWAVE: { value: "heatwave", label: "極大熱波" },
+  RAIN: { value: "rain", label: "雨" },
+  FREEZING_TEMPERATURE: { value: "freezing_temperature", label: "氷点下" },
+  DIAMOND_DUST: { value: "diamond_dust", label: "ダイヤモンドダスト" },
+  THUNDERSTORM: { value: "thunderstorm", label: "雷雨" },
+  HEAVY_RAIN: { value: "heavy_rain", label: "豪雨" },
+  TIME_WARP: { value: "time_warp", label: "時の乱れ" },
+  CHAOTIC_FLOW: { value: "chaotic_flow", label: "乱時流" },
+  RAINBOW: { value: "rainbow", label: "虹" },
 } as const;
 /** ZONE */
-const ZoneType: Record<string, {value: string, label: string}> = {
+const ZoneType: Record<string, { value: string; label: string }> = {
   ZONE_FIRE: { value: "zone_fire", label: "烈火陣" },
   ZONE_WATER: { value: "zone_water", label: "水天陣" },
   ZONE_WIND: { value: "zone_wind", label: "風王陣" },
@@ -210,18 +192,10 @@ interface IUnitEquipment {
   /** グラスタ */
   grasta: Array<IGrasta>;
 }
-interface IWeapon {
-
-}
-interface IArmor {
-
-}
-interface IBadge {
-
-}
-interface IGrasta {
-
-}
+interface IWeapon {}
+interface IArmor {}
+interface IBadge {}
+interface IGrasta {}
 
 interface IEnemy {
   /** 敵のステータス */

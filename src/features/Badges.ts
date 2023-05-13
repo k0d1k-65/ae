@@ -9,7 +9,7 @@ const badges = (() => {
       type: EquipmentType.Badge,
       stat: new UnitStatModel({
         hp: 1000,
-      })
+      }),
     },
   ];
 

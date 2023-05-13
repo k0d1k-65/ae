@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Accordion, AccordionDetails, AccordionSummary, Divider, Grid, TextField, ToggleButton } from '@mui/material';
 import { Box } from '@mui/system';
-import { getArmourByWeapon } from '../../utils/Utils';
+import { getArmourByWeapon } from '../../utils/common/Utils';
 import { Equipment } from '../../types/common/Equiqment';
 import { findOtherStyles, Unit } from '../../types/units/Unit';
 import { UnitStatModel } from '../../types/models/UnitStatModel';

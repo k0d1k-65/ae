@@ -1,5 +1,5 @@
-import { ArmourType } from "../constants/common/ArmourType";
-import { WeaponType } from "../constants/common/WeaponType";
+import { ArmourType } from "../../constants/common/ArmourType";
+import { WeaponType } from "../../constants/common/WeaponType";
 
 export function getArmourByWeapon (weapon: WeaponType) {
   switch (weapon) {

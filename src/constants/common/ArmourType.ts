@@ -1,3 +1,4 @@
+/** 防具種 */
 export enum ArmourType {
   bracelet = "腕輪",
   neckless = "首輪",

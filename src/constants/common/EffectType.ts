@@ -1,4 +1,4 @@
-enum EffectType {
+export enum EffectType {
   // スキルバフ
   powerBuffs = "腕力(%)",
   intBuffs = "知性(%)",
@@ -32,5 +32,3 @@ enum EffectType {
   enemyNumbers = "敵の数",
   enhOutsideAF = "狙い撃つ",
 }
-
-export { EffectType }

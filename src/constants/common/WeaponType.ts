@@ -1,3 +1,4 @@
+/** 武器種 */
 export enum WeaponType {
   All = "全",
   Lod = "杖",

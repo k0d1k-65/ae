@@ -1,3 +1,4 @@
+/** 属性種 */
 export enum ElementType {
   All = "全",
   None = "無",
@@ -8,4 +9,4 @@ export enum ElementType {
   Thunder = "雷",
   Yin = "陰",
   Crystal = "晶",
-};
+}

@@ -1,4 +1,4 @@
-/** ステータス */
+/** ステータス種 */
 export enum UnitStatType {
   HP = "HP",
   MP = "MP",

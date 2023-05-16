@@ -1,13 +1,13 @@
-export const StyleType = {
-  NS: "NS",
-  AS: "AS",
-  ES: "ES",
-} as const;
+/** ユニットスタイル種 */
+export enum StyleType {
+  NS = "NS",
+  AS = "AS",
+  ES = "ES",
+}
 
-export type StyleType = typeof StyleType[keyof typeof StyleType];
-
-export const StyleTypeColor = {
-  NS: "warning",
-  AS: "error",
-  ES: "success",
-} as const;
+/** ユニットスタイル表示カラー */
+export enum StyleTypeColor {
+  NS = "warning",
+  AS = "error",
+  ES = "success",
+}

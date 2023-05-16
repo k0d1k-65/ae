@@ -68,11 +68,6 @@ export const NavigationBar = () => {
                 textDecoration: "none",
               }}>{navLink.name}</Link>
             ))}
-              <Link to='/dev' style={{
-                marginRight: "2rem",
-                color: "#90caf9",
-                textDecoration: "none",
-              }}>dev</Link>
 
             {/* テーマ切り替え */}
             <IconButton sx={{ ml: 1 }} onClick={colorMode.toggleThemeColor} color="inherit">

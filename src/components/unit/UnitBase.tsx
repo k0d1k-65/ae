@@ -19,6 +19,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { UnitLightShadow } from './UnitLightShadow';
 import { StyleType, StyleTypeColor } from '../../constants/common/StyleType';
 import { UnitStatType } from '../../constants/common/UnitStatType';
+import EffectBase from '../unit-effect/EffectBase';
 
 export default function UnitBase() {
   const unitData = fetchUnits();
@@ -491,6 +492,8 @@ export default function UnitBase() {
 
         </AccordionDetails>
       </Accordion>
+
+      <EffectBase />
     </Box>
   );
 }

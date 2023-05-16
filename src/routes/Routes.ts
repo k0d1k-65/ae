@@ -1,5 +1,7 @@
 import Home from "../components/Home";
 import { Test } from "../components/Test";
+import UnitStatComponent from "../components/unit-stat";
+import UnitBase from "../components/unit/UnitBase";
 
 export const AppRoutes = [
   {
@@ -8,23 +10,18 @@ export const AppRoutes = [
     exact: true,
   },
   {
-    path: "/unit/master",
+    path: "/dev/unit",
+    component: UnitBase,
+    exact: true,
+  },
+  {
+    path: "/test",
     component: Test,
     exact: true,
   },
   {
-    path: "/unit/skill",
-    component: Test,
-    exact: true,
-  },
-  {
-    path: "/sim/damage",
-    component: Test,
-    exact: true,
-  },
-  {
-    path: "/sim/battle",
-    component: Test,
+    path: "/unit/edit",
+    component: UnitStatComponent,
     exact: true,
   },
 ];
@@ -34,20 +31,16 @@ export const NavLinks = {
     path: "/",
     name: "Home",
   },
-  master: {
-    path: "/unit/master",
-    name: "【マスタ】",
+  devUnit: {
+    path: "/dev/unit",
+    name: "devUnit",
   },
-  units: {
-    path: "/unit/skill",
-    name: "Char",
+  test: {
+    path: "/test",
+    name: "TEST",
   },
-  damageCalc: {
-    path: "/sim/damage",
-    name: "ダメージ計算",
-  },
-  battleCalc: {
-    path: "/sim/battle",
-    name: "バトルシミュレータ",
+  unitEdit: {
+    path: "/unit/edit",
+    name: "【ユニット編集】",
   },
 };

@@ -119,10 +119,12 @@ const UnitStatComponent: React.FC = () => {
         <Button
           variant='contained'
           color='primary'
+          disabled
         >SAVE</Button>
         <Button
           variant='contained'
           color='error'
+          disabled
         >CLEAR</Button>
       </Header>
 

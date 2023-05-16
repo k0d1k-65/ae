@@ -1,12 +1,12 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { createTheme, CssBaseline, ThemeProvider } from '@mui/material';
-import { ThemeColorModeContext } from './contexts/common/ThemeColorModeContext';
-import { NavigationBar } from './components/common/NavigationBar';
+import { ThemeColorModeContext } from './common/contexts/ThemeColorModeContext';
+import { NavigationBar } from './common/NavigationBar';
 import styled from 'styled-components';
-import Home from './components/Home';
-import NotFound from "./components/NotFound";
-import { AppRoutes } from './routes/Routes';
+import Home from './home';
+import NotFound from "./not-found";
+import { AppRoutes } from './Routes';
 
 const Wrapper = styled.div`
   margin: 0;

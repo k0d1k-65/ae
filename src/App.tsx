@@ -7,6 +7,7 @@ import styled from 'styled-components';
 import Home from './home';
 import NotFound from "./not-found";
 import { AppRoutes } from './Routes';
+import { ToastContainer } from 'react-toastify';
 
 const Wrapper = styled.div`
   margin: 0;
@@ -76,6 +77,11 @@ function App() {
           </ThemeColorModeContext.Provider>
 
           <Main>
+            <ToastContainer
+              newestOnTop
+              theme="dark"
+            />
+
             <Routes>
               <Route index element={<Home />} />
               {AppRoutes.map(appRoute => (
@@ -83,7 +89,6 @@ function App() {
               ))}
               <Route path="*" element={<NotFound />} />
             </Routes>
-
           </Main>
         </Wrapper>
       </BrowserRouter>

@@ -1,35 +1,35 @@
 import { Grid, Autocomplete, TextField } from '@mui/material';
-import { IAbilitiesForm } from './types.interface';
+import { IUnitForm } from './types.interface';
 
 const AbilitiesForm = (props: {
-  abilities: IAbilitiesForm,
-  setAbilities: React.Dispatch<IAbilitiesForm>
+  unitStat: IUnitForm,
+  handleOnChangeStat: (key: keyof IUnitForm, value: IUnitForm[keyof IUnitForm]) => void,
 }) => {
   const handleTextChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    props.setAbilities({...props.abilities, [event.target.name]: event.target.value});
+    props.handleOnChangeStat(event.target.name as any, event.target.value);
   };
 
   const handleabilityChange = (_: any, abilities: string[]) => {
-    props.setAbilities({...props.abilities, abilities: abilities});
+    props.handleOnChangeStat("abilities", abilities);
   };
 
   return (
     <Grid container>
       <Grid item xl={9}>
         {/* ヴァリアブルチャント名 */}
-        <TextField label='ヴァリアブルチャント名' sx={{width: '100%'}} name='variablechantName' value={props.abilities.variablechantName} onChange={handleTextChange} />
+        <TextField label='ヴァリアブルチャント名' sx={{width: '100%'}} name='variablechantName' value={props.unitStat.variablechantName} onChange={handleTextChange} />
         {/* ヴァリアブルチャント詳細 */}
-        <TextField label='ヴァリアブルチャント詳細' multiline sx={{width: '100%'}} name='variablechantDetail' value={props.abilities.variablechantDetail} onChange={handleTextChange} />
+        <TextField label='ヴァリアブルチャント詳細' multiline sx={{width: '100%'}} name='variablechantDetail' value={props.unitStat.variablechantDetail} onChange={handleTextChange} />
 
         {/* Ex必殺技名 */}
-        <TextField label='Ex必殺技名' sx={{width: '100%'}} name='extraSpecialMoveName' value={props.abilities.extraSpecialMoveName} onChange={handleTextChange} />
+        <TextField label='Ex必殺技名' sx={{width: '100%'}} name='extraSpecialMoveName' value={props.unitStat.extraSpecialMoveName} onChange={handleTextChange} />
         {/* Ex必殺技詳細 */}
-        <TextField label='Ex必殺技詳細' multiline sx={{width: '100%'}} name='extraSpecialMoveDetail' value={props.abilities.extraSpecialMoveDetail} onChange={handleTextChange} />
+        <TextField label='Ex必殺技詳細' multiline sx={{width: '100%'}} name='extraSpecialMoveDetail' value={props.unitStat.extraSpecialMoveDetail} onChange={handleTextChange} />
 
         {/* アナザーセンス名 */}
-        <TextField label='アナザーセンス名' sx={{width: '100%'}} name='anotherSenceName' value={props.abilities.anotherSenceName} onChange={handleTextChange} />
+        <TextField label='アナザーセンス名' sx={{width: '100%'}} name='anotherSenceName' value={props.unitStat.anotherSenceName} onChange={handleTextChange} />
         {/* アナザーセンス詳細 */}
-        <TextField label='アナザーセンス詳細' multiline sx={{width: '100%'}} name='anotherSenceDetail' value={props.abilities.anotherSenceDetail} onChange={handleTextChange} />
+        <TextField label='アナザーセンス詳細' multiline sx={{width: '100%'}} name='anotherSenceDetail' value={props.unitStat.anotherSenceDetail} onChange={handleTextChange} />
 
         {/* 個人アビリティ */}
         <Autocomplete
@@ -40,7 +40,7 @@ const AbilitiesForm = (props: {
           multiple
           freeSolo
           isOptionEqualToValue={() => false}
-          value={props.abilities.abilities}
+          value={props.unitStat.abilities}
           disableClearable
           onChange={handleabilityChange}
         />

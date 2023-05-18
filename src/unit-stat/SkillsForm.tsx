@@ -1,49 +1,53 @@
 import { Grid, TextField } from '@mui/material';
-import { ISkillsForm } from './types.interface';
+import { ISkillProperty, ISkillsForm, IUnitForm } from './types.interface';
 
 const SkillsForm = (props: {
-  skills: ISkillsForm,
-  setSkills: React.Dispatch<ISkillsForm>
+  unitStat: IUnitForm,
+  handleOnChangeSkill: (key: keyof ISkillProperty, grade: keyof ISkillsForm, value: IUnitForm[keyof IUnitForm]) => void,
 }) => {
-  const handleTextChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    props.setSkills({...props.skills, [event.target.name]: event.target.value});
+  const handleOnChangeName = (event: React.ChangeEvent<HTMLInputElement>) => {
+    props.handleOnChangeSkill("name", event.target.name as any, event.target.value);
   };
 
-  const handleNumberChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    props.setSkills({...props.skills, [event.target.name]: event.target.value || 0});
+  const handleOnChangeMp = (event: React.ChangeEvent<HTMLInputElement>) => {
+    props.handleOnChangeSkill("mp", event.target.name as any, event.target.value || 0);
+  };
+
+  const handleOnChangeDetail = (event: React.ChangeEvent<HTMLInputElement>) => {
+    props.handleOnChangeSkill("detail", event.target.name as any, event.target.value);
   };
 
   return (
     <Grid container>
       <Grid container item xl={9}>
-        <TextField label='★1 スキル' sx={{width: '80%'}} name='first' value={props.skills.first} onChange={handleTextChange} />
-        <TextField label='消費MP' type='number' sx={{width: '20%'}} name='firstMp' value={props.skills.firstMp} onChange={handleNumberChange} />
-        <TextField label='詳細' multiline sx={{width: '100%'}} name='firstDetail' value={props.skills.firstDetail} onChange={handleTextChange} />
+        <TextField label='★1 スキル' sx={{width: '80%'}} name='first.name' value={props.unitStat.first.name} onChange={handleOnChangeName} />
+        <TextField label='消費MP' type='number' sx={{width: '20%'}} name='first.mp' value={props.unitStat.first.mp} onChange={handleOnChangeMp} />
+        <TextField label='詳細' multiline sx={{width: '100%'}} name='first.detail' value={props.unitStat.first.detail} onChange={handleOnChangeDetail} />
 
-        <TextField label='★2 スキル' sx={{width: '80%'}} name='second' value={props.skills.second} onChange={handleTextChange} />
-        <TextField label='消費MP' type='number' sx={{width: '20%'}} name='secondMp' value={props.skills.secondMp} onChange={handleNumberChange} />
-        <TextField label='詳細' multiline sx={{width: '100%'}} name='secondDetail' value={props.skills.secondDetail} onChange={handleTextChange} />
+        <TextField label='★2 スキル' sx={{width: '80%'}} name='second.name' value={props.unitStat.second.name} onChange={handleOnChangeName} />
+        <TextField label='消費MP' type='number' sx={{width: '20%'}} name='second.mp' value={props.unitStat.second.mp} onChange={handleOnChangeMp} />
+        <TextField label='詳細' multiline sx={{width: '100%'}} name='second.detail' value={props.unitStat.second.detail} onChange={handleOnChangeDetail} />
 
-        <TextField label='★3 スキル' sx={{width: '80%'}} name='thirdA' value={props.skills.thirdA} onChange={handleTextChange} />
-        <TextField label='消費MP' type='number' sx={{width: '20%'}} name='thirdAMp' value={props.skills.thirdAMp} onChange={handleNumberChange} />
-        <TextField label='詳細' multiline sx={{width: '100%'}} name='thirdADetail' value={props.skills.thirdADetail} onChange={handleTextChange} />
-        <TextField label='★3 スキル' sx={{width: '80%'}} name='thirdB' value={props.skills.thirdB} onChange={handleTextChange} />
-        <TextField label='消費MP' type='number' sx={{width: '20%'}} name='thirdBMp' value={props.skills.thirdBMp} onChange={handleNumberChange} />
-        <TextField label='詳細' multiline sx={{width: '100%'}} name='thirdBDetail' value={props.skills.thirdBDetail} onChange={handleTextChange} />
+        <TextField label='★3 スキル' sx={{width: '80%'}} name='thirdA.name' value={props.unitStat.thirdA.name} onChange={handleOnChangeName} />
+        <TextField label='消費MP' type='number' sx={{width: '20%'}} name='thirdA.mp' value={props.unitStat.thirdA.mp} onChange={handleOnChangeMp} />
+        <TextField label='詳細' multiline sx={{width: '100%'}} name='thirdA.detail' value={props.unitStat.thirdA.detail} onChange={handleOnChangeDetail} />
+        <TextField label='★3 スキル' sx={{width: '80%'}} name='thirdB.name' value={props.unitStat.thirdB.name} onChange={handleOnChangeName} />
+        <TextField label='消費MP' type='number' sx={{width: '20%'}} name='thirdB.mp' value={props.unitStat.thirdB.mp} onChange={handleOnChangeMp} />
+        <TextField label='詳細' multiline sx={{width: '100%'}} name='thirdB.detail' value={props.unitStat.thirdB.detail} onChange={handleOnChangeDetail} />
 
-        <TextField label='★4 スキル' sx={{width: '80%'}} name='fourthA' value={props.skills.fourthA} onChange={handleTextChange} />
-        <TextField label='消費MP' type='number' sx={{width: '20%'}} name='fourthAMp' value={props.skills.fourthAMp} onChange={handleNumberChange} />
-        <TextField label='詳細' multiline sx={{width: '100%'}} name='fourthADetail' value={props.skills.fourthADetail} onChange={handleTextChange} />
-        <TextField label='★4 スキル' sx={{width: '80%'}} name='fourthB' value={props.skills.fourthB} onChange={handleTextChange} />
-        <TextField label='消費MP' type='number' sx={{width: '20%'}} name='fourthBMp' value={props.skills.fourthBMp} onChange={handleNumberChange} />
-        <TextField label='詳細' multiline sx={{width: '100%'}} name='fourthBDetail' value={props.skills.fourthBDetail} onChange={handleTextChange} />
+        <TextField label='★4 スキル' sx={{width: '80%'}} name='fourthA.name' value={props.unitStat.fourthA.name} onChange={handleOnChangeName} />
+        <TextField label='消費MP' type='number' sx={{width: '20%'}} name='fourthA.mp' value={props.unitStat.fourthA.mp} onChange={handleOnChangeMp} />
+        <TextField label='詳細' multiline sx={{width: '100%'}} name='fourthA.detail' value={props.unitStat.fourthA.detail} onChange={handleOnChangeDetail} />
+        <TextField label='★4 スキル' sx={{width: '80%'}} name='fourthB.name' value={props.unitStat.fourthB.name} onChange={handleOnChangeName} />
+        <TextField label='消費MP' type='number' sx={{width: '20%'}} name='fourthB.mp' value={props.unitStat.fourthB.mp} onChange={handleOnChangeMp} />
+        <TextField label='詳細' multiline sx={{width: '100%'}} name='fourthB.detail' value={props.unitStat.fourthB.detail} onChange={handleOnChangeDetail} />
 
-        <TextField label='★5 スキル' sx={{width: '80%'}} name='fifthA' value={props.skills.fifthA} onChange={handleTextChange} />
-        <TextField label='消費MP' type='number' sx={{width: '20%'}} name='fifthAMp' value={props.skills.fifthAMp} onChange={handleNumberChange} />
-        <TextField label='詳細' multiline sx={{width: '100%'}} name='fifthADetail' value={props.skills.fifthADetail} onChange={handleTextChange} />
-        <TextField label='★5 スキル' sx={{width: '80%'}} name='fifthB' value={props.skills.fifthB} onChange={handleTextChange} />
-        <TextField label='消費MP' type='number' sx={{width: '20%'}} name='fifthBMp' value={props.skills.fifthBMp} onChange={handleNumberChange} />
-        <TextField label='詳細' multiline sx={{width: '100%'}} name='fifthBDetail' value={props.skills.fifthBDetail} onChange={handleTextChange} />
+        <TextField label='★5 スキル' sx={{width: '80%'}} name='fifthA.name' value={props.unitStat.fifthA.name} onChange={handleOnChangeName} />
+        <TextField label='消費MP' type='number' sx={{width: '20%'}} name='fifthA.mp' value={props.unitStat.fifthA.mp} onChange={handleOnChangeMp} />
+        <TextField label='詳細' multiline sx={{width: '100%'}} name='fifthA.detail' value={props.unitStat.fifthA.detail} onChange={handleOnChangeDetail} />
+        <TextField label='★5 スキル' sx={{width: '80%'}} name='fifthB.name' value={props.unitStat.fifthB.name} onChange={handleOnChangeName} />
+        <TextField label='消費MP' type='number' sx={{width: '20%'}} name='fifthB.mp' value={props.unitStat.fifthB.mp} onChange={handleOnChangeMp} />
+        <TextField label='詳細' multiline sx={{width: '100%'}} name='fifthB.detail' value={props.unitStat.fifthB.detail} onChange={handleOnChangeDetail} />
       </Grid>
     </Grid>
   );

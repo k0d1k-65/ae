@@ -2,16 +2,16 @@ import { LightShadowType } from "../common/constants/LightShadowType";
 import { StyleType } from "../common/constants/StyleType";
 import { WeaponType } from "../common/constants/WeaponType";
 
-export interface IPersonalitiesForm {
+export type IPersonalitiesForm = {
   /** 武器選択 */
   weapon: WeaponType;
   /** ユニット名入力 */
   unitName: string;
   /** パーソナリティ */
   personalities: string[];
-}
+};
 
-export interface IStatsForm {
+export type IStatsForm = {
   /** クラス名 */
   className: string;
   /** スタイル選択 */
@@ -36,9 +36,9 @@ export interface IStatsForm {
   statSpeed: number;
   /** 精神 */
   statSplit: number;
-}
+};
 
-export interface IAbilitiesForm {
+export type IAbilitiesForm = {
   /** ヴァリアブルチャント名 */
   variablechantName: string;
   /** ヴァリアブルチャント詳細 */
@@ -53,59 +53,38 @@ export interface IAbilitiesForm {
   anotherSenceDetail: string;
   /** 個人アビリティ */
   abilities: string[];
-}
+};
 
-export interface ISkillsForm {
-  /** ★1 スキル */
-  first: string;
+export type ISkillProperty = {
+  /** スキル名 */
+  name: string;
   /** 消費MP */
-  firstMp: number;
+  mp: number;
   /** 詳細 */
-  firstDetail: string;
+  detail: string;
+};
+
+export type ISkillsForm = {
+  /** ★1 スキル */
+  first: ISkillProperty;
 
   /** ★2 スキル */
-  second: string;
-  /** 消費MP */
-  secondMp: number;
-  /** 詳細 */
-  secondDetail: string;
+  second: ISkillProperty;
 
   /** ★3A スキル */
-  thirdA: string;
-  /** 消費MP */
-  thirdAMp: number;
-  /** 詳細 */
-  thirdADetail: string;
+  thirdA: ISkillProperty;
   /** ★3B スキル */
-  thirdB: string;
-  /** 消費MP */
-  thirdBMp: number;
-  /** 詳細 */
-  thirdBDetail: string;
+  thirdB: ISkillProperty;
 
   /** ★4A スキル */
-  fourthA: string;
-  /** 消費MP */
-  fourthAMp: number;
-  /** 詳細 */
-  fourthADetail: string;
+  fourthA: ISkillProperty;
   /** ★4B スキル */
-  fourthB: string;
-  /** 消費MP */
-  fourthBMp: number;
-  /** 詳細 */
-  fourthBDetail: string;
+  fourthB: ISkillProperty;
 
   /** ★5A スキル */
-  fifthA: string;
-  /** 消費MP */
-  fifthAMp: number;
-  /** 詳細 */
-  fifthADetail: string;
+  fifthA: ISkillProperty;
   /** ★5B スキル */
-  fifthB: string;
-  /** 消費MP */
-  fifthBMp: number;
-  /** 詳細 */
-  fifthBDetail: string;
-}
+  fifthB: ISkillProperty;
+};
+
+export type IUnitForm = IPersonalitiesForm & IStatsForm & IAbilitiesForm & ISkillsForm;

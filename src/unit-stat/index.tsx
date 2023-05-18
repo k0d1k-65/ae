@@ -1,14 +1,15 @@
-import React from 'react';
+import React, { useReducer } from 'react';
 import PersonalitiesForm from './PersonalitiesForm';
 import StatsForm from './StatsForm';
 import AbilitiesForm from './AbilitiesForm';
 import SkillsForm from './SkillsForm';
-import { IAbilitiesForm, IPersonalitiesForm, ISkillsForm, IStatsForm } from './types.interface';
-import { WeaponType } from '../common/constants/WeaponType';
-import { StyleType } from '../common/constants/StyleType';
-import { LightShadowType } from '../common/constants/LightShadowType';
 import styled from 'styled-components';
 import { Button } from '@mui/material';
+import { saveUnit } from '../common/services/UnitService';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import reduceUnitStat, { initUnitStat } from './UnitStatHook';
+import { ISkillProperty, ISkillsForm, IUnitForm } from './types.interface';
 
 const Wrapper = styled.div`
   display: flex;
@@ -55,63 +56,40 @@ const Main = styled.div`
 `;
 
 const UnitStatComponent: React.FC = () => {
-  const [personality, setPersonality] = React.useState<IPersonalitiesForm>({
-    unitName: "",
-    weapon: WeaponType.All,
-    personalities: []
-  });
+  const [state, dispatch] = useReducer(reduceUnitStat, initUnitStat());
 
-  const [stats, setStats] = React.useState<IStatsForm>({
-    className: "",
-    style: StyleType.NS,
-    statHp: 0,
-    statMp: 0,
-    lightShadow: LightShadowType.Light,
-    lightShadowNumber: 0,
-    statPower: 0,
-    statEndure: 0,
-    statLuck: 0,
-    statIntelligense: 0,
-    statSpeed: 0,
-    statSplit: 0,
-  });
+  const handleOnClickSave = () => {
+    try {
+      const {result, updated} = saveUnit(state);
 
-  const [abilities, setAbilities] = React.useState<IAbilitiesForm>({
-    variablechantName: "",
-    variablechantDetail: "",
-    extraSpecialMoveName: "",
-    extraSpecialMoveDetail: "",
-    anotherSenceName: "",
-    anotherSenceDetail: "",
-    abilities: [],
-  });
+      toast.success('保存に成功しました')
+    } catch (err) {
+      toast.error('保存に失敗しました')
+    }
+  }
 
-  const [skills, setSkills] = React.useState<ISkillsForm>({
-    first: "",
-    firstMp: 0,
-    firstDetail: "",
-    second: "",
-    secondMp: 0,
-    secondDetail: "",
-    thirdA: "",
-    thirdAMp: 0,
-    thirdADetail: "",
-    thirdB: "",
-    thirdBMp: 0,
-    thirdBDetail: "",
-    fourthA: "",
-    fourthAMp: 0,
-    fourthADetail: "",
-    fourthB: "",
-    fourthBMp: 0,
-    fourthBDetail: "",
-    fifthA: "",
-    fifthAMp: 0,
-    fifthADetail: "",
-    fifthB: "",
-    fifthBMp: 0,
-    fifthBDetail: "",
-  });
+  const handleOnClickClear = () => {
+    dispatch({type: 'clear'});
+
+    toast.success('クリアしました')
+  }
+
+  const handleOnChangeStat = (key: keyof IUnitForm, value: IUnitForm[keyof IUnitForm]) => {
+    dispatch({
+      type: 'update',
+      key,
+      value,
+    })
+  }
+
+  const handleOnChangeSkill = (key: keyof ISkillProperty, grade: keyof ISkillsForm, value: IUnitForm[keyof IUnitForm]) => {
+    dispatch({
+      type: 'updateSkill',
+      key: key as keyof IUnitForm,
+      subKey: grade,
+      value,
+    })
+  }
 
   return (
     <Wrapper>
@@ -119,35 +97,36 @@ const UnitStatComponent: React.FC = () => {
         <Button
           variant='contained'
           color='primary'
-          disabled
+          onClick={handleOnClickSave}
         >SAVE</Button>
         <Button
           variant='contained'
           color='error'
-          disabled
+          onClick={handleOnClickClear}
         >CLEAR</Button>
       </Header>
 
       <Main>
         {/* ユニット名・パーソナリティ */}
-        <PersonalitiesForm personality={personality} setPersonality={setPersonality} />
+        <PersonalitiesForm unitStat={state} handleOnChangeStat={handleOnChangeStat} />
 
         <hr style={{margin: '16px 8px'}}/>
 
         {/* ステータス */}
-        <StatsForm stats={stats} setStats={setStats} />
+        <StatsForm unitStat={state} handleOnChangeStat={handleOnChangeStat} />
 
         <hr style={{margin: '16px 8px'}}/>
 
         {/* アビリティ */}
-        <AbilitiesForm abilities={abilities} setAbilities={setAbilities} />
+        <AbilitiesForm unitStat={state} handleOnChangeStat={handleOnChangeStat} />
 
         <hr style={{margin: '16px 8px'}}/>
 
         {/* スキル */}
-        <SkillsForm skills={skills} setSkills={setSkills} />
+        <SkillsForm unitStat={state} handleOnChangeSkill={handleOnChangeSkill} />
       </Main>
     </Wrapper>
   );
 };
+
 export default UnitStatComponent;

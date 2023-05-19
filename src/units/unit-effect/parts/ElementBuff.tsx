@@ -1,13 +1,13 @@
-import * as React from 'react';
-import { Autocomplete, Chip, InputAdornment, TextField } from '@mui/material';
-import { ElementType } from '../../../common/constants/ElementType';
-import { BuffElementPercent } from '../../types/common/BuffElementPercent';
-import { ElementSelect } from '../../../common/ElementSelect';
+import * as React from "react";
+import { Autocomplete, Chip, InputAdornment, TextField } from "@mui/material";
+import { ElementType } from "../../../common/constants/ElementType";
+import { BuffElementPercent } from "../../types/common/BuffElementPercent";
+import { ElementSelect } from "../../../common/ElementSelect";
 
 export default function ElementBuff(props: {
-  label: string,
-  value: BuffElementPercent[],
-  setValue: (x: BuffElementPercent[]) => void,
+  label: string;
+  value: BuffElementPercent[];
+  setValue: (x: BuffElementPercent[]) => void;
 }) {
   const { label, value: buffs, setValue: setBuffs } = props;
 
@@ -17,7 +17,7 @@ export default function ElementBuff(props: {
     return (
       <TextField
         {...params}
-        type='number'
+        type="number"
         label={label}
         variant="standard"
         InputProps={{
@@ -26,12 +26,7 @@ export default function ElementBuff(props: {
             <>
               {params.InputProps.startAdornment}
               <InputAdornment position="end">
-                <ElementSelect
-                  value={selectElement}
-                  handleSelect={setSelectElement}
-                  size='small'
-                  variant='standard'
-                />
+                <ElementSelect value={selectElement} handleSelect={setSelectElement} size="small" variant="standard" />
               </InputAdornment>
             </>
           ),
@@ -41,7 +36,7 @@ export default function ElementBuff(props: {
   };
 
   const handleChange = (reason: string, value: any) => {
-    if (reason === 'createOption') {
+    if (reason === "createOption") {
       if (!!value && typeof value === "string") {
         const item: BuffElementPercent = {
           type: selectElement,
@@ -49,22 +44,20 @@ export default function ElementBuff(props: {
         };
         setBuffs([...buffs, item]);
       }
-    }
-    else if (reason === 'removeOption') {
+    } else if (reason === "removeOption") {
       if (!!value && typeof value === "object") {
-        const index = buffs.findIndex(x => x.amount === value.amount && x.type === value.type);
+        const index = buffs.findIndex((x) => x.amount === value.amount && x.type === value.type);
         if (index > -1) {
           const _buffs = [...buffs];
           _buffs.splice(index, 1);
           setBuffs(_buffs);
         }
       }
-    }
-    else if (reason === 'clear') {
+    } else if (reason === "clear") {
       const init: BuffElementPercent[] = [];
       setBuffs(init);
     }
-  }
+  };
 
   return (
     <Autocomplete
@@ -79,10 +72,7 @@ export default function ElementBuff(props: {
       freeSolo
       isOptionEqualToValue={() => false}
       value={buffs}
-      onChange={(e, v, reason, details) => handleChange(
-        reason,
-        details?.option,
-      )}
+      onChange={(e, v, reason, details) => handleChange(reason, details?.option)}
     />
   );
 }

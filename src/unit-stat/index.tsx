@@ -1,15 +1,15 @@
-import React, { useReducer } from 'react';
-import PersonalitiesForm from './PersonalitiesForm';
-import StatsForm from './StatsForm';
-import AbilitiesForm from './AbilitiesForm';
-import SkillsForm from './SkillsForm';
-import styled from 'styled-components';
-import { Button } from '@mui/material';
-import { saveUnit } from '../common/services/UnitService';
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import reduceUnitStat, { initUnitStat } from './UnitStatHook';
-import { ISkillProperty, ISkillsForm, IUnitForm } from './types.interface';
+import React, { useReducer } from "react";
+import PersonalitiesForm from "./PersonalitiesForm";
+import StatsForm from "./StatsForm";
+import AbilitiesForm from "./AbilitiesForm";
+import SkillsForm from "./SkillsForm";
+import styled from "styled-components";
+import { Button } from "@mui/material";
+import { saveUnit } from "../common/services/UnitService";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import reduceUnitStat, { initUnitStat } from "./UnitStatHook";
+import { ISkillProperty, ISkillsForm, IUnitForm } from "./types.interface";
 
 const Wrapper = styled.div`
   display: flex;
@@ -60,67 +60,67 @@ const UnitStatComponent: React.FC = () => {
 
   const handleOnClickSave = () => {
     try {
-      const {result, updated} = saveUnit(state);
+      const { result, updated } = saveUnit(state);
 
-      toast.success('保存に成功しました')
+      toast.success("保存に成功しました");
     } catch (err) {
-      toast.error('保存に失敗しました')
+      toast.error("保存に失敗しました");
     }
-  }
+  };
 
   const handleOnClickClear = () => {
-    dispatch({type: 'clear'});
+    dispatch({ type: "clear" });
 
-    toast.success('クリアしました')
-  }
+    toast.success("クリアしました");
+  };
 
   const handleOnChangeStat = (key: keyof IUnitForm, value: IUnitForm[keyof IUnitForm]) => {
     dispatch({
-      type: 'update',
+      type: "update",
       key,
       value,
-    })
-  }
+    });
+  };
 
-  const handleOnChangeSkill = (key: keyof ISkillProperty, grade: keyof ISkillsForm, value: IUnitForm[keyof IUnitForm]) => {
+  const handleOnChangeSkill = (
+    key: keyof ISkillProperty,
+    grade: keyof ISkillsForm,
+    value: IUnitForm[keyof IUnitForm]
+  ) => {
     dispatch({
-      type: 'updateSkill',
+      type: "updateSkill",
       key: key as keyof IUnitForm,
       subKey: grade,
       value,
-    })
-  }
+    });
+  };
 
   return (
     <Wrapper>
       <Header>
-        <Button
-          variant='contained'
-          color='primary'
-          onClick={handleOnClickSave}
-        >SAVE</Button>
-        <Button
-          variant='contained'
-          color='error'
-          onClick={handleOnClickClear}
-        >CLEAR</Button>
+        <Button variant="contained" color="primary" onClick={handleOnClickSave}>
+          SAVE
+        </Button>
+        <Button variant="contained" color="error" onClick={handleOnClickClear}>
+          CLEAR
+        </Button>
       </Header>
 
       <Main>
         {/* ユニット名・パーソナリティ */}
         <PersonalitiesForm unitStat={state} handleOnChangeStat={handleOnChangeStat} />
 
-        <hr style={{margin: '16px 8px'}}/>
+        <hr style={{ margin: "16px 8px" }} />
 
         {/* ステータス */}
         <StatsForm unitStat={state} handleOnChangeStat={handleOnChangeStat} />
 
-        <hr style={{margin: '16px 8px'}}/>
+        <hr style={{ margin: "16px 8px" }} />
 
         {/* アビリティ */}
         <AbilitiesForm unitStat={state} handleOnChangeStat={handleOnChangeStat} />
 
-        <hr style={{margin: '16px 8px'}}/>
+        <hr style={{ margin: "16px 8px" }} />
 
         {/* スキル */}
         <SkillsForm unitStat={state} handleOnChangeSkill={handleOnChangeSkill} />

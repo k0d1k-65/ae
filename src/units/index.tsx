@@ -1,25 +1,25 @@
-import * as React from 'react';
-import { Accordion, AccordionDetails, AccordionSummary, Divider, Grid, TextField, ToggleButton } from '@mui/material';
-import { Box } from '@mui/system';
-import { getArmourByWeapon } from '../common/utils/Utils';
-import { Equipment } from './types/common/Equiqment';
-import { findOtherStyles, Unit } from './types/units/Unit';
-import { UnitStatModel } from './types/models/UnitStatModel';
-import { fetchArmours } from './features/Armour';
-import { fetchBadges } from './features/Badges';
-import { fetchUnits } from './features/Units';
-import { fetchWeapons } from './features/Weapons';
-import Spacer from '../common/Spacer';
-import { UnitSelectBox } from './UnitSelect';
-import { StyleChip } from '../common/StyleChip';
-import { UnitWeaponSelectBox } from './UnitWeaponSelect';
-import { UnitArmourSelectBox } from './UnitArmourSelect';
-import { UnitBadgeSelectBox } from './UnitBadgeSelect';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { UnitLightShadow } from './UnitLightShadow';
-import { StyleType, StyleTypeColor } from '../common/constants/StyleType';
-import { UnitStatType } from '../common/constants/UnitStatType';
-import EffectBase from './unit-effect/EffectBase';
+import * as React from "react";
+import { Accordion, AccordionDetails, AccordionSummary, Divider, Grid, TextField, ToggleButton } from "@mui/material";
+import { Box } from "@mui/system";
+import { getArmourByWeapon } from "../common/utils/Utils";
+import { Equipment } from "./types/common/Equiqment";
+import { findOtherStyles, Unit } from "./types/units/Unit";
+import { UnitStatModel } from "./types/models/UnitStatModel";
+import { fetchArmours } from "./features/Armour";
+import { fetchBadges } from "./features/Badges";
+import { fetchUnits } from "./features/Units";
+import { fetchWeapons } from "./features/Weapons";
+import Spacer from "../common/Spacer";
+import { UnitSelectBox } from "./UnitSelect";
+import { StyleChip } from "../common/StyleChip";
+import { UnitWeaponSelectBox } from "./UnitWeaponSelect";
+import { UnitArmourSelectBox } from "./UnitArmourSelect";
+import { UnitBadgeSelectBox } from "./UnitBadgeSelect";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { UnitLightShadow } from "./UnitLightShadow";
+import { StyleType, StyleTypeColor } from "../common/constants/StyleType";
+import { UnitStatType } from "../common/constants/UnitStatType";
+import EffectBase from "./unit-effect/EffectBase";
 
 export default function UnitBase() {
   const unitData = fetchUnits();
@@ -27,12 +27,12 @@ export default function UnitBase() {
   const armourData = fetchArmours();
   const badgeData = fetchBadges();
 
-  const [unit, setUnit] = React.useState<Unit|null>(null);
+  const [unit, setUnit] = React.useState<Unit | null>(null);
   const [unitDetailOpened, setUnitDetailOpened] = React.useState(false);
 
-  const [nsBonus, setNSBonus] = React.useState<Unit|null>(null);
-  const [asBonus, setASBonus] = React.useState<Unit|null>(null);
-  const [esBonus, setESBonus] = React.useState<Unit|null>(null);
+  const [nsBonus, setNSBonus] = React.useState<Unit | null>(null);
+  const [asBonus, setASBonus] = React.useState<Unit | null>(null);
+  const [esBonus, setESBonus] = React.useState<Unit | null>(null);
   const [hasNSBonus, setHasNSBonus] = React.useState(false);
   const [hasASBonus, setHasASBonus] = React.useState(false);
   const [hasESBonus, setHasESBonus] = React.useState(false);
@@ -53,11 +53,11 @@ export default function UnitBase() {
 
   const [unitLightShadowNumber, setUnitLightShadowNumber] = React.useState<number>(0);
 
-  const [weapon, setWeapon] = React.useState<Equipment|null>(null);
+  const [weapon, setWeapon] = React.useState<Equipment | null>(null);
   const [selectableWeapons, setSelectableWeapons] = React.useState<Equipment[]>([]);
-  const [armour, setArmour] = React.useState<Equipment|null>(null);
+  const [armour, setArmour] = React.useState<Equipment | null>(null);
   const [selectableArmours, setSelectableArmours] = React.useState<Equipment[]>([]);
-  const [badge, setBadge] = React.useState<Equipment|null>(null);
+  const [badge, setBadge] = React.useState<Equipment | null>(null);
 
   // スタイルボーナス リセット
   React.useEffect(() => {
@@ -70,9 +70,9 @@ export default function UnitBase() {
 
     if (!!unit) {
       const otherStyles = findOtherStyles(unitData, unit);
-      setNSBonus(otherStyles.find(x => x.styleType === StyleType.NS) || null);
-      setASBonus(otherStyles.find(x => x.styleType === StyleType.AS) || null);
-      setESBonus(otherStyles.find(x => x.styleType === StyleType.ES) || null);
+      setNSBonus(otherStyles.find((x) => x.styleType === StyleType.NS) || null);
+      setASBonus(otherStyles.find((x) => x.styleType === StyleType.AS) || null);
+      setESBonus(otherStyles.find((x) => x.styleType === StyleType.ES) || null);
     }
   }, [unit]);
 
@@ -140,12 +140,8 @@ export default function UnitBase() {
      */
     if (!!unit) {
       const options = weaponData
-        .filter(option => option.weaponType === unit.weapon)
-        .filter(option =>
-          !!option.equipOnly
-          ? option.equipOnly.targets.includes(unit.className)
-          : true
-        );
+        .filter((option) => option.weaponType === unit.weapon)
+        .filter((option) => (!!option.equipOnly ? option.equipOnly.targets.includes(unit.className) : true));
       setSelectableWeapons(options);
 
       if (!weapon || !options.includes(weapon)) {
@@ -167,12 +163,8 @@ export default function UnitBase() {
     if (!!unit) {
       const armourType = getArmourByWeapon(unit.weapon);
       const options = armourData
-        .filter(option => option.armourType === armourType)
-        .filter(option =>
-          !!option.equipOnly
-          ? option.equipOnly.targets.includes(unit.className)
-          : true
-        );
+        .filter((option) => option.armourType === armourType)
+        .filter((option) => (!!option.equipOnly ? option.equipOnly.targets.includes(unit.className) : true));
       setSelectableArmours(options);
 
       if (!armour || !options.includes(armour)) {
@@ -185,10 +177,7 @@ export default function UnitBase() {
   }, [unit]);
 
   return (
-    <Box
-      margin={2}
-      maxWidth={600}
-    >
+    <Box margin={2} maxWidth={600}>
       <Grid container>
         <Grid item xs={10}>
           {/* ユニット選択ボックス */}
@@ -203,7 +192,7 @@ export default function UnitBase() {
             value={0}
             selected={unitDetailOpened}
             onChange={() => setUnitDetailOpened(!unitDetailOpened)}
-            size={'small'}
+            size={"small"}
           >
             <ExpandMoreIcon />
           </ToggleButton>
@@ -216,25 +205,21 @@ export default function UnitBase() {
         expanded={unitDetailOpened}
         sx={{
           border: unitDetailOpened ? 1 : 0,
-          borderColor: 'grey.500',
-          '&:before': {
-            display: 'none',
-          }
+          borderColor: "grey.500",
+          "&:before": {
+            display: "none",
+          },
         }}
       >
-        <AccordionSummary style={{display: 'none'}}>
-        </AccordionSummary>
+        <AccordionSummary style={{ display: "none" }}></AccordionSummary>
 
-        <AccordionDetails
-          sx={{ margin: '.5rem 0' }}
-        >
-
+        <AccordionDetails sx={{ margin: ".5rem 0" }}>
           <Grid container spacing={1}>
             {/* クラス名テキスト */}
-            <Grid item xs={12} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', }}>
+            <Grid item xs={12} sx={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
               <div>
-                <span style={{fontSize: '80%'}}>Class : {!!unit ? unit.className : "-"}</span>
-                <StyleChip styleType={!!unit ? unit.styleType : null}/>
+                <span style={{ fontSize: "80%" }}>Class : {!!unit ? unit.className : "-"}</span>
+                <StyleChip styleType={!!unit ? unit.styleType : null} />
               </div>
 
               {/* auto計算 */}
@@ -242,8 +227,8 @@ export default function UnitBase() {
                 value="check"
                 selected={calcStatAuto}
                 onChange={() => setCalcStatAuto(!calcStatAuto)}
-                size={'small'}
-                color={'warning'}
+                size={"small"}
+                color={"warning"}
               >
                 <>auto計算</>
               </ToggleButton>
@@ -256,66 +241,60 @@ export default function UnitBase() {
                 label={UnitStatType.HP}
                 value={statusHp}
                 disabled={calcStatAuto}
-                onChange={e => setStatusHp(Number(e.target.value))}
-                size={'small'}
+                onChange={(e) => setStatusHp(Number(e.target.value))}
+                size={"small"}
               />
             </Grid>
 
             {/* スタイルボーナスONOFF指定チェックボックス */}
             <Grid item xs={8}>
-              {
-                !!nsBonus || !!asBonus || !!esBonus
-                ?
-                <span style={{fontSize: '80%'}}>StyleBonus : </span>
-                :
-                <></>
-              }
+              {!!nsBonus || !!asBonus || !!esBonus ? <span style={{ fontSize: "80%" }}>StyleBonus : </span> : <></>}
 
-              {
-                !!nsBonus
-                ?
+              {!!nsBonus ? (
                 <ToggleButton
                   value=""
                   selected={hasNSBonus}
-                  onChange={() => {setHasNSBonus(!hasNSBonus)}}
-                  size={'small'}
+                  onChange={() => {
+                    setHasNSBonus(!hasNSBonus);
+                  }}
+                  size={"small"}
                   color={StyleTypeColor.NS}
                 >
                   {StyleType.NS}
                 </ToggleButton>
-                :
+              ) : (
                 <></>
-              }
-              {
-                !!asBonus
-                ?
+              )}
+              {!!asBonus ? (
                 <ToggleButton
                   value=""
                   selected={hasASBonus}
-                  onChange={() => {setHasASBonus(!hasASBonus)}}
-                  size={'small'}
+                  onChange={() => {
+                    setHasASBonus(!hasASBonus);
+                  }}
+                  size={"small"}
                   color={StyleTypeColor.AS}
                 >
                   {StyleType.AS}
                 </ToggleButton>
-                :
+              ) : (
                 <></>
-              }
-              {
-                !!esBonus
-                ?
+              )}
+              {!!esBonus ? (
                 <ToggleButton
                   value=""
                   selected={hasESBonus}
-                  onChange={() => {setHasESBonus(!hasESBonus)}}
-                  size={'small'}
+                  onChange={() => {
+                    setHasESBonus(!hasESBonus);
+                  }}
+                  size={"small"}
                   color={StyleTypeColor.ES}
                 >
                   {StyleType.ES}
                 </ToggleButton>
-                :
+              ) : (
                 <></>
-              }
+              )}
             </Grid>
 
             <Grid item xs={4}>
@@ -325,13 +304,13 @@ export default function UnitBase() {
                 label={UnitStatType.MP}
                 value={statusMp}
                 disabled={calcStatAuto}
-                onChange={e => setStatusMp(Number(e.target.value))}
-                size={'small'}
+                onChange={(e) => setStatusMp(Number(e.target.value))}
+                size={"small"}
               />
             </Grid>
           </Grid>
 
-          <Divider variant="middle" sx={{margin: 1}} />
+          <Divider variant="middle" sx={{ margin: 1 }} />
 
           <Grid container spacing={1}>
             <Grid item xs={4}>
@@ -341,8 +320,8 @@ export default function UnitBase() {
                 label={UnitStatType.ATK}
                 value={statusAtk}
                 disabled={calcStatAuto}
-                onChange={e => setStatusAtk(Number(e.target.value))}
-                size={'small'}
+                onChange={(e) => setStatusAtk(Number(e.target.value))}
+                size={"small"}
               />
             </Grid>
             <Grid item xs={4}>
@@ -352,8 +331,8 @@ export default function UnitBase() {
                 label={UnitStatType.DEF}
                 value={statusDef}
                 disabled={calcStatAuto}
-                onChange={e => setStatusDef(Number(e.target.value))}
-                size={'small'}
+                onChange={(e) => setStatusDef(Number(e.target.value))}
+                size={"small"}
               />
             </Grid>
             <Grid item xs={4}>
@@ -371,8 +350,8 @@ export default function UnitBase() {
                 label={UnitStatType.MATK}
                 value={statusMatk}
                 disabled={calcStatAuto}
-                onChange={e => setStatusMatk(Number(e.target.value))}
-                size={'small'}
+                onChange={(e) => setStatusMatk(Number(e.target.value))}
+                size={"small"}
               />
             </Grid>
             <Grid item xs={4}>
@@ -382,13 +361,13 @@ export default function UnitBase() {
                 label={UnitStatType.MDEF}
                 value={statusMdef}
                 disabled={calcStatAuto}
-                onChange={e => setStatusMdef(Number(e.target.value))}
-                size={'small'}
+                onChange={(e) => setStatusMdef(Number(e.target.value))}
+                size={"small"}
               />
             </Grid>
           </Grid>
 
-          <Spacer size={32} axis="horizontal" style={{margin: 8}}/>
+          <Spacer size={32} axis="horizontal" style={{ margin: 8 }} />
 
           <Grid container spacing={1}>
             <Grid item xs={4}>
@@ -398,8 +377,8 @@ export default function UnitBase() {
                 label={UnitStatType.POWER}
                 value={statusPower}
                 disabled={calcStatAuto}
-                onChange={e => setStatusPower(Number(e.target.value))}
-                size={'small'}
+                onChange={(e) => setStatusPower(Number(e.target.value))}
+                size={"small"}
               />
             </Grid>
             <Grid item xs={4}>
@@ -409,8 +388,8 @@ export default function UnitBase() {
                 label={UnitStatType.ENDURE}
                 value={statusEndure}
                 disabled={calcStatAuto}
-                onChange={e => setStatusEndure(Number(e.target.value))}
-                size={'small'}
+                onChange={(e) => setStatusEndure(Number(e.target.value))}
+                size={"small"}
               />
             </Grid>
             <Grid item xs={4}>
@@ -420,8 +399,8 @@ export default function UnitBase() {
                 label={UnitStatType.LUCK}
                 value={statusLuck}
                 disabled={calcStatAuto}
-                onChange={e => setStatusLuck(Number(e.target.value))}
-                size={'small'}
+                onChange={(e) => setStatusLuck(Number(e.target.value))}
+                size={"small"}
               />
             </Grid>
             <Grid item xs={4}>
@@ -431,8 +410,8 @@ export default function UnitBase() {
                 label={UnitStatType.INTELLIGENCE}
                 value={statusIntelligence}
                 disabled={calcStatAuto}
-                onChange={e => setStatusIntelligence(Number(e.target.value))}
-                size={'small'}
+                onChange={(e) => setStatusIntelligence(Number(e.target.value))}
+                size={"small"}
               />
             </Grid>
             <Grid item xs={4}>
@@ -442,8 +421,8 @@ export default function UnitBase() {
                 label={UnitStatType.SPEED}
                 value={statusSpeed}
                 disabled={calcStatAuto}
-                onChange={e => setStatusSpeed(Number(e.target.value))}
-                size={'small'}
+                onChange={(e) => setStatusSpeed(Number(e.target.value))}
+                size={"small"}
               />
             </Grid>
             <Grid item xs={4}>
@@ -453,43 +432,36 @@ export default function UnitBase() {
                 label={UnitStatType.SPLIT}
                 value={statusSplit}
                 disabled={calcStatAuto}
-                onChange={e => setStatusSplit(Number(e.target.value))}
-                size={'small'}
+                onChange={(e) => setStatusSplit(Number(e.target.value))}
+                size={"small"}
               />
             </Grid>
-
           </Grid>
 
-          <Divider variant="middle" sx={{margin: 1}} />
+          <Divider variant="middle" sx={{ margin: 1 }} />
 
           {/* 武器選択ボックス */}
           <UnitWeaponSelectBox
-            labelTitle='Weapon'
+            labelTitle="Weapon"
             selecting={weapon}
             items={selectableWeapons}
             onSelected={setWeapon}
           />
 
-          <Spacer size={32} axis="horizontal" style={{margin: 4}}/>
+          <Spacer size={32} axis="horizontal" style={{ margin: 4 }} />
 
           {/* 防具選択ボックス */}
           <UnitArmourSelectBox
-            labelTitle='Armour'
+            labelTitle="Armour"
             selecting={armour}
             items={selectableArmours}
             onSelected={setArmour}
           />
 
-          <Spacer size={32} axis="horizontal" style={{margin: 4}}/>
+          <Spacer size={32} axis="horizontal" style={{ margin: 4 }} />
 
           {/* バッジ選択ボックス */}
-          <UnitBadgeSelectBox
-            labelTitle='Badge'
-            items={badgeData}
-            selecting={badge}
-            onSelected={setBadge}
-          />
-
+          <UnitBadgeSelectBox labelTitle="Badge" items={badgeData} selecting={badge} onSelected={setBadge} />
         </AccordionDetails>
       </Accordion>
 

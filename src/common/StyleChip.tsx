@@ -14,12 +14,5 @@ export function StyleChip(props: { styleType: StyleType | null }) {
       ? StyleTypeColor.AS
       : StyleTypeColor.NS;
 
-  return (
-    <Chip
-      label={props.styleType}
-      color={chipColor}
-      size="small"
-      sx={{ ml: 0.5, mr: 0.5 }}
-    />
-  );
+  return <Chip label={props.styleType} color={chipColor} size="small" sx={{ ml: 0.5, mr: 0.5 }} />;
 }

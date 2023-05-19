@@ -1,8 +1,8 @@
-import * as React from 'react';
-import ElementBuff from './parts/ElementBuff';
-import { Autocomplete, InputAdornment, Grid, TextField, ToggleButton } from '@mui/material';
-import { BuffElementPercent } from '../types/common/BuffElementPercent';
-import { EffectType } from '../../common/constants/EffectType';
+import * as React from "react";
+import ElementBuff from "./parts/ElementBuff";
+import { Autocomplete, InputAdornment, Grid, TextField, ToggleButton } from "@mui/material";
+import { BuffElementPercent } from "../types/common/BuffElementPercent";
+import { EffectType } from "../../common/constants/EffectType";
 
 export default function BuffEffects() {
   const [enhElement, setEnhElement] = React.useState<BuffElementPercent[]>([]);
@@ -27,12 +27,7 @@ export default function BuffEffects() {
   const [enemyNumbers, setEnemyNumbers] = React.useState<boolean>(false);
   const [enhOutsideAF, setEnhOutsideAF] = React.useState<boolean>(false);
 
-  const handleRenderInput = (
-    params: any,
-    label: string,
-    type: string,
-    adornment?: JSX.Element
-  ) => {
+  const handleRenderInput = (params: any, label: string, type: string, adornment?: JSX.Element) => {
     return (
       <TextField
         {...params}
@@ -44,9 +39,7 @@ export default function BuffEffects() {
           startAdornment: (
             <>
               {params.InputProps.startAdornment}
-              <InputAdornment position="end">
-                {adornment}
-              </InputAdornment>
+              <InputAdornment position="end">{adornment}</InputAdornment>
             </>
           ),
         }}
@@ -54,97 +47,75 @@ export default function BuffEffects() {
     );
   };
 
-  const handleChange = (
-    reason: string,
-    value: any,
-    state: any[],
-    setter: (x: any) => void,
-  ) => {
-    if (reason === 'createOption' && !!value) {
+  const handleChange = (reason: string, value: any, state: any[], setter: (x: any) => void) => {
+    if (reason === "createOption" && !!value) {
       setter([...state, value]);
-    }
-    else if (reason === 'removeOption' && !!value) {
+    } else if (reason === "removeOption" && !!value) {
       const _state = [...state];
       _state.splice(_state.indexOf(value), 1);
       setter(_state);
-    }
-    else if (reason === 'clear') {
+    } else if (reason === "clear") {
       setter(state.splice(0));
     }
-  }
+  };
 
   const initStrings: number[] = [];
 
   return (
     <>
       {/* 属性 */}
-      <ElementBuff
-        label={EffectType.enhElement}
-        value={enhElement}
-        setValue={setEnhElement}
-      />
+      <ElementBuff label={EffectType.enhElement} value={enhElement} setValue={setEnhElement} />
 
       {/* HP最大時強化 */}
       <Autocomplete
         options={initStrings}
-        renderInput={(p) => handleRenderInput(p, EffectType.enhHpMax, 'number')}
+        renderInput={(p) => handleRenderInput(p, EffectType.enhHpMax, "number")}
         multiple
         freeSolo
         isOptionEqualToValue={() => false}
-        value={enhHpMax.map(v => String(v))}
-        onChange={(e, v, reason, details) => handleChange(
-          reason,
-          Number(details?.option),
-          enhHpMax,
-          setEnhHpMax
-        )}
+        value={enhHpMax.map((v) => String(v))}
+        onChange={(e, v, reason, details) => handleChange(reason, Number(details?.option), enhHpMax, setEnhHpMax)}
       />
 
       {/* HP低下時強化 */}
       <Autocomplete
         options={initStrings}
-        renderInput={(p) => handleRenderInput(p, EffectType.enhHpLower, 'number')}
+        renderInput={(p) => handleRenderInput(p, EffectType.enhHpLower, "number")}
         multiple
         freeSolo
         isOptionEqualToValue={() => false}
-        value={enhHpLower.map(v => String(v))}
-        onChange={(e, v, reason, details) => handleChange(
-          reason,
-          Number(details?.option),
-          enhHpLower,
-          setEnhHpLower
-        )}
+        value={enhHpLower.map((v) => String(v))}
+        onChange={(e, v, reason, details) => handleChange(reason, Number(details?.option), enhHpLower, setEnhHpLower)}
       />
 
       {/* 通常攻撃強化 */}
       <Autocomplete
         options={initStrings}
-        renderInput={(p) => handleRenderInput(p, EffectType.enhNormalAttack, 'number')}
+        renderInput={(p) => handleRenderInput(p, EffectType.enhNormalAttack, "number")}
         multiple
         freeSolo
         isOptionEqualToValue={() => false}
-        value={enhNormalAttack.map(v => String(v))}
-        onChange={(e, v, reason, details) => handleChange(
-          reason,
-          Number(details?.option),
-          enhNormalAttack,
-          setEnhNormalAttack
-        )}
+        value={enhNormalAttack.map((v) => String(v))}
+        onChange={(e, v, reason, details) =>
+          handleChange(reason, Number(details?.option), enhNormalAttack, setEnhNormalAttack)
+        }
       />
 
-      <Grid container spacing={1} marginTop={.5} marginBottom={.5}>
+      <Grid container spacing={1} marginTop={0.5} marginBottom={0.5}>
         <Grid item xs={4}>
           {/* ZONE覚醒時強化 */}
-          <div style={{
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "flex-end"
-          }}>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "flex-end",
+            }}
+          >
             <ToggleButton
               value="check"
               selected={enhInAnotherZone}
               onChange={() => setEnhInAnotherZone(!enhInAnotherZone)}
-              size={'small'}
+              size={"small"}
               style={{
                 width: "100px",
                 marginRight: "8px",
@@ -158,14 +129,13 @@ export default function BuffEffects() {
               aria-readonly
               disabled={!enhInAnotherZone}
               value={50}
-              size={'small'}
+              size={"small"}
               style={{
                 flex: 1,
               }}
               variant="standard"
             />
           </div>
-
         </Grid>
 
         {/* enhGrowth */}
@@ -174,16 +144,18 @@ export default function BuffEffects() {
 
         <Grid item xs={4}>
           {/* 挑発エンハンス */}
-          <div style={{
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "flex-end"
-          }}>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "flex-end",
+            }}
+          >
             <ToggleButton
               value="check"
               selected={enhRage}
               onChange={() => setEnhRage(!enhRage)}
-              size={'small'}
+              size={"small"}
               style={{
                 width: "100px",
                 marginRight: "8px",
@@ -196,7 +168,7 @@ export default function BuffEffects() {
               aria-readonly
               disabled={!enhRage}
               value={50}
-              size={'small'}
+              size={"small"}
               style={{
                 flex: 1,
               }}
@@ -207,16 +179,18 @@ export default function BuffEffects() {
 
         <Grid item xs={4}>
           {/* 封印エンハンス */}
-          <div style={{
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "flex-end"
-          }}>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "flex-end",
+            }}
+          >
             <ToggleButton
               value="check"
               selected={enhBind}
               onChange={() => setEnhBind(!enhBind)}
-              size={'small'}
+              size={"small"}
               style={{
                 width: "100px",
                 marginRight: "8px",
@@ -229,7 +203,7 @@ export default function BuffEffects() {
               aria-readonly
               disabled={!enhBind}
               value={50}
-              size={'small'}
+              size={"small"}
               style={{
                 flex: 1,
               }}
@@ -240,16 +214,18 @@ export default function BuffEffects() {
 
         <Grid item xs={4}>
           {/* ペインエンハンス */}
-          <div style={{
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "flex-end"
-          }}>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "flex-end",
+            }}
+          >
             <ToggleButton
               value="check"
               selected={enhPain}
               onChange={() => setEnhPain(!enhPain)}
-              size={'small'}
+              size={"small"}
               style={{
                 width: "100px",
                 marginRight: "8px",
@@ -262,7 +238,7 @@ export default function BuffEffects() {
               aria-readonly
               disabled={!enhPain}
               value={50}
-              size={'small'}
+              size={"small"}
               style={{
                 flex: 1,
               }}
@@ -273,16 +249,18 @@ export default function BuffEffects() {
 
         <Grid item xs={4}>
           {/* 毒エンハンス */}
-          <div style={{
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "flex-end"
-          }}>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "flex-end",
+            }}
+          >
             <ToggleButton
               value="check"
               selected={enhPoison}
               onChange={() => setEnhPoison(!enhPoison)}
-              size={'small'}
+              size={"small"}
               style={{
                 width: "100px",
                 marginRight: "8px",
@@ -295,7 +273,7 @@ export default function BuffEffects() {
               aria-readonly
               disabled={!enhPoison}
               value={50}
-              size={'small'}
+              size={"small"}
               style={{
                 flex: 1,
               }}

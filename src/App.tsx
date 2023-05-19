@@ -1,13 +1,13 @@
-import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { createTheme, CssBaseline, ThemeProvider } from '@mui/material';
-import { ThemeColorModeContext } from './common/contexts/ThemeColorModeContext';
-import { NavigationBar } from './common/NavigationBar';
-import styled from 'styled-components';
-import Home from './home';
+import React from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { createTheme, CssBaseline, ThemeProvider } from "@mui/material";
+import { ThemeColorModeContext } from "./common/contexts/ThemeColorModeContext";
+import { NavigationBar } from "./common/NavigationBar";
+import styled from "styled-components";
+import Home from "./home";
 import NotFound from "./not-found";
-import { AppRoutes } from './Routes';
-import { ToastContainer } from 'react-toastify';
+import { AppRoutes } from "./Routes";
+import { ToastContainer } from "react-toastify";
 
 const Wrapper = styled.div`
   margin: 0;
@@ -48,7 +48,7 @@ const Main = styled.div`
 `;
 
 function App() {
-  const [themeColor, setThemeColor] = React.useState<'light' | 'dark'>('dark');
+  const [themeColor, setThemeColor] = React.useState<"light" | "dark">("dark");
 
   const theme = createTheme({
     palette: {
@@ -59,10 +59,10 @@ function App() {
   const handler = React.useMemo(
     () => ({
       toggleThemeColor: () => {
-        setThemeColor((prevMode) => (prevMode === 'light' ? 'dark' : 'light'));
+        setThemeColor((prevMode) => (prevMode === "light" ? "dark" : "light"));
       },
     }),
-    [],
+    []
   );
 
   return (
@@ -77,14 +77,11 @@ function App() {
           </ThemeColorModeContext.Provider>
 
           <Main>
-            <ToastContainer
-              newestOnTop
-              theme="dark"
-            />
+            <ToastContainer newestOnTop theme="dark" />
 
             <Routes>
               <Route index element={<Home />} />
-              {AppRoutes.map(appRoute => (
+              {AppRoutes.map((appRoute) => (
                 <Route path={appRoute.path} element={<appRoute.component />} />
               ))}
               <Route path="*" element={<NotFound />} />

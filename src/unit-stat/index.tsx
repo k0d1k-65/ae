@@ -8,7 +8,7 @@ import { Button } from "@mui/material";
 import { saveUnit } from "../common/services/UnitService";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import reduceUnitStat, { initUnitStat } from "./UnitStatHook";
+import reduceUnitStat, { initUnitStat } from "./UnitStatReducer";
 import { ISkillProperty, ISkillsForm, IUnitForm } from "./types.interface";
 
 const Wrapper = styled.div`

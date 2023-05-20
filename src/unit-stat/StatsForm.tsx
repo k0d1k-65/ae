@@ -12,7 +12,7 @@ const StatsForm = (props: {
   };
 
   const handleNumberChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    props.handleOnChangeStat(event.target.name as any, event.target.value || 0);
+    props.handleOnChangeStat(event.target.name as any, Number(event.target.value) || 0);
   };
 
   const handleStyleChange = (_: any, style: StyleType) => {

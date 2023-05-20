@@ -1,4 +1,4 @@
-import React, { useReducer } from "react";
+import React, { useEffect, useReducer, useState } from "react";
 import PersonalitiesForm from "./PersonalitiesForm";
 import StatsForm from "./StatsForm";
 import AbilitiesForm from "./AbilitiesForm";
@@ -10,6 +10,11 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import reduceUnitStat, { initUnitStat } from "./UnitStatReducer";
 import { ISkillProperty, ISkillsForm, IUnitForm } from "./types.interface";
+import UnitStatActionMenu from "./ActionMenu";
+import CreateIcon from "@mui/icons-material/Create";
+import BackspaceIcon from "@mui/icons-material/Backspace";
+import { retrieveUnits } from "../common/services/UnitService";
+import { UnitModel } from "../common/models/UnitModel";
 
 const Wrapper = styled.div`
   display: flex;
@@ -27,7 +32,7 @@ const Header = styled.div`
 
 const Main = styled.div`
   overflow: auto;
-  padding: 8px 0;
+  padding: 8px 2px;
   flex: auto;
 
   /* Firefox */
@@ -56,7 +61,11 @@ const Main = styled.div`
 `;
 
 const UnitStatComponent: React.FC = () => {
+  // 編集フォームのステート
   const [state, dispatch] = useReducer(reduceUnitStat, initUnitStat());
+
+  // ユニット全情報
+  const [unitList, setUnitList] = useState<UnitModel[]>([]);
 
   const handleOnClickSave = () => {
     try {
@@ -83,32 +92,56 @@ const UnitStatComponent: React.FC = () => {
   };
 
   const handleOnChangeSkill = (
-    key: keyof ISkillProperty,
-    grade: keyof ISkillsForm,
+    key: keyof ISkillsForm,
+    grade: keyof ISkillProperty,
     value: IUnitForm[keyof IUnitForm]
   ) => {
     dispatch({
       type: "updateSkill",
-      key: key as keyof IUnitForm,
+      key: key,
       subKey: grade,
       value,
     });
   };
 
+  const handleOnChangeUnit = (selected: UnitModel) => {
+    dispatch({
+      type: "updateAll",
+      newItem: selected,
+    });
+  };
+
+  // マウント時に、全ユニットを取得
+  useEffect(() => {
+    setUnitList(retrieveUnits());
+  }, []);
+
   return (
     <Wrapper>
       <Header>
-        <Button variant="contained" color="primary" onClick={handleOnClickSave}>
+        <Button variant="contained" color="primary" startIcon={<CreateIcon />} onClick={handleOnClickSave}>
           SAVE
         </Button>
-        <Button variant="contained" color="error" onClick={handleOnClickClear}>
+        <Button variant="contained" color="error" startIcon={<BackspaceIcon />} onClick={handleOnClickClear}>
           CLEAR
         </Button>
+
+        <UnitStatActionMenu
+          handleOnDelete={() => {}}
+          handleOnImport={() => {}}
+          handleOnExport={() => {}}
+          handleOnTrancate={() => {}}
+        />
       </Header>
 
       <Main>
         {/* ユニット名・パーソナリティ */}
-        <PersonalitiesForm unitStat={state} handleOnChangeStat={handleOnChangeStat} />
+        <PersonalitiesForm
+          unitStat={state}
+          handleOnChangeStat={handleOnChangeStat}
+          unitList={unitList}
+          handleOnChangeUnit={handleOnChangeUnit}
+        />
 
         <hr style={{ margin: "16px 8px" }} />
 

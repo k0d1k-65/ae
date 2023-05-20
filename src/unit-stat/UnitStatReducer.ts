@@ -21,8 +21,8 @@ type ActionType =
     }
   | {
       type: "updateSkill";
-      key: keyof IUnitForm;
-      subKey: keyof IUnitForm;
+      key: keyof ISkillsForm;
+      subKey: keyof ISkillProperty;
       value: IUnitForm[keyof IUnitForm];
     }
   | {
@@ -106,11 +106,6 @@ const reduceUnitStat = (state: IUnitForm, action: ActionType): IUnitForm => {
 
     // スキルフォーム（2階層）を更新
     case "updateSkill":
-      const propertyKeys = Object.keys({} as ISkillProperty);
-      if (!propertyKeys.includes(action.key)) {
-        return state;
-      }
-
       const skill = state[action.key] as ISkillProperty;
       const newSkill = {
         ...skill,

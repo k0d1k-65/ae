@@ -3,18 +3,18 @@ import { ISkillProperty, ISkillsForm, IUnitForm } from "./types.interface";
 
 const SkillsForm = (props: {
   unitStat: IUnitForm;
-  handleOnChangeSkill: (key: keyof ISkillProperty, grade: keyof ISkillsForm, value: IUnitForm[keyof IUnitForm]) => void;
+  handleOnChangeSkill: (key: keyof ISkillsForm, grade: keyof ISkillProperty, value: IUnitForm[keyof IUnitForm]) => void;
 }) => {
   const handleOnChangeName = (event: React.ChangeEvent<HTMLInputElement>) => {
-    props.handleOnChangeSkill("name", event.target.name as any, event.target.value);
+    props.handleOnChangeSkill(event.target.name as any, "name", event.target.value);
   };
 
   const handleOnChangeMp = (event: React.ChangeEvent<HTMLInputElement>) => {
-    props.handleOnChangeSkill("mp", event.target.name as any, event.target.value || 0);
+    props.handleOnChangeSkill(event.target.name as any, "mp", event.target.value || 0);
   };
 
   const handleOnChangeDetail = (event: React.ChangeEvent<HTMLInputElement>) => {
-    props.handleOnChangeSkill("detail", event.target.name as any, event.target.value);
+    props.handleOnChangeSkill(event.target.name as any, "detail", event.target.value);
   };
 
   return (
@@ -23,7 +23,7 @@ const SkillsForm = (props: {
         <TextField
           label="★1 スキル"
           sx={{ width: "80%" }}
-          name="first.name"
+          name="first"
           value={props.unitStat.first.name}
           onChange={handleOnChangeName}
         />
@@ -31,7 +31,7 @@ const SkillsForm = (props: {
           label="消費MP"
           type="number"
           sx={{ width: "20%" }}
-          name="first.mp"
+          name="first"
           value={props.unitStat.first.mp}
           onChange={handleOnChangeMp}
         />
@@ -39,7 +39,7 @@ const SkillsForm = (props: {
           label="詳細"
           multiline
           sx={{ width: "100%" }}
-          name="first.detail"
+          name="first"
           value={props.unitStat.first.detail}
           onChange={handleOnChangeDetail}
         />
@@ -47,7 +47,7 @@ const SkillsForm = (props: {
         <TextField
           label="★2 スキル"
           sx={{ width: "80%" }}
-          name="second.name"
+          name="second"
           value={props.unitStat.second.name}
           onChange={handleOnChangeName}
         />
@@ -55,7 +55,7 @@ const SkillsForm = (props: {
           label="消費MP"
           type="number"
           sx={{ width: "20%" }}
-          name="second.mp"
+          name="second"
           value={props.unitStat.second.mp}
           onChange={handleOnChangeMp}
         />
@@ -63,7 +63,7 @@ const SkillsForm = (props: {
           label="詳細"
           multiline
           sx={{ width: "100%" }}
-          name="second.detail"
+          name="second"
           value={props.unitStat.second.detail}
           onChange={handleOnChangeDetail}
         />
@@ -71,7 +71,7 @@ const SkillsForm = (props: {
         <TextField
           label="★3 スキル"
           sx={{ width: "80%" }}
-          name="thirdA.name"
+          name="thirdA"
           value={props.unitStat.thirdA.name}
           onChange={handleOnChangeName}
         />
@@ -79,7 +79,7 @@ const SkillsForm = (props: {
           label="消費MP"
           type="number"
           sx={{ width: "20%" }}
-          name="thirdA.mp"
+          name="thirdA"
           value={props.unitStat.thirdA.mp}
           onChange={handleOnChangeMp}
         />
@@ -87,14 +87,14 @@ const SkillsForm = (props: {
           label="詳細"
           multiline
           sx={{ width: "100%" }}
-          name="thirdA.detail"
+          name="thirdA"
           value={props.unitStat.thirdA.detail}
           onChange={handleOnChangeDetail}
         />
         <TextField
           label="★3 スキル"
           sx={{ width: "80%" }}
-          name="thirdB.name"
+          name="thirdB"
           value={props.unitStat.thirdB.name}
           onChange={handleOnChangeName}
         />
@@ -102,7 +102,7 @@ const SkillsForm = (props: {
           label="消費MP"
           type="number"
           sx={{ width: "20%" }}
-          name="thirdB.mp"
+          name="thirdB"
           value={props.unitStat.thirdB.mp}
           onChange={handleOnChangeMp}
         />
@@ -110,7 +110,7 @@ const SkillsForm = (props: {
           label="詳細"
           multiline
           sx={{ width: "100%" }}
-          name="thirdB.detail"
+          name="thirdB"
           value={props.unitStat.thirdB.detail}
           onChange={handleOnChangeDetail}
         />
@@ -118,7 +118,7 @@ const SkillsForm = (props: {
         <TextField
           label="★4 スキル"
           sx={{ width: "80%" }}
-          name="fourthA.name"
+          name="fourthA"
           value={props.unitStat.fourthA.name}
           onChange={handleOnChangeName}
         />
@@ -126,7 +126,7 @@ const SkillsForm = (props: {
           label="消費MP"
           type="number"
           sx={{ width: "20%" }}
-          name="fourthA.mp"
+          name="fourthA"
           value={props.unitStat.fourthA.mp}
           onChange={handleOnChangeMp}
         />
@@ -134,14 +134,14 @@ const SkillsForm = (props: {
           label="詳細"
           multiline
           sx={{ width: "100%" }}
-          name="fourthA.detail"
+          name="fourthA"
           value={props.unitStat.fourthA.detail}
           onChange={handleOnChangeDetail}
         />
         <TextField
           label="★4 スキル"
           sx={{ width: "80%" }}
-          name="fourthB.name"
+          name="fourthB"
           value={props.unitStat.fourthB.name}
           onChange={handleOnChangeName}
         />
@@ -149,7 +149,7 @@ const SkillsForm = (props: {
           label="消費MP"
           type="number"
           sx={{ width: "20%" }}
-          name="fourthB.mp"
+          name="fourthB"
           value={props.unitStat.fourthB.mp}
           onChange={handleOnChangeMp}
         />
@@ -157,7 +157,7 @@ const SkillsForm = (props: {
           label="詳細"
           multiline
           sx={{ width: "100%" }}
-          name="fourthB.detail"
+          name="fourthB"
           value={props.unitStat.fourthB.detail}
           onChange={handleOnChangeDetail}
         />
@@ -165,7 +165,7 @@ const SkillsForm = (props: {
         <TextField
           label="★5 スキル"
           sx={{ width: "80%" }}
-          name="fifthA.name"
+          name="fifthA"
           value={props.unitStat.fifthA.name}
           onChange={handleOnChangeName}
         />
@@ -173,7 +173,7 @@ const SkillsForm = (props: {
           label="消費MP"
           type="number"
           sx={{ width: "20%" }}
-          name="fifthA.mp"
+          name="fifthA"
           value={props.unitStat.fifthA.mp}
           onChange={handleOnChangeMp}
         />
@@ -181,14 +181,14 @@ const SkillsForm = (props: {
           label="詳細"
           multiline
           sx={{ width: "100%" }}
-          name="fifthA.detail"
+          name="fifthA"
           value={props.unitStat.fifthA.detail}
           onChange={handleOnChangeDetail}
         />
         <TextField
           label="★5 スキル"
           sx={{ width: "80%" }}
-          name="fifthB.name"
+          name="fifthB"
           value={props.unitStat.fifthB.name}
           onChange={handleOnChangeName}
         />
@@ -196,7 +196,7 @@ const SkillsForm = (props: {
           label="消費MP"
           type="number"
           sx={{ width: "20%" }}
-          name="fifthB.mp"
+          name="fifthB"
           value={props.unitStat.fifthB.mp}
           onChange={handleOnChangeMp}
         />
@@ -204,7 +204,7 @@ const SkillsForm = (props: {
           label="詳細"
           multiline
           sx={{ width: "100%" }}
-          name="fifthB.detail"
+          name="fifthB"
           value={props.unitStat.fifthB.detail}
           onChange={handleOnChangeDetail}
         />

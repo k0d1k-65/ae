@@ -5,16 +5,18 @@ import AbilitiesForm from "./AbilitiesForm";
 import SkillsForm from "./SkillsForm";
 import styled from "styled-components";
 import { Button } from "@mui/material";
-import { saveUnit } from "../common/services/UnitService";
+import { deleteUnit, saveUnit } from "../common/services/UnitService";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import reduceUnitStat, { initUnitStat } from "./UnitStatReducer";
 import { ISkillProperty, ISkillsForm, IUnitForm } from "./types.interface";
 import UnitStatActionMenu from "./ActionMenu";
+import AddCircleIcon from '@mui/icons-material/AddCircle';
 import CreateIcon from "@mui/icons-material/Create";
 import BackspaceIcon from "@mui/icons-material/Backspace";
 import { retrieveUnits } from "../common/services/UnitService";
 import { UnitModel } from "../common/models/UnitModel";
+import { Autocomplete, TextField, Box } from "@mui/material";
 
 const Wrapper = styled.div`
   display: flex;
@@ -62,14 +64,20 @@ const Main = styled.div`
 
 const UnitStatComponent: React.FC = () => {
   // 編集フォームのステート
-  const [state, dispatch] = useReducer(reduceUnitStat, initUnitStat());
+  const [editingUnit, dispatchEditUnit] = useReducer(reduceUnitStat, initUnitStat());
+
+  // 編集対象選択中のユニット
+  const [selectedUnit, setSelectedUnit] = useState<UnitModel>(initUnitStat());
 
   // ユニット全情報
   const [unitList, setUnitList] = useState<UnitModel[]>([]);
 
+  // 「保存」
   const handleOnClickSave = () => {
     try {
-      const { result, updated } = saveUnit(state);
+      const { result, updated } = saveUnit(editingUnit);
+      setUnitList(updated);
+      setSelectedUnit(editingUnit);
 
       toast.success("保存に成功しました");
     } catch (err) {
@@ -77,26 +85,43 @@ const UnitStatComponent: React.FC = () => {
     }
   };
 
+  // 「クリア」
   const handleOnClickClear = () => {
-    dispatch({ type: "clear" });
+    dispatchEditUnit({ type: "updateAll", newItem: selectedUnit });
 
     toast.success("クリアしました");
   };
 
+  // 「削除」
+  // MEMO: delete( selectedUnit.unitName / style
+  const handleOnClickDelete = () => {
+    try {
+      const { result, updated } = deleteUnit(selectedUnit);
+      setUnitList(updated);
+      setSelectedUnit(editingUnit);
+
+      toast.success("削除に成功しました");
+    } catch (err) {
+      toast.error("削除に失敗しました");
+    }
+  };
+
+  // フォーム入力
   const handleOnChangeStat = (key: keyof IUnitForm, value: IUnitForm[keyof IUnitForm]) => {
-    dispatch({
+    dispatchEditUnit({
       type: "update",
       key,
       value,
     });
   };
 
+  // スキル入力
   const handleOnChangeSkill = (
     key: keyof ISkillsForm,
     grade: keyof ISkillProperty,
     value: IUnitForm[keyof IUnitForm]
   ) => {
-    dispatch({
+    dispatchEditUnit({
       type: "updateSkill",
       key: key,
       subKey: grade,
@@ -104,10 +129,22 @@ const UnitStatComponent: React.FC = () => {
     });
   };
 
+  // 選択ユニット変更
   const handleOnChangeUnit = (selected: UnitModel) => {
-    dispatch({
+    setSelectedUnit(selected);
+    dispatchEditUnit({
       type: "updateAll",
       newItem: selected,
+    });
+  };
+
+  // 新規ユニット
+  const handleOnClickNewItem = () => {
+    const init = initUnitStat();
+    setSelectedUnit(init);
+    dispatchEditUnit({
+      type: "updateAll",
+      newItem: init,
     });
   };
 
@@ -119,6 +156,41 @@ const UnitStatComponent: React.FC = () => {
   return (
     <Wrapper>
       <Header>
+        <Button
+          onClick={() => {
+            console.log({ editingUnit, selectedUnit });
+          }}
+        >
+          DEBUG
+        </Button>
+
+        {/* 編集対象ユニット選択 */}
+        <Autocomplete
+          options={unitList}
+          value={selectedUnit}
+          sx={{ width: "320px", maxWidth: "50%" }}
+          groupBy={(opt) => opt.weapon}
+          getOptionLabel={(opt) => opt.unitName}
+          renderOption={(props, opt) => (
+            <Box component="li" {...props}>
+              <span>
+                {opt.style} {opt.unitName}
+              </span>
+            </Box>
+          )}
+          renderInput={(params) => <TextField {...params} label="Unit" />}
+          onChange={(ev: any, unit: UnitModel | null) => {
+            if (unit) {
+              handleOnChangeUnit(unit);
+            } else {
+              handleOnChangeUnit(initUnitStat());
+            }
+          }}
+        />
+
+        <Button variant="contained" color="success" startIcon={<AddCircleIcon />} onClick={handleOnClickNewItem}>
+          NEW
+        </Button>
         <Button variant="contained" color="primary" startIcon={<CreateIcon />} onClick={handleOnClickSave}>
           SAVE
         </Button>
@@ -127,7 +199,7 @@ const UnitStatComponent: React.FC = () => {
         </Button>
 
         <UnitStatActionMenu
-          handleOnDelete={() => {}}
+          handleOnDelete={handleOnClickDelete}
           handleOnImport={() => {}}
           handleOnExport={() => {}}
           handleOnTrancate={() => {}}
@@ -136,27 +208,22 @@ const UnitStatComponent: React.FC = () => {
 
       <Main>
         {/* ユニット名・パーソナリティ */}
-        <PersonalitiesForm
-          unitStat={state}
-          handleOnChangeStat={handleOnChangeStat}
-          unitList={unitList}
-          handleOnChangeUnit={handleOnChangeUnit}
-        />
+        <PersonalitiesForm unitStat={editingUnit} default={selectedUnit} handleOnChangeStat={handleOnChangeStat} />
 
         <hr style={{ margin: "16px 8px" }} />
 
         {/* ステータス */}
-        <StatsForm unitStat={state} handleOnChangeStat={handleOnChangeStat} />
+        <StatsForm unitStat={editingUnit} default={selectedUnit} handleOnChangeStat={handleOnChangeStat} />
 
         <hr style={{ margin: "16px 8px" }} />
 
         {/* アビリティ */}
-        <AbilitiesForm unitStat={state} handleOnChangeStat={handleOnChangeStat} />
+        <AbilitiesForm unitStat={editingUnit} default={selectedUnit} handleOnChangeStat={handleOnChangeStat} />
 
         <hr style={{ margin: "16px 8px" }} />
 
         {/* スキル */}
-        <SkillsForm unitStat={state} handleOnChangeSkill={handleOnChangeSkill} />
+        <SkillsForm unitStat={editingUnit} default={selectedUnit} handleOnChangeSkill={handleOnChangeSkill} />
       </Main>
     </Wrapper>
   );

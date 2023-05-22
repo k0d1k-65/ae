@@ -1,5 +1,6 @@
 import { readLocalStorage, saveLocalStorage } from "./LocalStorageService";
 import { UnitModel } from "../models/UnitModel";
+import { StyleType } from "../constants/StyleType";
 
 const unitsKey = "UnitModel";
 
@@ -15,11 +16,20 @@ type SaveResult = {
   updated: UnitModel[];
 };
 
-/** ユニットデータをローカルストレージに突っ込む */
-export const saveUnit = (unit: UnitModel): SaveResult => {
+/**
+ * ユニットデータをローカルストレージに突っ込む
+ * @param unit 入力
+ * @param unitName 主キー
+ * @param style 主キー
+ * @returns 更新後アイテム
+ */
+export const saveUnit = (unit: UnitModel, unitName?: string, style?: StyleType): SaveResult => {
   const units = retrieveUnits();
 
-  const duplicateIndex = units.findIndex((u) => u.unitName === unit.unitName && u.style === unit.style);
+  const pkUnitName = unitName || unit.unitName;
+  const pkStyle = style || unit.style;
+
+  const duplicateIndex = units.findIndex((u) => u.unitName === pkUnitName && u.style === pkStyle);
 
   try {
     // 名前とスタイルが一致している場合、上書き
@@ -70,5 +80,38 @@ export const deleteUnit = (unit: UnitModel): DeleteResult => {
     console.log("unit-service delete: ", err);
 
     throw err;
+  }
+};
+
+export const importUnits = (json: string, overwrite = false) => {
+  let units = retrieveUnits();
+
+  try {
+    const newUnits = JSON.parse(json) as UnitModel[];
+
+    for (const newItem of newUnits) {
+      const duplicateIndex = units.findIndex((u) => u.unitName === newItem.unitName && u.style === newItem.style);
+
+      // 名前とスタイルが一致している場合、上書きor既存優先
+      if (duplicateIndex >= 0) {
+        if (overwrite) {
+          units[duplicateIndex] = { ...units[duplicateIndex], ...newItem };
+        } else {
+          units[duplicateIndex] = { ...newItem, ...units[duplicateIndex] };
+        }
+      }
+      // それ以外は、新規追加
+      else {
+        units = [...units, newItem];
+      }
+    }
+
+    saveLocalStorage<UnitModel[]>(unitsKey, units);
+
+    return units;
+  } catch (err) {
+    console.log("unit-service import: ", err);
+
+    return units;
   }
 };

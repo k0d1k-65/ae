@@ -304,11 +304,11 @@ const SkillsForm = (props: {
         {props.unitStat.style === StyleType.AS ? (
           <>
             <FirstSkill />
+            <FourthBSkill />
             <SecondSkill />
             <ThirdASkill />
             <ThirdBSkill />
             <FourthASkill />
-            <FourthBSkill />
             <FifthASkill />
             <FifthBSkill />
           </>

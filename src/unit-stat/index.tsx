@@ -5,7 +5,7 @@ import AbilitiesForm from "./AbilitiesForm";
 import SkillsForm from "./SkillsForm";
 import styled from "styled-components";
 import { Button } from "@mui/material";
-import { deleteUnit, saveUnit } from "../common/services/UnitService";
+import { deleteUnit, importUnits, saveUnit } from "../common/services/UnitService";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import reduceUnitStat, { initUnitStat } from "./UnitStatReducer";
@@ -74,6 +74,19 @@ const UnitStatComponent: React.FC = () => {
   // 「保存」
   const handleOnClickSave = () => {
     try {
+      const { result, updated } = saveUnit(editingUnit, selectedUnit.unitName, selectedUnit.style);
+      setUnitList(updated);
+      setSelectedUnit(editingUnit);
+
+      toast.success("保存に成功しました");
+    } catch (err) {
+      toast.error("保存に失敗しました");
+    }
+  };
+
+  // 「新規保存」
+  const handleOnClickCreate = () => {
+    try {
       const { result, updated } = saveUnit(editingUnit);
       setUnitList(updated);
       setSelectedUnit(editingUnit);
@@ -103,6 +116,64 @@ const UnitStatComponent: React.FC = () => {
     } catch (err) {
       toast.error("削除に失敗しました");
     }
+  };
+
+  // 「インポート」
+  const handleonClickImport = () => {
+    const fileInput = document.createElement("input");
+    fileInput.type = "file";
+    fileInput.accept = ".json";
+    fileInput.addEventListener("change", async (e) => {
+      const file = (e.target as HTMLInputElement).files?.[0];
+      if (file) {
+        const contents = await readFileContents(file);
+
+        try {
+          const updated = importUnits(contents, true);
+          setUnitList(updated);
+          setSelectedUnit(initUnitStat());
+          dispatchEditUnit({ type: "updateAll", newItem: initUnitStat() });
+
+          toast.success("インポートしました");
+        } catch (err) {
+          toast.success("インポートに失敗しました");
+        }
+      }
+    });
+    fileInput.click();
+  };
+
+  const readFileContents = (file: File) => {
+    return new Promise<string>((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const contents = e.target?.result;
+        if (typeof contents === "string") {
+          resolve(contents);
+        } else {
+          reject(new Error("Failed to read file contents."));
+        }
+      };
+      reader.onerror = () => {
+        reject(new Error("Failed to read file."));
+      };
+      reader.readAsText(file);
+    });
+  };
+
+  // 「エクスポート」
+  const handleonClickExport = () => {
+    // TODO: なんかいい感じに移譲する
+    const jsonStr = JSON.stringify(unitList);
+    const blob = new Blob([jsonStr], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "ae-units.json";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
   };
 
   // フォーム入力
@@ -145,14 +216,6 @@ const UnitStatComponent: React.FC = () => {
   return (
     <Wrapper>
       <Header>
-        <Button
-          onClick={() => {
-            console.log({ editingUnit, selectedUnit });
-          }}
-        >
-          DEBUG
-        </Button>
-
         {/* 編集対象ユニット選択 */}
         <Autocomplete
           options={unitList}
@@ -177,8 +240,14 @@ const UnitStatComponent: React.FC = () => {
           }}
         />
 
+        {/* 余白 */}
+        <div style={{flex: "auto"}}></div>
+
         <Button variant="contained" color="primary" startIcon={<CreateIcon />} onClick={handleOnClickSave}>
           SAVE
+        </Button>
+        <Button variant="contained" color="success" startIcon={<CreateIcon />} onClick={handleOnClickCreate}>
+          AS NEW
         </Button>
         <Button variant="contained" color="error" startIcon={<BackspaceIcon />} onClick={handleOnClickClear}>
           CLEAR
@@ -186,8 +255,8 @@ const UnitStatComponent: React.FC = () => {
 
         <UnitStatActionMenu
           handleOnDelete={handleOnClickDelete}
-          handleOnImport={() => {}}
-          handleOnExport={() => {}}
+          handleOnImport={handleonClickImport}
+          handleOnExport={handleonClickExport}
           handleOnTrancate={() => {}}
         />
       </Header>

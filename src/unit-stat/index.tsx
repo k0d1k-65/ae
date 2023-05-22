@@ -11,7 +11,6 @@ import "react-toastify/dist/ReactToastify.css";
 import reduceUnitStat, { initUnitStat } from "./UnitStatReducer";
 import { ISkillProperty, ISkillsForm, IUnitForm } from "./types.interface";
 import UnitStatActionMenu from "./ActionMenu";
-import AddCircleIcon from '@mui/icons-material/AddCircle';
 import CreateIcon from "@mui/icons-material/Create";
 import BackspaceIcon from "@mui/icons-material/Backspace";
 import { retrieveUnits } from "../common/services/UnitService";
@@ -138,16 +137,6 @@ const UnitStatComponent: React.FC = () => {
     });
   };
 
-  // 新規ユニット
-  const handleOnClickNewItem = () => {
-    const init = initUnitStat();
-    setSelectedUnit(init);
-    dispatchEditUnit({
-      type: "updateAll",
-      newItem: init,
-    });
-  };
-
   // マウント時に、全ユニットを取得
   useEffect(() => {
     setUnitList(retrieveUnits());
@@ -188,9 +177,6 @@ const UnitStatComponent: React.FC = () => {
           }}
         />
 
-        <Button variant="contained" color="success" startIcon={<AddCircleIcon />} onClick={handleOnClickNewItem}>
-          NEW
-        </Button>
         <Button variant="contained" color="primary" startIcon={<CreateIcon />} onClick={handleOnClickSave}>
           SAVE
         </Button>

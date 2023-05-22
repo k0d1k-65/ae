@@ -11,7 +11,14 @@ const AbilitiesForm = (props: {
     props.handleOnChangeStat(event.target.name as any, event.target.value);
   };
 
-  const handleabilityChange = (_: any, abilities: string[]) => {
+  const handleabilityChange = (_: any, items: string[]) => {
+    // カンマ区切りで一括登録
+    const abilities = [
+      ...items.reduce<string[]>((acuumelate, item) => {
+        return [...acuumelate, ...item.split(",")];
+      }, []),
+    ];
+
     props.handleOnChangeStat("abilities", abilities);
   };
 

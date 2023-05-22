@@ -1,4 +1,4 @@
-import { Grid, Autocomplete, TextField, Box } from "@mui/material";
+import { Grid, Autocomplete, TextField } from "@mui/material";
 import WeaponSelect from "../common/WeaponSelect";
 import { WeaponType } from "../common/constants/WeaponType";
 import { IUnitForm } from "./types.interface";
@@ -18,7 +18,13 @@ const PersonalitiesForm = (props: {
   };
 
   const handlePersonalitiesChange = (_: any, items: string[]) => {
-    const personalities = [...items];
+    // カンマ区切りで一括登録
+    const personalities = [
+      ...items.reduce<string[]>((acuumelate, item) => {
+        return [...acuumelate, ...item.split(",")];
+      }, []),
+    ];
+
     props.handleOnChangeStat("personalities", Array.from(new Set(personalities)));
   };
 

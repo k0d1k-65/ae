@@ -57,7 +57,7 @@ export const deleteUnit = (unit: UnitModel): DeleteResult => {
   try {
     // 削除対象があれば削除が一致している場合、上書き
     if (target >= 0) {
-      units.splice(target, 1)
+      units.splice(target, 1);
       saveLocalStorage<UnitModel[]>(unitsKey, units);
 
       return { result: "deleted", updated: units };

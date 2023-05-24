@@ -19,7 +19,7 @@ const AbilitiesForm = (props: {
       }, []),
     ];
 
-    props.handleOnChangeStat("abilities", abilities);
+    props.handleOnChangeStat("abilities", Array.from(new Set(abilities)));
   };
 
   return (
@@ -98,9 +98,7 @@ const AbilitiesForm = (props: {
             renderInput={(params) => <TextField {...params} label="アビリティ" />}
             multiple
             freeSolo
-            isOptionEqualToValue={() => false}
             value={props.unitStat.abilities}
-            disableClearable
             onChange={handleabilityChange}
           />
         </EditedOutline>

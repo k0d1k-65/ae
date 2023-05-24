@@ -15,7 +15,7 @@ import CreateIcon from "@mui/icons-material/Create";
 import BackspaceIcon from "@mui/icons-material/Backspace";
 import { retrieveUnits } from "../common/services/UnitService";
 import { UnitModel } from "../common/models/UnitModel";
-import { Autocomplete, TextField, Box } from "@mui/material";
+import { Autocomplete, TextField, Box, Divider } from "@mui/material";
 
 const Wrapper = styled.div`
   display: flex;
@@ -78,8 +78,12 @@ const UnitStatComponent: React.FC = () => {
       setUnitList(updated);
       setSelectedUnit(editingUnit);
 
+      // TODO: toast.dismiss とセットなのがめんどくさいので、なんかラップする
+      // TODO: 実質、limitが1件に強制されるので、なんとかする。
+      toast.dismiss();
       toast.success("保存に成功しました");
     } catch (err) {
+      toast.dismiss();
       toast.error("保存に失敗しました");
     }
   };
@@ -91,8 +95,10 @@ const UnitStatComponent: React.FC = () => {
       setUnitList(updated);
       setSelectedUnit(editingUnit);
 
+      toast.dismiss();
       toast.success("保存に成功しました");
     } catch (err) {
+      toast.dismiss();
       toast.error("保存に失敗しました");
     }
   };
@@ -101,19 +107,22 @@ const UnitStatComponent: React.FC = () => {
   const handleOnClickClear = () => {
     dispatchEditUnit({ type: "updateAll", newItem: selectedUnit });
 
+    toast.dismiss();
     toast.success("クリアしました");
   };
 
   // 「削除」
-  // MEMO: delete( selectedUnit.unitName / style
   const handleOnClickDelete = () => {
     try {
+      // TODO: delete (selectedUnit.unitName, selectedUnit.style)
       const { result, updated } = deleteUnit(selectedUnit);
       setUnitList(updated);
       setSelectedUnit(editingUnit);
 
+      toast.dismiss();
       toast.success("削除に成功しました");
     } catch (err) {
+      toast.dismiss();
       toast.error("削除に失敗しました");
     }
   };
@@ -134,8 +143,10 @@ const UnitStatComponent: React.FC = () => {
           setSelectedUnit(initUnitStat());
           dispatchEditUnit({ type: "updateAll", newItem: initUnitStat() });
 
+          toast.dismiss();
           toast.success("インポートしました");
         } catch (err) {
+          toast.dismiss();
           toast.success("インポートに失敗しました");
         }
       }
@@ -241,7 +252,9 @@ const UnitStatComponent: React.FC = () => {
         />
 
         {/* 余白 */}
-        <div style={{flex: "auto"}}></div>
+        <div style={{ flex: "auto" }}></div>
+
+        {/* TODO: 幅が狭いときに非表示（menu内に表示させる。） */}
 
         <Button variant="contained" color="primary" startIcon={<CreateIcon />} onClick={handleOnClickSave}>
           SAVE
@@ -263,22 +276,25 @@ const UnitStatComponent: React.FC = () => {
 
       <Main>
         {/* ユニット名・パーソナリティ */}
+        {/* TODO: クリックすると縮小する。 */}
+        <Divider sx={{ margin: "16px 8px" }}>base</Divider>
+
         <PersonalitiesForm unitStat={editingUnit} default={selectedUnit} handleOnChangeStat={handleOnChangeStat} />
 
-        <hr style={{ margin: "16px 8px" }} />
-
         {/* ステータス */}
+        <Divider sx={{ margin: "16px 8px" }}>stat</Divider>
+
         <StatsForm unitStat={editingUnit} default={selectedUnit} handleOnChangeStat={handleOnChangeStat} />
 
-        <hr style={{ margin: "16px 8px" }} />
-
         {/* アビリティ */}
+        <Divider sx={{ margin: "16px 8px" }}>abilities</Divider>
+
         <AbilitiesForm unitStat={editingUnit} default={selectedUnit} handleOnChangeStat={handleOnChangeStat} />
 
-        <hr style={{ margin: "16px 8px" }} />
-
         {/* スキル */}
-        <SkillsForm unitStat={editingUnit} default={selectedUnit} handleOnChangeSkill={handleOnChangeSkill} />
+        <Divider sx={{ margin: "16px 8px" }}>skills</Divider>
+
+        <SkillsForm unitStat={editingUnit} defaultStat={selectedUnit} handleOnChangeSkill={handleOnChangeSkill} />
       </Main>
     </Wrapper>
   );

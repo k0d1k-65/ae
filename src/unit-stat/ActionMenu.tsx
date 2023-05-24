@@ -29,6 +29,7 @@ const UnitStatActionMenu = (props: {
   const open = Boolean(anchorEl);
 
   const options = [
+    // TODO: 横幅が狭いときに、save,clear も。
     {
       key: "delete",
       icon: <DeleteOutlineIcon />,

@@ -8,6 +8,7 @@ import Home from "./home";
 import NotFound from "./not-found";
 import { AppRoutes } from "./Routes";
 import { ToastContainer } from "react-toastify";
+import useWindowSize from "./common/utils/WindowSize";
 
 const Wrapper = styled.div`
   margin: 0;
@@ -50,6 +51,8 @@ const Main = styled.div`
 function App() {
   const [themeColor, setThemeColor] = React.useState<"light" | "dark">("dark");
 
+  const [width, height] = useWindowSize();
+
   const theme = createTheme({
     palette: {
       mode: themeColor,
@@ -77,7 +80,7 @@ function App() {
           </ThemeColorModeContext.Provider>
 
           <Main>
-            <ToastContainer newestOnTop theme="dark" />
+            <ToastContainer newestOnTop pauseOnFocusLoss={false} theme="dark" limit={width < 768 ? 1 : 0} />
 
             <Routes>
               <Route index element={<Home />} />

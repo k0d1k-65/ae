@@ -57,7 +57,6 @@ const PersonalitiesForm = (props: {
             renderInput={(params) => <TextField {...params} label="パーソナリティ" />}
             multiple
             freeSolo
-            isOptionEqualToValue={() => false}
             value={props.unitStat.personalities}
             onChange={handlePersonalitiesChange}
             disableCloseOnSelect

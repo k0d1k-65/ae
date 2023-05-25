@@ -4,18 +4,15 @@ import StatsForm from "./StatsForm";
 import AbilitiesForm from "./AbilitiesForm";
 import SkillsForm from "./SkillsForm";
 import styled from "styled-components";
-import { Button } from "@mui/material";
 import { deleteUnit, importUnits, saveUnit } from "../common/services/UnitService";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import reduceUnitStat, { initUnitStat } from "./UnitStatReducer";
 import { ISkillProperty, ISkillsForm, IUnitForm } from "./types.interface";
 import UnitStatActionMenu from "./ActionMenu";
-import CreateIcon from "@mui/icons-material/Create";
-import BackspaceIcon from "@mui/icons-material/Backspace";
 import { retrieveUnits } from "../common/services/UnitService";
 import { UnitModel } from "../common/models/UnitModel";
-import { Autocomplete, TextField, Box, Divider } from "@mui/material";
+import { Autocomplete, TextField, Box, Divider, Button } from "@mui/material";
 
 const Wrapper = styled.div`
   display: flex;
@@ -254,19 +251,9 @@ const UnitStatComponent: React.FC = () => {
         {/* 余白 */}
         <div style={{ flex: "auto" }}></div>
 
-        {/* TODO: 幅が狭いときに非表示（menu内に表示させる。） */}
-
-        <Button variant="contained" color="primary" startIcon={<CreateIcon />} onClick={handleOnClickSave}>
-          SAVE
-        </Button>
-        <Button variant="contained" color="success" startIcon={<CreateIcon />} onClick={handleOnClickCreate}>
-          AS NEW
-        </Button>
-        <Button variant="contained" color="error" startIcon={<BackspaceIcon />} onClick={handleOnClickClear}>
-          CLEAR
-        </Button>
-
         <UnitStatActionMenu
+          handleOnClickSave={handleOnClickSave}
+          handleOnClickClear={handleOnClickClear}
           handleOnDelete={handleOnClickDelete}
           handleOnImport={handleonClickImport}
           handleOnExport={handleonClickExport}

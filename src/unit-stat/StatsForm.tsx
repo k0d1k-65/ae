@@ -62,7 +62,7 @@ const StatsForm = (props: {
             type="number"
             sx={{ width: "100%" }}
             name="statHp"
-            value={props.unitStat.statHp}
+            value={props.unitStat.statHp.toString()}
             onChange={handleNumberChange}
           />
         </EditedOutline>
@@ -78,7 +78,7 @@ const StatsForm = (props: {
             type="number"
             sx={{ width: "100%" }}
             name="statMp"
-            value={props.unitStat.statMp}
+            value={props.unitStat.statMp.toString()}
             onChange={handleNumberChange}
           />
         </EditedOutline>
@@ -108,7 +108,7 @@ const StatsForm = (props: {
             type="number"
             sx={{ width: "100%" }}
             name="lightShadowNumber"
-            value={props.unitStat.lightShadowNumber}
+            value={props.unitStat.lightShadowNumber.toString()}
             onChange={handleNumberChange}
           />
         </EditedOutline>
@@ -122,7 +122,7 @@ const StatsForm = (props: {
             type="number"
             sx={{ width: "100%" }}
             name="statPower"
-            value={props.unitStat.statPower}
+            value={props.unitStat.statPower.toString()}
             onChange={handleNumberChange}
           />
         </EditedOutline>
@@ -135,7 +135,7 @@ const StatsForm = (props: {
             type="number"
             sx={{ width: "100%" }}
             name="statEndure"
-            value={props.unitStat.statEndure}
+            value={props.unitStat.statEndure.toString()}
             onChange={handleNumberChange}
           />
         </EditedOutline>
@@ -148,7 +148,7 @@ const StatsForm = (props: {
             type="number"
             sx={{ width: "100%" }}
             name="statLuck"
-            value={props.unitStat.statLuck}
+            value={props.unitStat.statLuck.toString()}
             onChange={handleNumberChange}
           />
         </EditedOutline>
@@ -164,7 +164,7 @@ const StatsForm = (props: {
             type="number"
             sx={{ width: "100%" }}
             name="statIntelligense"
-            value={props.unitStat.statIntelligense}
+            value={props.unitStat.statIntelligense.toString()}
             onChange={handleNumberChange}
           />
         </EditedOutline>
@@ -177,7 +177,7 @@ const StatsForm = (props: {
             type="number"
             sx={{ width: "100%" }}
             name="statSpeed"
-            value={props.unitStat.statSpeed}
+            value={props.unitStat.statSpeed.toString()}
             onChange={handleNumberChange}
           />
         </EditedOutline>
@@ -190,7 +190,7 @@ const StatsForm = (props: {
             type="number"
             sx={{ width: "100%" }}
             name="statSplit"
-            value={props.unitStat.statSplit}
+            value={props.unitStat.statSplit.toString()}
             onChange={handleNumberChange}
           />
         </EditedOutline>

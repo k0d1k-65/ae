@@ -43,7 +43,7 @@ const UnitSkillEditorComponent = (props: {
           sx={{ width: "100%" }}
           label="消費MP"
           type="number"
-          value={props.edit.mp}
+          value={props.edit.mp.toString()}
           onChange={handleOnChangeMp}
         />
       </EditedOutline>

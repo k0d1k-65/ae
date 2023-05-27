@@ -8,11 +8,10 @@ import { deleteUnit, importUnits, saveUnit } from "../common/services/UnitServic
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import reduceUnitStat, { initUnitStat } from "./UnitStatReducer";
-import { ISkillProperty, ISkillsForm, IUnitForm } from "./types.interface";
 import UnitStatActionMenu from "./ActionMenu";
 import { retrieveUnits } from "../common/services/UnitService";
-import { UnitModel } from "../common/models/UnitModel";
 import { Autocomplete, TextField, Box, Divider, Button } from "@mui/material";
+import { ISkillProperty, IUnitSkills, IUnitStatModel } from "../common/models/UnitModel";
 
 const Wrapper = styled.div`
   display: flex;
@@ -63,10 +62,10 @@ const UnitStatComponent: React.FC = () => {
   const [editingUnit, dispatchEditUnit] = useReducer(reduceUnitStat, initUnitStat());
 
   // 編集対象選択中のユニット
-  const [selectedUnit, setSelectedUnit] = useState<UnitModel>(initUnitStat());
+  const [selectedUnit, setSelectedUnit] = useState<IUnitStatModel>(initUnitStat());
 
   // ユニット全情報
-  const [unitList, setUnitList] = useState<UnitModel[]>([]);
+  const [unitList, setUnitList] = useState<IUnitStatModel[]>([]);
 
   // 「保存」
   const handleOnClickSave = () => {
@@ -185,7 +184,7 @@ const UnitStatComponent: React.FC = () => {
   };
 
   // フォーム入力
-  const handleOnChangeStat = (key: keyof IUnitForm, value: IUnitForm[keyof IUnitForm]) => {
+  const handleOnChangeStat = (key: keyof IUnitStatModel, value: IUnitStatModel[keyof IUnitStatModel]) => {
     dispatchEditUnit({
       type: "update",
       key,
@@ -195,9 +194,9 @@ const UnitStatComponent: React.FC = () => {
 
   // スキル入力
   const handleOnChangeSkill = (
-    key: keyof ISkillsForm,
+    key: keyof IUnitSkills,
     grade: keyof ISkillProperty,
-    value: IUnitForm[keyof IUnitForm]
+    value: IUnitStatModel[keyof IUnitStatModel]
   ) => {
     dispatchEditUnit({
       type: "updateSkill",
@@ -208,8 +207,9 @@ const UnitStatComponent: React.FC = () => {
   };
 
   // 選択ユニット変更
-  const handleOnChangeUnit = (selected: UnitModel) => {
+  const handleOnChangeUnit = (selected: IUnitStatModel) => {
     setSelectedUnit(selected);
+    {/* TODO: FIXME: モデリングしてnullableなプロパティで問題がないようにする。 */}
     dispatchEditUnit({
       type: "updateAll",
       newItem: selected,
@@ -239,7 +239,7 @@ const UnitStatComponent: React.FC = () => {
             </Box>
           )}
           renderInput={(params) => <TextField {...params} label="Unit" />}
-          onChange={(ev: any, unit: UnitModel | null) => {
+          onChange={(ev: any, unit: IUnitStatModel | null) => {
             if (unit) {
               handleOnChangeUnit(unit);
             } else {

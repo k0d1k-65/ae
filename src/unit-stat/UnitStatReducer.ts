@@ -1,45 +1,46 @@
-import {
-  IAbilitiesForm,
-  IPersonalitiesForm,
-  ISkillProperty,
-  ISkillsForm,
-  IStatsForm,
-  IUnitForm,
-} from "./types.interface";
 import { WeaponType } from "../common/constants/WeaponType";
 import { StyleType } from "../common/constants/StyleType";
 import { LightShadowType } from "../common/constants/LightShadowType";
+import {
+  ISkillProperty,
+  IStatBonus,
+  IUnitAbilities,
+  IUnitPersonalities,
+  IUnitSkills,
+  IUnitStatModel,
+  IUnitStats,
+} from "../common/models/UnitModel";
 
 type ActionType =
   | {
       type: "update";
-      key: keyof IUnitForm;
-      value: IUnitForm[keyof IUnitForm];
+      key: keyof IUnitStatModel;
+      value: IUnitStatModel[keyof IUnitStatModel];
     }
   | {
       type: "clear";
     }
   | {
       type: "updateSkill";
-      key: keyof ISkillsForm;
+      key: keyof IUnitSkills;
       subKey: keyof ISkillProperty;
-      value: IUnitForm[keyof IUnitForm];
+      value: IUnitStatModel[keyof IUnitStatModel];
     }
   | {
       type: "updateAll";
-      newItem: IUnitForm;
+      newItem: IUnitStatModel;
     };
 
-export const initUnitStat = (): IUnitForm => {
+export const initUnitStat = (): IUnitStatModel => {
   /** パーソナリティ 初期値 */
-  const initPersonality: IPersonalitiesForm = {
+  const initPersonality: IUnitPersonalities = {
     unitName: "",
     weapon: WeaponType.All,
     personalities: [],
   };
 
   /** ステータス 初期値 */
-  const initStat: IStatsForm = {
+  const initStat: IUnitStats = {
     className: "",
     style: StyleType.NS,
     statHp: 0,
@@ -55,9 +56,11 @@ export const initUnitStat = (): IUnitForm => {
   };
 
   /** アビリティ 初期値 */
-  const initAbility: IAbilitiesForm = {
+  const initAbility: IUnitAbilities = {
     variablechantName: "",
     variablechantDetail: "",
+    variablechantEnhancedName: "",
+    variablechantEnhancedDetail: "",
     extraSpecialMoveName: "",
     extraSpecialMoveDetail: "",
     anotherSenceName: "",
@@ -72,7 +75,7 @@ export const initUnitStat = (): IUnitForm => {
     detail: "",
   };
 
-  const initSkill: ISkillsForm = {
+  const initSkill: IUnitSkills = {
     first: { ...initSkillProp },
     second: { ...initSkillProp },
     thirdA: { ...initSkillProp },
@@ -91,7 +94,7 @@ export const initUnitStat = (): IUnitForm => {
   };
 };
 
-const reduceUnitStat = (state: IUnitForm, action: ActionType): IUnitForm => {
+const reduceUnitStat = (state: IUnitStatModel, action: ActionType): IUnitStatModel => {
   switch (action.type) {
     // 更新
     case "update":

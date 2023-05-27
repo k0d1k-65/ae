@@ -1,11 +1,11 @@
 import { Grid, Autocomplete, TextField, Box } from "@mui/material";
-import { IUnitForm } from "./types.interface";
 import { EditedOutline } from "../common/EditOutLinedText";
+import { IUnitStatModel } from "../common/models/UnitModel";
 
 const AbilitiesForm = (props: {
-  unitStat: IUnitForm;
-  default: IUnitForm;
-  handleOnChangeStat: (key: keyof IUnitForm, value: IUnitForm[keyof IUnitForm]) => void;
+  unitStat: IUnitStatModel;
+  default: IUnitStatModel;
+  handleOnChangeStat: (key: keyof IUnitStatModel, value: IUnitStatModel[keyof IUnitStatModel]) => void;
 }) => {
   const handleTextChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     props.handleOnChangeStat(event.target.name as any, event.target.value);
@@ -42,6 +42,29 @@ const AbilitiesForm = (props: {
             sx={{ width: "100%" }}
             name="variablechantDetail"
             value={props.unitStat.variablechantDetail}
+            onChange={handleTextChange}
+            multiline
+          />
+        </EditedOutline>
+        {/* 強化ヴァリアブルチャント名 */}
+        <EditedOutline isEdited={props.default.variablechantEnhancedName !== props.unitStat.variablechantEnhancedName}>
+          <TextField
+            label="強化ヴァリアブルチャント名"
+            sx={{ width: "100%" }}
+            name="variablechantEnhancedName"
+            value={props.unitStat.variablechantEnhancedName}
+            onChange={handleTextChange}
+          />
+        </EditedOutline>
+        {/* 強化ヴァリアブルチャント詳細 */}
+        <EditedOutline
+          isEdited={props.default.variablechantEnhancedDetail !== props.unitStat.variablechantEnhancedDetail}
+        >
+          <TextField
+            label="強化ヴァリアブルチャント詳細"
+            sx={{ width: "100%" }}
+            name="variablechantEnhancedDetail"
+            value={props.unitStat.variablechantEnhancedDetail}
             onChange={handleTextChange}
             multiline
           />
@@ -92,7 +115,7 @@ const AbilitiesForm = (props: {
         </EditedOutline>
 
         {/* 個人アビリティ */}
-        <EditedOutline isEdited={props.default.abilities.join(",") !== props.unitStat.abilities.join(",")}>
+        <EditedOutline isEdited={props.default.abilities?.join(",") !== props.unitStat.abilities?.join(",")}>
           <Autocomplete
             options={[]}
             renderInput={(params) => <TextField {...params} label="アビリティ" />}

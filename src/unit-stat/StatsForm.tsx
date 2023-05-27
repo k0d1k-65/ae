@@ -1,13 +1,13 @@
-import { Grid, Autocomplete, TextField } from "@mui/material";
-import { IUnitForm } from "./types.interface";
+import { Grid, Autocomplete, TextField, MenuItem, ListItemText, Select, SelectChangeEvent } from "@mui/material";
 import { StyleType } from "../common/constants/StyleType";
 import { LightShadowType } from "../common/constants/LightShadowType";
 import { EditedOutline } from "../common/EditOutLinedText";
+import { IUnitStatModel } from "../common/models/UnitModel";
 
 const StatsForm = (props: {
-  unitStat: IUnitForm;
-  default: IUnitForm;
-  handleOnChangeStat: (key: keyof IUnitForm, value: IUnitForm[keyof IUnitForm]) => void;
+  unitStat: IUnitStatModel;
+  default: IUnitStatModel;
+  handleOnChangeStat: (key: keyof IUnitStatModel, value: IUnitStatModel[keyof IUnitStatModel]) => void;
 }) => {
   const handleTextChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     props.handleOnChangeStat(event.target.name as any, event.target.value);
@@ -17,12 +17,12 @@ const StatsForm = (props: {
     props.handleOnChangeStat(event.target.name as any, Number(event.target.value) || 0);
   };
 
-  const handleStyleChange = (_: any, style: StyleType) => {
-    props.handleOnChangeStat("style", style);
+  const handleStyleChange = (event: SelectChangeEvent<StyleType>) => {
+    props.handleOnChangeStat("style", event.target.value);
   };
 
-  const handleLightShadowChange = (_: any, ls: LightShadowType) => {
-    props.handleOnChangeStat("lightShadow", ls);
+  const handleLightShadowChange = (event: SelectChangeEvent<LightShadowType>) => {
+    props.handleOnChangeStat("lightShadow", event.target.value);
   };
 
   return (
@@ -42,13 +42,18 @@ const StatsForm = (props: {
       {/* スタイル選択 */}
       <Grid item xs={2} lg={2}>
         <EditedOutline isEdited={props.default.style !== props.unitStat.style}>
-          <Autocomplete
-            options={Object.values(StyleType)}
-            renderInput={(params) => <TextField {...params} label="スタイル" sx={{ width: "100%" }} />}
+          <Select
             value={props.unitStat.style}
-            disableClearable
             onChange={handleStyleChange}
-          />
+            sx={{ p: "0 .5rem", width: "100%" }}
+            size={"small"}
+          >
+            {Object.values(StyleType).map((wType) => (
+              <MenuItem value={wType}>
+                <ListItemText primary={wType} />
+              </MenuItem>
+            ))}
+          </Select>
         </EditedOutline>
       </Grid>
       {/* 余白 */}
@@ -62,7 +67,7 @@ const StatsForm = (props: {
             type="number"
             sx={{ width: "100%" }}
             name="statHp"
-            value={props.unitStat.statHp.toString()}
+            value={props.unitStat.statHp?.toString()}
             onChange={handleNumberChange}
           />
         </EditedOutline>
@@ -78,7 +83,7 @@ const StatsForm = (props: {
             type="number"
             sx={{ width: "100%" }}
             name="statMp"
-            value={props.unitStat.statMp.toString()}
+            value={props.unitStat.statMp?.toString()}
             onChange={handleNumberChange}
           />
         </EditedOutline>
@@ -91,13 +96,18 @@ const StatsForm = (props: {
       {/* 天冥選択 */}
       <Grid item xs={2} lg={1}>
         <EditedOutline isEdited={props.default.lightShadow !== props.unitStat.lightShadow}>
-          <Autocomplete
-            options={Object.values(LightShadowType)}
-            renderInput={(params) => <TextField {...params} label="天冥" sx={{ width: "100%" }} />}
+          <Select
             value={props.unitStat.lightShadow}
-            disableClearable
             onChange={handleLightShadowChange}
-          />
+            sx={{ p: "0 .5rem", width: "100%" }}
+            size={"small"}
+          >
+            {Object.values(LightShadowType).map((wType) => (
+              <MenuItem value={wType}>
+                <ListItemText primary={wType} />
+              </MenuItem>
+            ))}
+          </Select>
         </EditedOutline>
       </Grid>
       {/* 天冥入力 */}
@@ -108,7 +118,7 @@ const StatsForm = (props: {
             type="number"
             sx={{ width: "100%" }}
             name="lightShadowNumber"
-            value={props.unitStat.lightShadowNumber.toString()}
+            value={props.unitStat.lightShadowNumber?.toString()}
             onChange={handleNumberChange}
           />
         </EditedOutline>
@@ -122,7 +132,7 @@ const StatsForm = (props: {
             type="number"
             sx={{ width: "100%" }}
             name="statPower"
-            value={props.unitStat.statPower.toString()}
+            value={props.unitStat.statPower?.toString()}
             onChange={handleNumberChange}
           />
         </EditedOutline>
@@ -135,7 +145,7 @@ const StatsForm = (props: {
             type="number"
             sx={{ width: "100%" }}
             name="statEndure"
-            value={props.unitStat.statEndure.toString()}
+            value={props.unitStat.statEndure?.toString()}
             onChange={handleNumberChange}
           />
         </EditedOutline>
@@ -148,7 +158,7 @@ const StatsForm = (props: {
             type="number"
             sx={{ width: "100%" }}
             name="statLuck"
-            value={props.unitStat.statLuck.toString()}
+            value={props.unitStat.statLuck?.toString()}
             onChange={handleNumberChange}
           />
         </EditedOutline>
@@ -164,7 +174,7 @@ const StatsForm = (props: {
             type="number"
             sx={{ width: "100%" }}
             name="statIntelligense"
-            value={props.unitStat.statIntelligense.toString()}
+            value={props.unitStat.statIntelligense?.toString()}
             onChange={handleNumberChange}
           />
         </EditedOutline>
@@ -177,7 +187,7 @@ const StatsForm = (props: {
             type="number"
             sx={{ width: "100%" }}
             name="statSpeed"
-            value={props.unitStat.statSpeed.toString()}
+            value={props.unitStat.statSpeed?.toString()}
             onChange={handleNumberChange}
           />
         </EditedOutline>
@@ -190,7 +200,7 @@ const StatsForm = (props: {
             type="number"
             sx={{ width: "100%" }}
             name="statSplit"
-            value={props.unitStat.statSplit.toString()}
+            value={props.unitStat.statSplit?.toString()}
             onChange={handleNumberChange}
           />
         </EditedOutline>

@@ -1,13 +1,17 @@
 import React from "react";
 import { Grid } from "@mui/material";
-import { ISkillProperty, ISkillsForm, IUnitForm } from "./types.interface";
 import { StyleType } from "../common/constants/StyleType";
 import UnitSkillEditorComponent from "./SkillEditor";
+import { ISkillProperty, IUnitSkills, IUnitStatModel } from "../common/models/UnitModel";
 
 const SkillsForm = (props: {
-  unitStat: IUnitForm;
-  defaultStat: IUnitForm;
-  handleOnChangeSkill: (key: keyof ISkillsForm, grade: keyof ISkillProperty, value: IUnitForm[keyof IUnitForm]) => void;
+  unitStat: IUnitStatModel;
+  defaultStat: IUnitStatModel;
+  handleOnChangeSkill: (
+    key: keyof IUnitSkills,
+    grade: keyof ISkillProperty,
+    value: IUnitStatModel[keyof IUnitStatModel]
+  ) => void;
 }) => {
   const { unitStat, defaultStat, handleOnChangeSkill } = props;
 

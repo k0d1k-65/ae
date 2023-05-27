@@ -1,13 +1,13 @@
 import { Grid, Autocomplete, TextField } from "@mui/material";
 import WeaponSelect from "../common/WeaponSelect";
 import { WeaponType } from "../common/constants/WeaponType";
-import { IUnitForm } from "./types.interface";
 import { EditedOutline } from "../common/EditOutLinedText";
+import { IUnitStatModel } from "../common/models/UnitModel";
 
 const PersonalitiesForm = (props: {
-  unitStat: IUnitForm;
-  default: IUnitForm;
-  handleOnChangeStat: (key: keyof IUnitForm, value: IUnitForm[keyof IUnitForm]) => void;
+  unitStat: IUnitStatModel;
+  default: IUnitStatModel;
+  handleOnChangeStat: (key: keyof IUnitStatModel, value: IUnitStatModel[keyof IUnitStatModel]) => void;
 }) => {
   const handleWeaponSelect = (value: WeaponType) => {
     props.handleOnChangeStat("weapon", value);
@@ -51,7 +51,7 @@ const PersonalitiesForm = (props: {
       <Grid item xs={0} lg={2}></Grid>
       {/* パーソナリティ */}
       <Grid item xs={12} lg={6}>
-        <EditedOutline isEdited={props.default.personalities.join(",") !== props.unitStat.personalities.join(",")}>
+        <EditedOutline isEdited={props.default.personalities?.join(",") !== props.unitStat.personalities?.join(",")}>
           <Autocomplete
             options={[]}
             renderInput={(params) => <TextField {...params} label="パーソナリティ" />}

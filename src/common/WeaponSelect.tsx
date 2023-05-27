@@ -3,7 +3,7 @@ import { WeaponType } from "./constants/WeaponType";
 
 /** 武器種セレクトボックス */
 const WeaponSelect = (props: {
-  value: WeaponType | "all";
+  value: WeaponType | undefined;
   handleSelect: (x: any) => void;
   size?: "small" | "medium" | undefined;
   variant?: "standard" | "outlined" | "filled" | undefined;

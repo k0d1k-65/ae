@@ -1,14 +1,14 @@
 import React from "react";
 import { TextField } from "@mui/material";
-import { ISkillProperty, ISkillsForm } from "./types.interface";
 import { EditedOutline } from "../common/EditOutLinedText";
+import { ISkillProperty, IUnitSkills } from "../common/models/UnitModel";
 
 const UnitSkillEditorComponent = (props: {
   default: ISkillProperty;
   edit: ISkillProperty;
   gradeTitle: "★1" | "★2" | "★3" | "★4" | "★5";
-  gradeKey: keyof ISkillsForm;
-  setter: (key: keyof ISkillsForm, grade: keyof ISkillProperty, value: ISkillProperty[keyof ISkillProperty]) => void;
+  gradeKey: keyof IUnitSkills;
+  setter: (key: keyof IUnitSkills, grade: keyof ISkillProperty, value: ISkillProperty[keyof ISkillProperty]) => void;
 }) => {
   const handleOnChangeName = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const value = event.target.value;
@@ -43,7 +43,7 @@ const UnitSkillEditorComponent = (props: {
           sx={{ width: "100%" }}
           label="消費MP"
           type="number"
-          value={props.edit.mp.toString()}
+          value={props.edit.mp?.toString()}
           onChange={handleOnChangeMp}
         />
       </EditedOutline>

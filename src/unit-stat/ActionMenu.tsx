@@ -103,18 +103,17 @@ const UnitStatActionMenu = (props: {
     setAnchorEl(null);
   };
 
-
   type colors = "error" | "inherit" | "primary" | "secondary" | "info" | "success" | "warning";
 
   return (
     <div>
-      {
-        width > 1440
-        ?
-          options.map(({ key, icon, color, handleOnClick }) => (
-            <Button variant="contained" color={color as colors} startIcon={icon} onClick={handleOnClick}>{key}</Button>
-          ))
-        :
+      {width > 1440 ? (
+        options.map(({ key, icon, color, handleOnClick }) => (
+          <Button variant="contained" color={color as colors} startIcon={icon} onClick={handleOnClick}>
+            {key}
+          </Button>
+        ))
+      ) : (
         <>
           <IconButton
             aria-label="more"
@@ -150,7 +149,7 @@ const UnitStatActionMenu = (props: {
             ))}
           </Menu>
         </>
-      }
+      )}
     </div>
   );
 };

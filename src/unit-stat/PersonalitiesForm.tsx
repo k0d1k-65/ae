@@ -91,6 +91,7 @@ const PersonalitiesForm = (props: {
         <UnitStatBonusEditorComponent
           edit={props.unitStat.styleBoardBonus!}
           default={props.default.styleBoardBonus!}
+          title="Style Bonus"
           setter={props.handleOnChangeStatBonus}
         />
       </Grid>

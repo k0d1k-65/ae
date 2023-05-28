@@ -7,11 +7,12 @@ import "react-toastify/dist/ReactToastify.css";
 import reduceUnitStat, { initUnitStat } from "./UnitStatReducer";
 import UnitStatActionMenu from "./ActionMenu";
 import { retrieveUnits } from "../common/services/UnitService";
-import { Autocomplete, TextField, Box, Divider } from "@mui/material";
-import { ISkillProperty, IStatBonus, IUnitSkills, IUnitStatModel } from "../common/models/UnitModel";
+import { Divider } from "@mui/material";
+import { ISkillProperty, IStatBonus, IUnitSkills, IUnitStatModel, IUnitStats } from "../common/models/UnitModel";
 import StatsForm from "./StatsForm";
 import AbilitiesForm from "./AbilitiesForm";
 import SkillsForm from "./SkillsForm";
+import UnitSelectBox from "./UnitSelectBox";
 
 const Wrapper = styled.div`
   display: flex;
@@ -215,6 +216,20 @@ const UnitStatComponent: React.FC = () => {
     });
   };
 
+  // 天冥ボーナス入力
+  const handleOnChangeLightShadowBonus = (
+    key: keyof IUnitStats,
+    subKey: keyof IStatBonus,
+    value: IStatBonus[keyof IStatBonus]
+  ) => {
+    dispatchEditUnit({
+      type: "updateStatBonus",
+      key,
+      subKey,
+      value,
+    });
+  };
+
   // 選択ユニット変更
   const handleOnChangeUnit = (selected?: IUnitStatModel) => {
     const initialized = initUnitStat(selected);
@@ -235,28 +250,7 @@ const UnitStatComponent: React.FC = () => {
     <Wrapper>
       <Header>
         {/* 編集対象ユニット選択 */}
-        <Autocomplete
-          options={unitList}
-          value={selectedUnit}
-          sx={{ width: "320px", maxWidth: "50%" }}
-          groupBy={(opt) => opt.weapon}
-          getOptionLabel={(opt) => opt.unitName}
-          renderOption={(props, opt) => (
-            <Box component="li" {...props}>
-              <span>
-                {opt.style} {opt.unitName}
-              </span>
-            </Box>
-          )}
-          renderInput={(params) => <TextField {...params} label="Unit" />}
-          onChange={(ev: any, unit: IUnitStatModel | null) => {
-            if (unit) {
-              handleOnChangeUnit(unit);
-            } else {
-              handleOnChangeUnit();
-            }
-          }}
-        />
+        <UnitSelectBox unitList={unitList} selectedUnit={selectedUnit} handleOnSelect={handleOnChangeUnit} />
 
         {/* 余白 */}
         <div style={{ flex: "auto" }}></div>
@@ -286,7 +280,12 @@ const UnitStatComponent: React.FC = () => {
         <Divider sx={{ margin: "16px 8px" }}>stat</Divider>
 
         {/* ステータス */}
-        <StatsForm unitStat={editingUnit} default={selectedUnit} handleOnChangeStat={handleOnChangeStat} />
+        <StatsForm
+          unitStat={editingUnit}
+          default={selectedUnit}
+          handleOnChangeStat={handleOnChangeStat}
+          handleOnChangeStatBonus={handleOnChangeLightShadowBonus}
+        />
 
         <Divider sx={{ margin: "16px 8px" }}>abilities</Divider>
 

@@ -2,12 +2,18 @@ import { Grid, TextField, MenuItem, ListItemText, Select, SelectChangeEvent } fr
 import { StyleType } from "../common/constants/StyleType";
 import { LightShadowType } from "../common/constants/LightShadowType";
 import { EditedOutline } from "../common/EditOutLinedText";
-import { IUnitStatModel } from "../common/models/UnitModel";
+import { IStatBonus, IUnitStatModel, IUnitStats } from "../common/models/UnitModel";
+import LightShadowBonusForm from "./LightShadowBonusForm";
 
 const StatsForm = (props: {
   unitStat: IUnitStatModel;
   default: IUnitStatModel;
   handleOnChangeStat: (key: keyof IUnitStatModel, value: IUnitStatModel[keyof IUnitStatModel]) => void;
+  handleOnChangeStatBonus: (
+    key: keyof IUnitStats,
+    subKey: keyof IStatBonus,
+    value: IStatBonus[keyof IStatBonus]
+  ) => void;
 }) => {
   const handleTextChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     props.handleOnChangeStat(event.target.name as any, event.target.value);
@@ -22,7 +28,7 @@ const StatsForm = (props: {
   };
 
   const handleLightShadowChange = (event: SelectChangeEvent<LightShadowType>) => {
-    props.handleOnChangeStat("lightShadow", event.target.value);
+    props.handleOnChangeStat("lightShadow", event.target.value || null);
   };
 
   return (
@@ -97,11 +103,14 @@ const StatsForm = (props: {
       <Grid item xs={2} lg={1}>
         <EditedOutline isEdited={props.default.lightShadow !== props.unitStat.lightShadow}>
           <Select
-            value={props.unitStat.lightShadow || LightShadowType.Light}
+            value={props.unitStat.lightShadow || ""}
             onChange={handleLightShadowChange}
             sx={{ p: "0 .5rem", width: "100%" }}
             size={"small"}
           >
+            <MenuItem value="">
+              <ListItemText primary="-" />
+            </MenuItem>
             {Object.values(LightShadowType).map((wType) => (
               <MenuItem value={wType}>
                 <ListItemText primary={wType} />
@@ -111,7 +120,7 @@ const StatsForm = (props: {
         </EditedOutline>
       </Grid>
       {/* 天冥入力 */}
-      <Grid item xs={4} lg={2}>
+      <Grid item xs={2} lg={1}>
         <EditedOutline isEdited={props.default.lightShadowNumber !== props.unitStat.lightShadowNumber}>
           <TextField
             label="天冥値"
@@ -122,6 +131,14 @@ const StatsForm = (props: {
             onChange={handleNumberChange}
           />
         </EditedOutline>
+      </Grid>
+      {/* 天冥ボーナス */}
+      <Grid item xs={2} lg={1}>
+        <LightShadowBonusForm
+          unitStat={props.unitStat}
+          default={props.default}
+          handleOnChangeStat={props.handleOnChangeStatBonus}
+        />
       </Grid>
 
       {/* 腕力 */}

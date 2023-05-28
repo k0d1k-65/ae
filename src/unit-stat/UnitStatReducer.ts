@@ -142,7 +142,7 @@ const reduceUnitStat = (state: IUnitStatModel, action: ActionType): IUnitStatMod
   switch (action.type) {
     // 更新
     case "update":
-      if (state[action.key] && typeof action.value !== typeof state[action.key]) {
+      if (!!action.value && !!state[action.key] && typeof action.value !== typeof state[action.key]) {
         console.log(`not match [${typeof action.value}] [${typeof state[action.key]}]`);
         return state;
       }

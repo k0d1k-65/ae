@@ -108,7 +108,7 @@ export type ISkillProperty = {
 /** スキル */
 export type IUnitSkills = {
   // - 通常攻撃変化
-  extra: ISkillProperty | null;
+  extra: ISkillProperty;
 
   /** ★1 スキル */
   first: ISkillProperty;

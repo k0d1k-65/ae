@@ -6,19 +6,26 @@ import { UnitStatBonus, UnitStatBonusType } from "../common/constants/UnitStatTy
 const UnitStatBonusEditorComponent = (props: {
   default: IStatBonus;
   edit: IStatBonus;
+  title: string;
   setter: (key: keyof IStatBonus, value: IStatBonus[keyof IStatBonus]) => void;
 }) => {
   return (
     // スタイルコンプリートボーナス
-    <div style={{ display: "flex" }}>
+    <div style={{ display: "flex", width: "95%" }}>
+      {/* ラベル */}
+      <span style={{ flex: "none", minWidth: "15%", margin: 8 }}>{props.title}</span>
+
       {/* ステータス種 */}
-      <EditedOutline isEdited={props.default.statType !== props.edit.statType} style={{ width: "40%" }}>
+      <EditedOutline isEdited={props.default.statType !== props.edit.statType} style={{ flex: "none", width: "45%" }}>
         <Select
           value={props.edit.statType}
-          onChange={(ev) => props.setter("statType", ev.target.value as UnitStatBonusType)}
+          onChange={(ev) => props.setter("statType", (ev.target.value as UnitStatBonusType) || null)}
           sx={{ p: "0 .5rem", width: "100%" }}
           size={"small"}
         >
+          <MenuItem value="">
+            <ListItemText primary="-" />
+          </MenuItem>
           {Object.keys(UnitStatBonus).map((statType) => (
             <MenuItem value={statType}>
               <ListItemText primary={UnitStatBonus[statType as UnitStatBonusType]} />
@@ -28,7 +35,10 @@ const UnitStatBonusEditorComponent = (props: {
       </EditedOutline>
 
       {/* 補正値 */}
-      <EditedOutline isEdited={props.default.statAmount !== props.edit.statAmount} style={{ width: "40%" }}>
+      <EditedOutline
+        isEdited={props.default.statAmount !== props.edit.statAmount}
+        style={{ flex: "none", width: "20%" }}
+      >
         <TextField
           sx={{ width: "100%" }}
           type="number"
@@ -38,13 +48,16 @@ const UnitStatBonusEditorComponent = (props: {
       </EditedOutline>
 
       {/* 演算子 */}
-      <EditedOutline isEdited={props.default.operator !== props.edit.operator} style={{ width: "20%" }}>
+      <EditedOutline isEdited={props.default.operator !== props.edit.operator} style={{ flex: "none", width: "20%" }}>
         <Select
           value={props.edit.operator}
-          onChange={(ev) => props.setter("operator", ev.target.value as "+" | "%")}
+          onChange={(ev) => props.setter("operator", (ev.target.value as "+" | "%") || null)}
           sx={{ p: "0 .5rem", width: "100%" }}
           size={"small"}
         >
+          <MenuItem value="">
+            <ListItemText primary="-" />
+          </MenuItem>
           {[
             { key: "+", print: ".0" },
             { key: "%", print: "%" },

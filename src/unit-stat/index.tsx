@@ -1,17 +1,17 @@
 import React, { useEffect, useReducer, useState } from "react";
 import PersonalitiesForm from "./PersonalitiesForm";
-import StatsForm from "./StatsForm";
-import AbilitiesForm from "./AbilitiesForm";
-import SkillsForm from "./SkillsForm";
 import styled from "styled-components";
-import { deleteUnit, importUnits, saveUnit } from "../common/services/UnitService";
+import { deleteUnit, importUnits, saveUnit, trancateUnit } from "../common/services/UnitService";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import reduceUnitStat, { initUnitStat } from "./UnitStatReducer";
 import UnitStatActionMenu from "./ActionMenu";
 import { retrieveUnits } from "../common/services/UnitService";
-import { Autocomplete, TextField, Box, Divider, Button } from "@mui/material";
-import { ISkillProperty, IUnitSkills, IUnitStatModel } from "../common/models/UnitModel";
+import { Autocomplete, TextField, Box, Divider } from "@mui/material";
+import { ISkillProperty, IStatBonus, IUnitSkills, IUnitStatModel } from "../common/models/UnitModel";
+import StatsForm from "./StatsForm";
+import AbilitiesForm from "./AbilitiesForm";
+import SkillsForm from "./SkillsForm";
 
 const Wrapper = styled.div`
   display: flex;
@@ -84,24 +84,9 @@ const UnitStatComponent: React.FC = () => {
     }
   };
 
-  // 「新規保存」
-  const handleOnClickCreate = () => {
-    try {
-      const { result, updated } = saveUnit(editingUnit);
-      setUnitList(updated);
-      setSelectedUnit(editingUnit);
-
-      toast.dismiss();
-      toast.success("保存に成功しました");
-    } catch (err) {
-      toast.dismiss();
-      toast.error("保存に失敗しました");
-    }
-  };
-
   // 「クリア」
   const handleOnClickClear = () => {
-    dispatchEditUnit({ type: "updateAll", newItem: selectedUnit });
+    dispatchEditUnit({ type: "replace", newItem: selectedUnit });
 
     toast.dismiss();
     toast.success("クリアしました");
@@ -137,11 +122,12 @@ const UnitStatComponent: React.FC = () => {
           const updated = importUnits(contents, true);
           setUnitList(updated);
           setSelectedUnit(initUnitStat());
-          dispatchEditUnit({ type: "updateAll", newItem: initUnitStat() });
+          dispatchEditUnit({ type: "replace", newItem: initUnitStat() });
 
           toast.dismiss();
           toast.success("インポートしました");
         } catch (err) {
+          console.log("failed import: ", err);
           toast.dismiss();
           toast.success("インポートに失敗しました");
         }
@@ -183,6 +169,19 @@ const UnitStatComponent: React.FC = () => {
     URL.revokeObjectURL(url);
   };
 
+  // 「全削除」
+  const handleOnClickTrancate = () => {
+    trancateUnit();
+
+    const initUnit = initUnitStat();
+    setUnitList([]);
+    dispatchEditUnit({ type: "clear" });
+    setSelectedUnit(initUnit);
+
+    toast.dismiss();
+    toast.success("全データを削除しました");
+  };
+
   // フォーム入力
   const handleOnChangeStat = (key: keyof IUnitStatModel, value: IUnitStatModel[keyof IUnitStatModel]) => {
     dispatchEditUnit({
@@ -206,13 +205,24 @@ const UnitStatComponent: React.FC = () => {
     });
   };
 
-  // 選択ユニット変更
-  const handleOnChangeUnit = (selected: IUnitStatModel) => {
-    setSelectedUnit(selected);
-    {/* TODO: FIXME: モデリングしてnullableなプロパティで問題がないようにする。 */}
+  // スタイルコンプリートボーナス入力
+  const handleOnChangeStyleBoardBonus = (key: keyof IStatBonus, value: IStatBonus[keyof IStatBonus]) => {
     dispatchEditUnit({
-      type: "updateAll",
-      newItem: selected,
+      type: "updateStatBonus",
+      key: "styleBoardBonus",
+      subKey: key,
+      value,
+    });
+  };
+
+  // 選択ユニット変更
+  const handleOnChangeUnit = (selected?: IUnitStatModel) => {
+    const initialized = initUnitStat(selected);
+    setSelectedUnit(initialized);
+
+    dispatchEditUnit({
+      type: "replace",
+      newItem: initialized,
     });
   };
 
@@ -243,7 +253,7 @@ const UnitStatComponent: React.FC = () => {
             if (unit) {
               handleOnChangeUnit(unit);
             } else {
-              handleOnChangeUnit(initUnitStat());
+              handleOnChangeUnit();
             }
           }}
         />
@@ -257,7 +267,7 @@ const UnitStatComponent: React.FC = () => {
           handleOnDelete={handleOnClickDelete}
           handleOnImport={handleonClickImport}
           handleOnExport={handleonClickExport}
-          handleOnTrancate={() => {}}
+          handleOnTrancate={handleOnClickTrancate}
         />
       </Header>
 
@@ -266,21 +276,26 @@ const UnitStatComponent: React.FC = () => {
         {/* TODO: クリックすると縮小する。 */}
         <Divider sx={{ margin: "16px 8px" }}>base</Divider>
 
-        <PersonalitiesForm unitStat={editingUnit} default={selectedUnit} handleOnChangeStat={handleOnChangeStat} />
+        <PersonalitiesForm
+          unitStat={editingUnit}
+          default={selectedUnit}
+          handleOnChangeStat={handleOnChangeStat}
+          handleOnChangeStatBonus={handleOnChangeStyleBoardBonus}
+        />
 
-        {/* ステータス */}
         <Divider sx={{ margin: "16px 8px" }}>stat</Divider>
 
+        {/* ステータス */}
         <StatsForm unitStat={editingUnit} default={selectedUnit} handleOnChangeStat={handleOnChangeStat} />
 
-        {/* アビリティ */}
         <Divider sx={{ margin: "16px 8px" }}>abilities</Divider>
 
+        {/* アビリティ */}
         <AbilitiesForm unitStat={editingUnit} default={selectedUnit} handleOnChangeStat={handleOnChangeStat} />
 
-        {/* スキル */}
         <Divider sx={{ margin: "16px 8px" }}>skills</Divider>
 
+        {/* スキル */}
         <SkillsForm unitStat={editingUnit} defaultStat={selectedUnit} handleOnChangeSkill={handleOnChangeSkill} />
       </Main>
     </Wrapper>

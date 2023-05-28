@@ -1,22 +1,15 @@
-import { Grid, Autocomplete, TextField } from "@mui/material";
-import WeaponSelect from "../common/WeaponSelect";
+import { Grid, Autocomplete, TextField, MenuItem, ListItemText, Select } from "@mui/material";
 import { WeaponType } from "../common/constants/WeaponType";
 import { EditedOutline } from "../common/EditOutLinedText";
-import { IUnitStatModel } from "../common/models/UnitModel";
+import { IStatBonus, IUnitStatModel } from "../common/models/UnitModel";
+import UnitStatBonusEditorComponent from "./StatBonusEditor";
 
 const PersonalitiesForm = (props: {
   unitStat: IUnitStatModel;
   default: IUnitStatModel;
   handleOnChangeStat: (key: keyof IUnitStatModel, value: IUnitStatModel[keyof IUnitStatModel]) => void;
+  handleOnChangeStatBonus: (key: keyof IStatBonus, value: IStatBonus[keyof IStatBonus]) => void;
 }) => {
-  const handleWeaponSelect = (value: WeaponType) => {
-    props.handleOnChangeStat("weapon", value);
-  };
-
-  const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    props.handleOnChangeStat("unitName", event.target.value);
-  };
-
   const handlePersonalitiesChange = (_: any, items: string[]) => {
     // カンマ区切りで一括登録
     const personalities = [
@@ -31,24 +24,50 @@ const PersonalitiesForm = (props: {
   return (
     <Grid container>
       {/* 武器選択 */}
-      <EditedOutline isEdited={props.default.weapon !== props.unitStat.weapon}>
-        <Grid item xs={3} lg={1}>
-          <WeaponSelect value={props.unitStat.weapon} handleSelect={handleWeaponSelect} size="small" />
-        </Grid>
-      </EditedOutline>
+      <Grid item xs={2} lg={1}>
+        <EditedOutline isEdited={props.default.weapon !== props.unitStat.weapon}>
+          <Select
+            value={props.unitStat.weapon}
+            onChange={(ev) => props.handleOnChangeStat("weapon", ev.target.value)}
+            sx={{ p: "0 .5rem", width: "100%" }}
+            size={"small"}
+          >
+            {Object.values(WeaponType).map((wType) => (
+              <MenuItem value={wType}>
+                <ListItemText primary={wType} />
+              </MenuItem>
+            ))}
+          </Select>
+        </EditedOutline>
+      </Grid>
+
       {/* ユニット名入力 */}
-      <Grid item xs={9} lg={3}>
+      <Grid item xs={5} lg={2}>
         <EditedOutline isEdited={props.default.unitName !== props.unitStat.unitName}>
           <TextField
             value={props.unitStat.unitName}
-            onChange={handleNameChange}
+            onChange={(ev) => props.handleOnChangeStat("unitName", ev.target.value)}
             label="ユニット名"
             sx={{ width: "100%" }}
           />
         </EditedOutline>
       </Grid>
+
+      {/* 真名 */}
+      <Grid item xs={5} lg={2}>
+        <EditedOutline isEdited={props.default.unitTrueName !== props.unitStat.unitTrueName}>
+          <TextField
+            value={props.unitStat.unitTrueName || ""}
+            onChange={(ev) => props.handleOnChangeStat("unitTrueName", ev.target.value)}
+            label="真名"
+            sx={{ width: "100%" }}
+          />
+        </EditedOutline>
+      </Grid>
+
       {/* 余白 */}
-      <Grid item xs={0} lg={2}></Grid>
+      <Grid item xs={12} lg={1}></Grid>
+
       {/* パーソナリティ */}
       <Grid item xs={12} lg={6}>
         <EditedOutline isEdited={props.default.personalities?.join(",") !== props.unitStat.personalities?.join(",")}>
@@ -57,11 +76,23 @@ const PersonalitiesForm = (props: {
             renderInput={(params) => <TextField {...params} label="パーソナリティ" />}
             multiple
             freeSolo
-            value={props.unitStat.personalities}
+            value={props.unitStat.personalities || []}
             onChange={handlePersonalitiesChange}
             disableCloseOnSelect
           />
         </EditedOutline>
+      </Grid>
+
+      {/* 余白 */}
+      <Grid item xs={12} lg={6}></Grid>
+
+      {/* スタイルコンプリートボーナス */}
+      <Grid item xs={12} lg={6}>
+        <UnitStatBonusEditorComponent
+          edit={props.unitStat.styleBoardBonus!}
+          default={props.default.styleBoardBonus!}
+          setter={props.handleOnChangeStatBonus}
+        />
       </Grid>
     </Grid>
   );

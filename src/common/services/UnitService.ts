@@ -9,19 +9,20 @@ const unitsKey = "UnitModel";
 export const retrieveUnits = (): IUnitStatModel[] => {
   const UnitModels = readLocalStorage<IUnitStatModel[]>(unitsKey, []);
 
+  console.log({ UnitModels });
+
   // TODO: なんかソートしないといけないっぽい、でもUI都合だから、なんかいい感じなところに書きたい。
-  return UnitModels
-  .sort((a, b) => {
+  return UnitModels.sort((a, b) => {
     const styleTypeIndex = Object.values(StyleType);
 
-    return styleTypeIndex.indexOf(a.style) >= styleTypeIndex.indexOf(b.style) ? 1 : -1
+    return styleTypeIndex.indexOf(a.style) >= styleTypeIndex.indexOf(b.style) ? 1 : -1;
   })
-  .sort((a, b) => (a.unitName >= b.unitName ? 1 : -1))
-  .sort((a, b) => {
-    const weaponTypeIndex = Object.values(WeaponType);
+    .sort((a, b) => (a.unitName >= b.unitName ? 1 : -1))
+    .sort((a, b) => {
+      const weaponTypeIndex = Object.values(WeaponType);
 
-    return weaponTypeIndex.indexOf(a.weapon) >= weaponTypeIndex.indexOf(b.weapon) ? 1 : -1
-  });
+      return weaponTypeIndex.indexOf(a.weapon) >= weaponTypeIndex.indexOf(b.weapon) ? 1 : -1;
+    });
 };
 
 type SaveResult = {
@@ -127,4 +128,9 @@ export const importUnits = (json: string, overwrite = false) => {
 
     return units;
   }
+};
+
+/** ローカルストレージから1件削除 */
+export const trancateUnit = () => {
+  saveLocalStorage(unitsKey, []);
 };

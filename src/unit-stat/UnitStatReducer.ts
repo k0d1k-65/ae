@@ -1,6 +1,5 @@
 import { WeaponType } from "../common/constants/WeaponType";
 import { StyleType } from "../common/constants/StyleType";
-import { LightShadowType } from "../common/constants/LightShadowType";
 import {
   ISkillProperty,
   IStatBonus,
@@ -27,64 +26,28 @@ type ActionType =
       value: IUnitStatModel[keyof IUnitStatModel];
     }
   | {
-      type: "updateAll";
+      type: "updateStatBonus";
+      key: keyof IUnitStatModel;
+      subKey: keyof IStatBonus;
+      value: IStatBonus[keyof IStatBonus];
+    }
+  | {
+      type: "replace";
       newItem: IUnitStatModel;
     };
 
-export const initUnitStat = (): IUnitStatModel => {
+export const initUnitStat = (current?: IUnitStatModel): IUnitStatModel => {
   /** パーソナリティ 初期値 */
-  const initPersonality: IUnitPersonalities = {
-    unitName: "",
-    weapon: WeaponType.All,
-    personalities: [],
-  };
+  const initPersonality: IUnitPersonalities = unitPersonalities(current);
 
   /** ステータス 初期値 */
-  const initStat: IUnitStats = {
-    className: "",
-    style: StyleType.NS,
-    statHp: 0,
-    statMp: 0,
-    lightShadow: LightShadowType.Light,
-    lightShadowNumber: 0,
-    statPower: 0,
-    statEndure: 0,
-    statLuck: 0,
-    statIntelligense: 0,
-    statSpeed: 0,
-    statSplit: 0,
-  };
+  const initStat: IUnitStats = unitStats(current);
 
   /** アビリティ 初期値 */
-  const initAbility: IUnitAbilities = {
-    variablechantName: "",
-    variablechantDetail: "",
-    variablechantEnhancedName: "",
-    variablechantEnhancedDetail: "",
-    extraSpecialMoveName: "",
-    extraSpecialMoveDetail: "",
-    anotherSenceName: "",
-    anotherSenceDetail: "",
-    abilities: [],
-  };
+  const initAbility: IUnitAbilities = unitAbilities(current);
 
   /** スキル 初期値 */
-  const initSkillProp: ISkillProperty = {
-    name: "",
-    mp: 0,
-    detail: "",
-  };
-
-  const initSkill: IUnitSkills = {
-    first: { ...initSkillProp },
-    second: { ...initSkillProp },
-    thirdA: { ...initSkillProp },
-    thirdB: { ...initSkillProp },
-    fourthA: { ...initSkillProp },
-    fourthB: { ...initSkillProp },
-    fifthA: { ...initSkillProp },
-    fifthB: { ...initSkillProp },
-  };
+  const initSkill: IUnitSkills = unitSkills(current);
 
   return {
     ...initPersonality,
@@ -94,11 +57,93 @@ export const initUnitStat = (): IUnitStatModel => {
   };
 };
 
+const unitStyleBoardBonus = (current?: IStatBonus | null): IStatBonus => {
+  return {
+    statType: current?.statType || null,
+    statAmount: current?.statAmount || null,
+    operator: current?.operator || null,
+  };
+};
+
+const unitPersonalities = (current?: IUnitPersonalities): IUnitPersonalities => {
+  return {
+    unitName: current?.unitName || "",
+    weapon: current?.weapon || WeaponType.Lod,
+    personalities: current?.personalities || [],
+    unitTrueName: current?.unitTrueName || null,
+    styleBoardBonus: unitStyleBoardBonus(current?.styleBoardBonus),
+  };
+};
+
+const unitStats = (current?: IUnitStats): IUnitStats => {
+  return {
+    className: current?.className || null,
+    style: current?.style || StyleType.NS,
+    statHp: current?.statHp || null,
+    statMp: current?.statMp || null,
+    lightShadow: current?.lightShadow || null,
+    lightShadowNumber: current?.lightShadowNumber || null,
+    statPower: current?.statPower || null,
+    statEndure: current?.statEndure || null,
+    statLuck: current?.statLuck || null,
+    statIntelligense: current?.statIntelligense || null,
+    statSpeed: current?.statSpeed || null,
+    statSplit: current?.statSplit || null,
+    ls_5: unitStyleBoardBonus(current?.ls_5),
+    ls_15: unitStyleBoardBonus(current?.ls_15),
+    ls_30: unitStyleBoardBonus(current?.ls_30),
+    ls_50: unitStyleBoardBonus(current?.ls_50),
+    ls_75: unitStyleBoardBonus(current?.ls_75),
+    ls_105: unitStyleBoardBonus(current?.ls_105),
+    ls_140: unitStyleBoardBonus(current?.ls_140),
+    ls_175: unitStyleBoardBonus(current?.ls_175),
+    ls_215: unitStyleBoardBonus(current?.ls_215),
+    ls_255: unitStyleBoardBonus(current?.ls_255),
+  };
+};
+
+const unitAbilities = (current?: IUnitAbilities): IUnitAbilities => {
+  return {
+    variablechantName: current?.variablechantName || null,
+    variablechantDetail: current?.variablechantDetail || null,
+    variablechantEnhancedName: current?.variablechantEnhancedName || null,
+    variablechantEnhancedDetail: current?.variablechantEnhancedDetail || null,
+    extraSpecialMoveName: current?.extraSpecialMoveName || null,
+    extraSpecialMoveDetail: current?.extraSpecialMoveDetail || null,
+    anotherSenceName: current?.anotherSenceName || null,
+    anotherSenceDetail: current?.anotherSenceDetail || null,
+    abilities: [],
+  };
+};
+
+const unitSkillProps = (current?: ISkillProperty | null): ISkillProperty => {
+  return {
+    name: current?.name || null,
+    mp: current?.mp || null,
+    detail: current?.detail || null,
+  };
+};
+
+const unitSkills = (current?: IUnitSkills): IUnitSkills => {
+  return {
+    extra: unitSkillProps(current?.extra),
+    first: unitSkillProps(current?.first),
+    second: unitSkillProps(current?.second),
+    thirdA: unitSkillProps(current?.thirdA),
+    thirdB: unitSkillProps(current?.thirdB),
+    fourthA: unitSkillProps(current?.fourthA),
+    fourthB: unitSkillProps(current?.fourthB),
+    fifthA: unitSkillProps(current?.fifthA),
+    fifthB: unitSkillProps(current?.fifthB),
+  };
+};
+
 const reduceUnitStat = (state: IUnitStatModel, action: ActionType): IUnitStatModel => {
   switch (action.type) {
     // 更新
     case "update":
-      if (typeof action.value !== typeof state[action.key]) {
+      if (state[action.key] && typeof action.value !== typeof state[action.key]) {
+        console.log(`not match [${typeof action.value}] [${typeof state[action.key]}]`);
         return state;
       }
 
@@ -120,9 +165,22 @@ const reduceUnitStat = (state: IUnitStatModel, action: ActionType): IUnitStatMod
         [action.key]: newSkill,
       };
 
+    // ボーナス枠フォーム（2階層）を更新
+    case "updateStatBonus":
+      const stat = state[action.key] as IStatBonus;
+      const newBonus = {
+        ...stat,
+        [action.subKey]: action.value,
+      };
+
+      return {
+        ...state,
+        [action.key]: newBonus,
+      };
+
     // まるっと置き換え
-    case "updateAll":
-      return action.newItem;
+    case "replace":
+      return initUnitStat(action.newItem);
 
     // 初期化
     case "clear":

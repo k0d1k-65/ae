@@ -34,7 +34,7 @@ const UnitSkillEditorComponent = (props: {
         <TextField
           sx={{ width: "100%" }}
           label={`${props.gradeTitle} スキル`}
-          value={props.edit.name}
+          value={props.edit.name || ""}
           onChange={handleOnChangeName}
         />
       </EditedOutline>
@@ -43,7 +43,7 @@ const UnitSkillEditorComponent = (props: {
           sx={{ width: "100%" }}
           label="消費MP"
           type="number"
-          value={props.edit.mp?.toString()}
+          value={props.edit.mp?.toString() || ""}
           onChange={handleOnChangeMp}
         />
       </EditedOutline>
@@ -52,7 +52,7 @@ const UnitSkillEditorComponent = (props: {
           sx={{ width: "100%" }}
           label="詳細"
           multiline
-          value={props.edit.detail}
+          value={props.edit.detail || ""}
           onChange={handleOnChangeDetail}
         />
       </EditedOutline>

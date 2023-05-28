@@ -1,4 +1,4 @@
-import { Grid, Autocomplete, TextField, MenuItem, ListItemText, Select, SelectChangeEvent } from "@mui/material";
+import { Grid, TextField, MenuItem, ListItemText, Select, SelectChangeEvent } from "@mui/material";
 import { StyleType } from "../common/constants/StyleType";
 import { LightShadowType } from "../common/constants/LightShadowType";
 import { EditedOutline } from "../common/EditOutLinedText";
@@ -34,7 +34,7 @@ const StatsForm = (props: {
             label="クラス名"
             sx={{ width: "100%" }}
             name="className"
-            value={props.unitStat.className}
+            value={props.unitStat.className || ""}
             onChange={handleTextChange}
           />
         </EditedOutline>
@@ -67,7 +67,7 @@ const StatsForm = (props: {
             type="number"
             sx={{ width: "100%" }}
             name="statHp"
-            value={props.unitStat.statHp?.toString()}
+            value={props.unitStat.statHp?.toString() || ""}
             onChange={handleNumberChange}
           />
         </EditedOutline>
@@ -83,7 +83,7 @@ const StatsForm = (props: {
             type="number"
             sx={{ width: "100%" }}
             name="statMp"
-            value={props.unitStat.statMp?.toString()}
+            value={props.unitStat.statMp?.toString() || ""}
             onChange={handleNumberChange}
           />
         </EditedOutline>
@@ -97,7 +97,7 @@ const StatsForm = (props: {
       <Grid item xs={2} lg={1}>
         <EditedOutline isEdited={props.default.lightShadow !== props.unitStat.lightShadow}>
           <Select
-            value={props.unitStat.lightShadow}
+            value={props.unitStat.lightShadow || LightShadowType.Light}
             onChange={handleLightShadowChange}
             sx={{ p: "0 .5rem", width: "100%" }}
             size={"small"}
@@ -118,7 +118,7 @@ const StatsForm = (props: {
             type="number"
             sx={{ width: "100%" }}
             name="lightShadowNumber"
-            value={props.unitStat.lightShadowNumber?.toString()}
+            value={props.unitStat.lightShadowNumber?.toString() || ""}
             onChange={handleNumberChange}
           />
         </EditedOutline>
@@ -132,7 +132,7 @@ const StatsForm = (props: {
             type="number"
             sx={{ width: "100%" }}
             name="statPower"
-            value={props.unitStat.statPower?.toString()}
+            value={props.unitStat.statPower?.toString() || ""}
             onChange={handleNumberChange}
           />
         </EditedOutline>
@@ -145,7 +145,7 @@ const StatsForm = (props: {
             type="number"
             sx={{ width: "100%" }}
             name="statEndure"
-            value={props.unitStat.statEndure?.toString()}
+            value={props.unitStat.statEndure?.toString() || ""}
             onChange={handleNumberChange}
           />
         </EditedOutline>
@@ -158,7 +158,7 @@ const StatsForm = (props: {
             type="number"
             sx={{ width: "100%" }}
             name="statLuck"
-            value={props.unitStat.statLuck?.toString()}
+            value={props.unitStat.statLuck?.toString() || ""}
             onChange={handleNumberChange}
           />
         </EditedOutline>
@@ -174,7 +174,7 @@ const StatsForm = (props: {
             type="number"
             sx={{ width: "100%" }}
             name="statIntelligense"
-            value={props.unitStat.statIntelligense?.toString()}
+            value={props.unitStat.statIntelligense?.toString() || ""}
             onChange={handleNumberChange}
           />
         </EditedOutline>
@@ -187,7 +187,7 @@ const StatsForm = (props: {
             type="number"
             sx={{ width: "100%" }}
             name="statSpeed"
-            value={props.unitStat.statSpeed?.toString()}
+            value={props.unitStat.statSpeed?.toString() || ""}
             onChange={handleNumberChange}
           />
         </EditedOutline>
@@ -200,7 +200,7 @@ const StatsForm = (props: {
             type="number"
             sx={{ width: "100%" }}
             name="statSplit"
-            value={props.unitStat.statSplit?.toString()}
+            value={props.unitStat.statSplit?.toString() || ""}
             onChange={handleNumberChange}
           />
         </EditedOutline>

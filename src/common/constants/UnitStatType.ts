@@ -13,3 +13,18 @@ export enum UnitStatType {
   SPLIT = "精神",
   SPEED = "速度",
 }
+
+/** ボーナスステータス種 */
+export type UnitStatBonusType = keyof typeof UnitStatBonus;
+
+export const UnitStatBonus = {
+  HP: "HP",
+  MP: "MP",
+  POWER: "腕力",
+  ENDURE: "耐久",
+  LUCK: "幸運",
+  INTELLIGENCE: "知性",
+  SPLIT: "精神",
+  SPEED: "速度",
+  CRITICAL: "クリティカル率",
+} as const;

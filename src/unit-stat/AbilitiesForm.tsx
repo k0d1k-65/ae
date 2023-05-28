@@ -1,4 +1,4 @@
-import { Grid, Autocomplete, TextField, Box } from "@mui/material";
+import { Grid, Autocomplete, TextField } from "@mui/material";
 import { EditedOutline } from "../common/EditOutLinedText";
 import { IUnitStatModel } from "../common/models/UnitModel";
 
@@ -31,7 +31,7 @@ const AbilitiesForm = (props: {
             label="ヴァリアブルチャント名"
             sx={{ width: "100%" }}
             name="variablechantName"
-            value={props.unitStat.variablechantName}
+            value={props.unitStat.variablechantName || ""}
             onChange={handleTextChange}
           />
         </EditedOutline>
@@ -41,7 +41,7 @@ const AbilitiesForm = (props: {
             label="ヴァリアブルチャント詳細"
             sx={{ width: "100%" }}
             name="variablechantDetail"
-            value={props.unitStat.variablechantDetail}
+            value={props.unitStat.variablechantDetail || ""}
             onChange={handleTextChange}
             multiline
           />
@@ -52,7 +52,7 @@ const AbilitiesForm = (props: {
             label="強化ヴァリアブルチャント名"
             sx={{ width: "100%" }}
             name="variablechantEnhancedName"
-            value={props.unitStat.variablechantEnhancedName}
+            value={props.unitStat.variablechantEnhancedName || ""}
             onChange={handleTextChange}
           />
         </EditedOutline>
@@ -64,7 +64,7 @@ const AbilitiesForm = (props: {
             label="強化ヴァリアブルチャント詳細"
             sx={{ width: "100%" }}
             name="variablechantEnhancedDetail"
-            value={props.unitStat.variablechantEnhancedDetail}
+            value={props.unitStat.variablechantEnhancedDetail || ""}
             onChange={handleTextChange}
             multiline
           />
@@ -76,7 +76,7 @@ const AbilitiesForm = (props: {
             label="Ex必殺技名"
             sx={{ width: "100%" }}
             name="extraSpecialMoveName"
-            value={props.unitStat.extraSpecialMoveName}
+            value={props.unitStat.extraSpecialMoveName || ""}
             onChange={handleTextChange}
           />
         </EditedOutline>
@@ -86,7 +86,7 @@ const AbilitiesForm = (props: {
             label="Ex必殺技詳細"
             sx={{ width: "100%" }}
             name="extraSpecialMoveDetail"
-            value={props.unitStat.extraSpecialMoveDetail}
+            value={props.unitStat.extraSpecialMoveDetail || ""}
             onChange={handleTextChange}
             multiline
           />
@@ -98,7 +98,7 @@ const AbilitiesForm = (props: {
             label="アナザーセンス名"
             sx={{ width: "100%" }}
             name="anotherSenceName"
-            value={props.unitStat.anotherSenceName}
+            value={props.unitStat.anotherSenceName || ""}
             onChange={handleTextChange}
           />
         </EditedOutline>
@@ -108,7 +108,7 @@ const AbilitiesForm = (props: {
             label="アナザーセンス詳細"
             sx={{ width: "100%" }}
             name="anotherSenceDetail"
-            value={props.unitStat.anotherSenceDetail}
+            value={props.unitStat.anotherSenceDetail || ""}
             onChange={handleTextChange}
             multiline
           />
@@ -121,7 +121,7 @@ const AbilitiesForm = (props: {
             renderInput={(params) => <TextField {...params} label="アビリティ" />}
             multiple
             freeSolo
-            value={props.unitStat.abilities}
+            value={props.unitStat.abilities || []}
             onChange={handleabilityChange}
           />
         </EditedOutline>

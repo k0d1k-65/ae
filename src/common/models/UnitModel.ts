@@ -1,26 +1,15 @@
 import { LightShadowType } from "../constants/LightShadowType";
 import { StyleType } from "../constants/StyleType";
+import { UnitStatBonusType } from "../constants/UnitStatType";
 import { WeaponType } from "../constants/WeaponType";
-
-// TODO: なんとか共通化できねーの？
-export type IStatBonusTypes =
-  | "HP"
-  | "MP"
-  | "POWER"
-  | "ENDURE"
-  | "LUCK"
-  | "INTELLIGENCE"
-  | "SPLIT"
-  | "SPEED"
-  | "CRITICAL";
 
 export type IStatBonus = {
   /** ステータス種 */
-  statType: IStatBonusTypes;
+  statType: UnitStatBonusType | null;
   /** 補正値 */
-  statAmount: number;
+  statAmount: number | null;
   /** 演算子 */
-  operator: "+" | "%";
+  operator: "+" | "%" | null;
 };
 
 /** パーソナリティ */
@@ -30,96 +19,96 @@ export type IUnitPersonalities = {
   /** ユニット名入力 */
   unitName: string;
   /** パーソナリティ */
-  personalities?: string[];
+  personalities: string[] | null;
   /** 真の名前 */
-  unitTrueName?: string;
+  unitTrueName: string | null;
   /** スタイルコンプリートボーナス */
-  styleBoardBonus?: IStatBonus;
+  styleBoardBonus: IStatBonus | null;
 };
 
 /** ステータス */
 export type IUnitStats = {
   /** クラス名 */
-  className?: string;
+  className: string | null;
   /** スタイル選択 */
   style: StyleType;
   /** HP */
-  statHp?: number;
+  statHp: number | null;
   /** MP */
-  statMp?: number;
+  statMp: number | null;
   /** 天冥選択 */
-  lightShadow?: LightShadowType;
+  lightShadow: LightShadowType | null;
   /** 天冥入力 */
-  lightShadowNumber?: number;
+  lightShadowNumber: number | null;
   /** 腕力 */
-  statPower?: number;
+  statPower: number | null;
   /** 耐久 */
-  statEndure?: number;
+  statEndure: number | null;
   /** 幸運 */
-  statLuck?: number;
+  statLuck: number | null;
   /** 知性 */
-  statIntelligense?: number;
+  statIntelligense: number | null;
   /** 速度 */
-  statSpeed?: number;
+  statSpeed: number | null;
   /** 精神 */
-  statSplit?: number;
+  statSplit: number | null;
   /** 天冥ボーナス 5 */
-  ls_5?: IStatBonus;
+  ls_5: IStatBonus | null;
   /** 天冥ボーナス 15 */
-  ls_15?: IStatBonus;
+  ls_15: IStatBonus | null;
   /** 天冥ボーナス 30 */
-  ls_30?: IStatBonus;
+  ls_30: IStatBonus | null;
   /** 天冥ボーナス 50 */
-  ls_50?: IStatBonus;
+  ls_50: IStatBonus | null;
   /** 天冥ボーナス 75 */
-  ls_75?: IStatBonus;
+  ls_75: IStatBonus | null;
   /** 天冥ボーナス 105 */
-  ls_105?: IStatBonus;
+  ls_105: IStatBonus | null;
   /** 天冥ボーナス 140 */
-  ls_140?: IStatBonus;
+  ls_140: IStatBonus | null;
   /** 天冥ボーナス 175 */
-  ls_175?: IStatBonus;
+  ls_175: IStatBonus | null;
   /** 天冥ボーナス 215 */
-  ls_215?: IStatBonus;
+  ls_215: IStatBonus | null;
   /** 天冥ボーナス 255 */
-  ls_255?: IStatBonus;
+  ls_255: IStatBonus | null;
 };
 
 /** アビリティ */
 export type IUnitAbilities = {
   /** ヴァリアブルチャント名 */
-  variablechantName?: string;
+  variablechantName: string | null;
   /** ヴァリアブルチャント詳細 */
-  variablechantDetail?: string;
+  variablechantDetail: string | null;
   /** 強化ヴァリアブルチャント名 */
-  variablechantEnhancedName?: string;
+  variablechantEnhancedName: string | null;
   /** 強化ヴァリアブルチャント詳細 */
-  variablechantEnhancedDetail?: string;
+  variablechantEnhancedDetail: string | null;
   /** Ex必殺技名 */
-  extraSpecialMoveName?: string;
+  extraSpecialMoveName: string | null;
   /** Ex必殺技詳細 */
-  extraSpecialMoveDetail?: string;
+  extraSpecialMoveDetail: string | null;
   /** アナザーセンス名 */
-  anotherSenceName?: string;
+  anotherSenceName: string | null;
   /** アナザーセンス詳細 */
-  anotherSenceDetail?: string;
+  anotherSenceDetail: string | null;
   /** 個人アビリティ */
-  abilities?: string[];
+  abilities: string[] | null;
 };
 
 export type ISkillProperty = {
   /** スキル名 */
-  name?: string;
+  name: string | null;
   /** 消費MP */
-  mp?: number;
+  mp: number | null;
   /** 詳細 */
-  detail?: string;
+  detail: string | null;
 };
 
 /** スキル */
 export type IUnitSkills = {
   // - 通常攻撃変化
-  extra?: ISkillProperty;
+  extra: ISkillProperty | null;
 
   /** ★1 スキル */
   first: ISkillProperty;

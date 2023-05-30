@@ -1,7 +1,6 @@
 import * as React from "react";
 import IconButton from "@mui/material/IconButton";
 import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import CreateIcon from "@mui/icons-material/Create";
 import BackspaceIcon from "@mui/icons-material/Backspace";
@@ -9,8 +8,9 @@ import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import IosShareIcon from "@mui/icons-material/IosShare";
 import CleaningServicesIcon from "@mui/icons-material/CleaningServices";
-import { ListItemIcon, ListItemText, Button } from "@mui/material";
 import useWindowSize from "../common/utils/WindowSize";
+import UnitStatActionDialog from "./ActionDialog";
+import UnitStatActionMenuItem from "./ActionMenuItem";
 
 const ITEM_HEIGHT = 48;
 
@@ -42,7 +42,7 @@ const UnitStatActionMenu = (props: {
       key: "save",
       icon: <CreateIcon />,
       color: "success",
-      handleOnClick: () => {
+      handleClickMenu: () => {
         handleOnClickSave();
         setAnchorEl(null);
       },
@@ -51,7 +51,7 @@ const UnitStatActionMenu = (props: {
       key: "clear",
       icon: <BackspaceIcon />,
       color: "info",
-      handleOnClick: () => {
+      handleClickMenu: () => {
         handleOnClickClear();
         setAnchorEl(null);
       },
@@ -60,7 +60,7 @@ const UnitStatActionMenu = (props: {
       key: "delete",
       icon: <DeleteOutlineIcon />,
       color: "error",
-      handleOnClick: () => {
+      handleClickMenu: () => {
         handleOnDelete();
         setAnchorEl(null);
       },
@@ -69,7 +69,7 @@ const UnitStatActionMenu = (props: {
       key: "import",
       icon: <FileDownloadIcon />,
       color: "info",
-      handleOnClick: () => {
+      handleClickMenu: () => {
         handleOnImport();
         setAnchorEl(null);
       },
@@ -78,7 +78,7 @@ const UnitStatActionMenu = (props: {
       key: "export",
       icon: <IosShareIcon />,
       color: "info",
-      handleOnClick: () => {
+      handleClickMenu: () => {
         handleOnExport();
         setAnchorEl(null);
       },
@@ -87,7 +87,7 @@ const UnitStatActionMenu = (props: {
       key: "trancate",
       icon: <CleaningServicesIcon />,
       color: "error",
-      handleOnClick: () => {
+      handleClickMenu: () => {
         handleOnTrancate();
         setAnchorEl(null);
       },
@@ -108,10 +108,8 @@ const UnitStatActionMenu = (props: {
   return (
     <div>
       {width > 1440 ? (
-        options.map(({ key, icon, color, handleOnClick }) => (
-          <Button variant="contained" color={color as colors} startIcon={icon} onClick={handleOnClick}>
-            {key}
-          </Button>
+        options.map(({ key, icon, color, handleClickMenu }) => (
+          <UnitStatActionDialog title={key} icon={icon} color={color} delegate={handleClickMenu} />
         ))
       ) : (
         <>
@@ -141,11 +139,8 @@ const UnitStatActionMenu = (props: {
               },
             }}
           >
-            {options.map(({ key, icon, handleOnClick }) => (
-              <MenuItem key={key} onClick={handleOnClick}>
-                <ListItemIcon>{icon}</ListItemIcon>
-                <ListItemText primary={key} />
-              </MenuItem>
+            {options.map(({ key, icon, handleClickMenu }) => (
+              <UnitStatActionMenuItem title={key} icon={icon} delegate={handleClickMenu} />
             ))}
           </Menu>
         </>

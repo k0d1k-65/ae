@@ -29,8 +29,7 @@ const PersonalitiesForm = (props: {
           <Select
             value={props.unitStat.weapon}
             onChange={(ev) => props.handleOnChangeStat("weapon", ev.target.value)}
-            sx={{ p: "0 .5rem", width: "100%" }}
-            size={"small"}
+            sx={{ width: "100%", height: "56px" }}
           >
             {Object.values(WeaponType).map((wType) => (
               <MenuItem value={wType}>

@@ -1,62 +1,18 @@
 import React, { useEffect, useReducer, useState } from "react";
 import PersonalitiesForm from "./PersonalitiesForm";
-import styled from "styled-components";
 import { deleteUnit, importUnits, saveUnit, trancateUnit } from "../common/services/UnitService";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import reduceUnitStat, { initUnitStat } from "./UnitStatReducer";
 import UnitStatActionMenu from "./ActionMenu";
 import { retrieveUnits } from "../common/services/UnitService";
-import { Divider } from "@mui/material";
+import { Divider, ToggleButton } from "@mui/material";
 import { ISkillProperty, IStatBonus, IUnitSkills, IUnitStatModel, IUnitStats } from "../common/models/UnitModel";
 import StatsForm from "./StatsForm";
 import AbilitiesForm from "./AbilitiesForm";
 import SkillsForm from "./SkillsForm";
 import UnitSelectBox from "./UnitSelectBox";
-
-const Wrapper = styled.div`
-  display: flex;
-  height: 100%;
-  flex-direction: column;
-`;
-
-const Header = styled.div`
-  flex: 0;
-  margin: 8px 0 16px;
-  display: flex;
-  justify-content: flex-end;
-  gap: 8px;
-`;
-
-const Main = styled.div`
-  overflow: auto;
-  padding: 8px 2px;
-  flex: auto;
-
-  /* Firefox */
-  scrollbar-width: auto;
-  scrollbar-color: #a8a8a8 #e1e1e1;
-
-  /* Chrome, Edge, and Safari */
-  &::-webkit-scrollbar {
-    width: 16px;
-  }
-
-  &::-webkit-scrollbar-track {
-    background: #e1e1e166;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background-color: #a8a8a8;
-    border-radius: 8px;
-    border: 1px solid #ddd
-
-    /* スクロールバーのホバー時の色 */
-    &:hover {
-      background-color: #808080;
-    }
-  }
-`;
+import MainContentComponent from "../common/MainContentComponent";
 
 const UnitStatComponent: React.FC = () => {
   // 編集フォームのステート
@@ -246,58 +202,94 @@ const UnitStatComponent: React.FC = () => {
     setUnitList(retrieveUnits());
   }, []);
 
+  const headerContent = (
+    <div
+      style={{
+        margin: "8px 0 16px",
+        display: "flex",
+        justifyContent: "flex-end",
+        gap: "8px",
+      }}
+    >
+      {/* 編集対象ユニット選択 */}
+      <UnitSelectBox unitList={unitList} selectedUnit={selectedUnit} handleOnSelect={handleOnChangeUnit} />
+
+      {/* 余白 */}
+      <div style={{ flex: "auto" }}></div>
+
+      <UnitStatActionMenu
+        handleOnClickSave={handleOnClickSave}
+        handleOnClickClear={handleOnClickClear}
+        handleOnDelete={handleOnClickDelete}
+        handleOnImport={handleonClickImport}
+        handleOnExport={handleonClickExport}
+        handleOnTrancate={handleOnClickTrancate}
+      />
+    </div>
+  );
+
+  // TODO: なんかもっと共通化とか？
+  const [openBase, setOpenBase] = React.useState(true);
+  const [openStat, setOpenStat] = React.useState(true);
+  const [openAbilities, setOpenAbilities] = React.useState(true);
+  const [openSkills, setOpenSkills] = React.useState(true);
+
   return (
-    <Wrapper>
-      <Header>
-        {/* 編集対象ユニット選択 */}
-        <UnitSelectBox unitList={unitList} selectedUnit={selectedUnit} handleOnSelect={handleOnChangeUnit} />
+    <MainContentComponent header={headerContent}>
+      {/* ユニット名・パーソナリティ */}
+      <Divider sx={{ margin: "16px 8px" }}>
+        <ToggleButton value={""} selected={openBase} onClick={() => setOpenBase(!openBase)} size="small">
+          base
+        </ToggleButton>
+      </Divider>
 
-        {/* 余白 */}
-        <div style={{ flex: "auto" }}></div>
-
-        <UnitStatActionMenu
-          handleOnClickSave={handleOnClickSave}
-          handleOnClickClear={handleOnClickClear}
-          handleOnDelete={handleOnClickDelete}
-          handleOnImport={handleonClickImport}
-          handleOnExport={handleonClickExport}
-          handleOnTrancate={handleOnClickTrancate}
-        />
-      </Header>
-
-      <Main>
-        {/* ユニット名・パーソナリティ */}
-        {/* TODO: クリックすると縮小する。 */}
-        <Divider sx={{ margin: "16px 8px" }}>base</Divider>
-
+      {openBase && (
         <PersonalitiesForm
           unitStat={editingUnit}
           default={selectedUnit}
           handleOnChangeStat={handleOnChangeStat}
           handleOnChangeStatBonus={handleOnChangeStyleBoardBonus}
         />
+      )}
 
-        <Divider sx={{ margin: "16px 8px" }}>stat</Divider>
+      {/* ステータス */}
+      <Divider sx={{ margin: "16px 8px" }}>
+        <ToggleButton value={""} selected={openStat} onClick={() => setOpenStat(!openStat)} size="small">
+          stat
+        </ToggleButton>
+      </Divider>
 
-        {/* ステータス */}
+      {openStat && (
         <StatsForm
           unitStat={editingUnit}
           default={selectedUnit}
           handleOnChangeStat={handleOnChangeStat}
           handleOnChangeStatBonus={handleOnChangeLightShadowBonus}
         />
+      )}
 
-        <Divider sx={{ margin: "16px 8px" }}>abilities</Divider>
+      {/* アビリティ */}
+      <Divider sx={{ margin: "16px 8px" }}>
+        <ToggleButton value={""} selected={openAbilities} onClick={() => setOpenAbilities(!openAbilities)} size="small">
+          abilities
+        </ToggleButton>
+      </Divider>
 
-        {/* アビリティ */}
+      {openAbilities && (
         <AbilitiesForm unitStat={editingUnit} default={selectedUnit} handleOnChangeStat={handleOnChangeStat} />
+      )}
 
-        <Divider sx={{ margin: "16px 8px" }}>skills</Divider>
+      {/* スキル */}
+      <Divider sx={{ margin: "16px 8px" }}>
+        <ToggleButton value={""} selected={openSkills} onClick={() => setOpenSkills(!openSkills)} size="small">
+          skills
+        </ToggleButton>
+      </Divider>
 
-        {/* スキル */}
+      {openSkills && (
         <SkillsForm unitStat={editingUnit} defaultStat={selectedUnit} handleOnChangeSkill={handleOnChangeSkill} />
-      </Main>
-    </Wrapper>
+      )}
+    </MainContentComponent>
   );
 };
 

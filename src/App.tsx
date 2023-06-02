@@ -21,30 +21,6 @@ const Main = styled.div`
   overflow: auto;
   padding: 0;
   flex: auto;
-
-  width: 100%;
-  margin: 0 auto;
-  @media (min-width: 768px) {
-    width: 620px;
-  }
-  @media (min-width: 980px) {
-    width: 780px;
-  }
-  @media (min-width: 1200px) {
-    width: 960px;
-  }
-  @media (min-width: 1440px) {
-    width: 1140px;
-  }
-  @media (min-width: 1680px) {
-    width: 1300px;
-  }
-  @media (min-width: 1920px) {
-    width: 1460px;
-  }
-  @media (min-width: 2160px) {
-    width: 1620px;
-  }
 `;
 
 function App() {

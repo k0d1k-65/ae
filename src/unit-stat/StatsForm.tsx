@@ -48,12 +48,7 @@ const StatsForm = (props: {
       {/* スタイル選択 */}
       <Grid item xs={2} lg={2}>
         <EditedOutline isEdited={props.default.style !== props.unitStat.style}>
-          <Select
-            value={props.unitStat.style}
-            onChange={handleStyleChange}
-            sx={{ p: "0 .5rem", width: "100%" }}
-            size={"small"}
-          >
+          <Select value={props.unitStat.style} onChange={handleStyleChange} sx={{ width: "100%", height: "56px" }}>
             {Object.values(StyleType).map((wType) => (
               <MenuItem value={wType}>
                 <ListItemText primary={wType} />
@@ -105,8 +100,7 @@ const StatsForm = (props: {
           <Select
             value={props.unitStat.lightShadow || ""}
             onChange={handleLightShadowChange}
-            sx={{ p: "0 .5rem", width: "100%" }}
-            size={"small"}
+            sx={{ width: "100%", height: "56px" }}
           >
             <MenuItem value="">
               <ListItemText primary="-" />

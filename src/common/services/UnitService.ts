@@ -2,8 +2,49 @@ import { readLocalStorage, saveLocalStorage } from "./LocalStorageService";
 import { StyleType } from "../constants/StyleType";
 import { IUnitStatModel } from "../models/UnitModel";
 import { WeaponType } from "../constants/WeaponType";
+import { UnitStatType } from "../constants/UnitStatType";
 
 const unitsKey = "UnitModel";
+
+/** ちゃんとマッピング */
+export const mapModelUnitStat = (unitStat: any): IUnitStatModel | null => {
+  // オブジェクトですらない
+  if (typeof unitStat !== "object") {
+    return null;
+  }
+
+  // 名前とスタイル情報は必須
+  if (!unitStat.unitName || !unitStat.style) {
+    return null;
+  }
+
+  const response = unitStat as IUnitStatModel;
+
+  // TODO: カスタムタイプに合わないやつとか、型違反しているデータを弾く
+
+  // ステータスボーナスは、ステータス珠の指定がない場合nullにしておく
+  const bonusProps: (keyof IUnitStatModel)[] = [
+    "styleBoardBonus",
+    "ls_5",
+    "ls_15",
+    "ls_30",
+    "ls_50",
+    "ls_75",
+    "ls_105",
+    "ls_140",
+    "ls_175",
+    "ls_215",
+    "ls_255",
+  ];
+  // TODO: なんとかして。
+  // for (const keyName of bonusProps) {
+  //   if (!Object.keys(UnitStatType).includes(response[keyName]?.statType || "")) {
+  //     response[keyName] = null;
+  //   }
+  // }
+
+  return response;
+};
 
 /** ユニットデータをローカルストレージから取得 */
 export const retrieveUnits = (): IUnitStatModel[] => {
@@ -11,18 +52,31 @@ export const retrieveUnits = (): IUnitStatModel[] => {
 
   console.log({ UnitModels });
 
-  // TODO: なんかソートしないといけないっぽい、でもUI都合だから、なんかいい感じなところに書きたい。
-  return UnitModels.sort((a, b) => {
-    const styleTypeIndex = Object.values(StyleType);
+  return UnitModels;
+};
 
-    return styleTypeIndex.indexOf(a.style) >= styleTypeIndex.indexOf(b.style) ? 1 : -1;
-  })
-    .sort((a, b) => (a.unitName >= b.unitName ? 1 : -1))
-    .sort((a, b) => {
-      const weaponTypeIndex = Object.values(WeaponType);
+/** ユニットデータをローカルストレージから取得して、ユニット名と武器種でソートして返却 */
+export const retrieveAndSortUnits = (): IUnitStatModel[] => {
+  const units = retrieveUnits();
 
-      return weaponTypeIndex.indexOf(a.weapon) >= weaponTypeIndex.indexOf(b.weapon) ? 1 : -1;
-    });
+  return (
+    units
+      // スタイルをソート
+      .sort((a, b) => {
+        const styleTypeIndex = Object.values(StyleType);
+
+        // TODO: 漢字とか、ヴとかひらがな・カタカナ？とかの擦り合わせ
+        return styleTypeIndex.indexOf(a.style) >= styleTypeIndex.indexOf(b.style) ? 1 : -1;
+      })
+      // 名前でソート
+      .sort((a, b) => (a.unitName >= b.unitName ? 1 : -1))
+      // 武器種でソート
+      .sort((a, b) => {
+        const weaponTypeIndex = Object.values(WeaponType);
+
+        return weaponTypeIndex.indexOf(a.weapon) >= weaponTypeIndex.indexOf(b.weapon) ? 1 : -1;
+      })
+  );
 };
 
 type SaveResult = {

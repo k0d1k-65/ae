@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useTheme, styled } from "@mui/material/styles";
 import LightMode from "@mui/icons-material/LightMode";
 import DarkMode from "@mui/icons-material/DarkMode";
-import { AppBar, Box, Toolbar, IconButton, Drawer } from "@mui/material";
+import { AppBar, Box, Toolbar, IconButton, Drawer, List, ListItem, ListItemText } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import { ThemeColorModeContext } from "./contexts/ThemeColorModeContext";
 import { Link } from "react-router-dom";
@@ -19,6 +19,13 @@ export const NavigationBar = () => {
     },
   }));
 
+  const CusMenuHeader = styled(Box)(({ theme }) => ({
+    marginRight: theme.spacing(2),
+    [theme.breakpoints.down("md")]: {
+      display: "none",
+    },
+  }));
+
   const [open, setOpen] = useState(false);
 
   const handleDrawerOpen = () => {
@@ -28,8 +35,6 @@ export const NavigationBar = () => {
   const handleDrawerClose = () => {
     setOpen(false);
   };
-
-  const drawerItems = <div></div>;
 
   return (
     <>
@@ -41,18 +46,20 @@ export const NavigationBar = () => {
           </CusMenuButton>
 
           <Box flex={1} display={"flex"} alignItems={"center"} justifyContent={"flex-end"}>
-            {Object.values(NavLinks).map((navLink) => (
-              <Link
-                to={navLink.path}
-                style={{
-                  marginRight: "2rem",
-                  color: "#90caf9",
-                  textDecoration: "none",
-                }}
-              >
-                {navLink.name}
-              </Link>
-            ))}
+            <CusMenuHeader>
+              {Object.values(NavLinks).map((navLink) => (
+                <Link
+                  to={navLink.path}
+                  style={{
+                    marginRight: "2rem",
+                    color: "#90caf9",
+                    textDecoration: "none",
+                  }}
+                >
+                  {navLink.name}
+                </Link>
+              ))}
+            </CusMenuHeader>
 
             {/* テーマ切り替え */}
             <IconButton sx={{ ml: 1 }} onClick={colorMode.toggleThemeColor} color="inherit">
@@ -64,7 +71,25 @@ export const NavigationBar = () => {
 
       {/* メニュー */}
       <Drawer anchor="left" open={open} onClose={handleDrawerClose}>
-        {drawerItems}
+        <Box>
+          <List>
+            {Object.values(NavLinks).map((navLink) => (
+              <Link
+                to={navLink.path}
+                style={{
+                  marginRight: "2rem",
+                  color: "#90caf9",
+                  textDecoration: "none",
+                }}
+                onClick={handleDrawerClose}
+              >
+                <ListItem>
+                  <ListItemText primary={navLink.name} />
+                </ListItem>
+              </Link>
+            ))}
+          </List>
+        </Box>
       </Drawer>
     </>
   );

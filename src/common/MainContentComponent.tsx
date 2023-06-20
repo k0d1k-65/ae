@@ -39,12 +39,7 @@ const MainWrap = styled.div`
 const Main = styled.div`
   width: 100%;
   margin: 0 auto;
-  @media (min-width: 768px) {
-    width: 620px;
-  }
-  @media (min-width: 980px) {
-    width: 780px;
-  }
+  padding: 0 8px;
   @media (min-width: 1200px) {
     width: 960px;
   }

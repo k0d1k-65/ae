@@ -72,7 +72,7 @@ const PersonalitiesForm = (props: {
         <EditedOutline isEdited={props.default.personalities?.join(",") !== props.unitStat.personalities?.join(",")}>
           <Autocomplete
             options={[]}
-            renderInput={(params) => <TextField {...params} label="パーソナリティ" />}
+            renderInput={(params) => <TextField {...params} label="パーソナリティ" multiline />}
             multiple
             freeSolo
             value={props.unitStat.personalities || []}

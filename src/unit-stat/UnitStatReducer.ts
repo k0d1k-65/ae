@@ -112,7 +112,7 @@ const unitAbilities = (current?: IUnitAbilities): IUnitAbilities => {
     extraSpecialMoveDetail: current?.extraSpecialMoveDetail || null,
     anotherSenceName: current?.anotherSenceName || null,
     anotherSenceDetail: current?.anotherSenceDetail || null,
-    abilities: [],
+    abilities: current?.abilities || [],
   };
 };
 

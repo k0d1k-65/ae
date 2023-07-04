@@ -41,6 +41,7 @@ const UnitSelectBox = (props: {
           props.handleOnSelect();
         }
       }}
+      blurOnSelect={true}
     />
   );
 };

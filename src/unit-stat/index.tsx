@@ -1,6 +1,6 @@
 import React, { useEffect, useReducer, useState } from "react";
 import PersonalitiesForm from "./PersonalitiesForm";
-import { deleteUnit, importUnits, saveUnit, trancateUnit } from "../common/services/UnitService";
+import { deleteUnit, importUnits, sortUnits, saveUnit, trancateUnit } from "../common/services/UnitService";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import reduceUnitStat, { initUnitStat } from "./UnitStatReducer";
@@ -199,7 +199,7 @@ const UnitStatComponent: React.FC = () => {
 
   // マウント時に、全ユニットを取得
   useEffect(() => {
-    setUnitList(retrieveUnits());
+    setUnitList(sortUnits(retrieveUnits()));
   }, []);
 
   const headerContent = (

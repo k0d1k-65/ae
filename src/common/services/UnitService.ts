@@ -56,9 +56,7 @@ export const retrieveUnits = (): IUnitStatModel[] => {
 };
 
 /** ユニットデータをローカルストレージから取得して、ユニット名と武器種でソートして返却 */
-export const retrieveAndSortUnits = (): IUnitStatModel[] => {
-  const units = retrieveUnits();
-
+export const sortUnits = (units: IUnitStatModel[]): IUnitStatModel[] => {
   return (
     units
       // スタイルをソート

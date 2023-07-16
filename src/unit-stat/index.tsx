@@ -247,6 +247,7 @@ const UnitStatComponent: React.FC = () => {
         <PersonalitiesForm
           unitStat={editingUnit}
           default={selectedUnit}
+          units={unitList}
           handleOnChangeStat={handleOnChangeStat}
           handleOnChangeStatBonus={handleOnChangeStyleBoardBonus}
         />

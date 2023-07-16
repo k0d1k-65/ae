@@ -106,7 +106,6 @@ const unitAbilities = (current?: IUnitAbilities): IUnitAbilities => {
   return {
     variablechantName: current?.variablechantName || null,
     variablechantDetail: current?.variablechantDetail || null,
-    variablechantEnhancedName: current?.variablechantEnhancedName || null,
     variablechantEnhancedDetail: current?.variablechantEnhancedDetail || null,
     extraSpecialMoveName: current?.extraSpecialMoveName || null,
     extraSpecialMoveDetail: current?.extraSpecialMoveDetail || null,

@@ -1,6 +1,7 @@
-import { Grid, Autocomplete, TextField } from "@mui/material";
+import { Grid, Autocomplete, TextField, Box } from "@mui/material";
 import { EditedOutline } from "../common/EditOutLinedText";
 import { IUnitStatModel } from "../common/models/UnitModel";
+import { StyleType } from "../common/constants/StyleType";
 
 const AbilitiesForm = (props: {
   unitStat: IUnitStatModel;
@@ -46,23 +47,13 @@ const AbilitiesForm = (props: {
             multiline
           />
         </EditedOutline>
-        {/* 強化ヴァリアブルチャント名 */}
-        <EditedOutline isEdited={props.default.variablechantEnhancedName !== props.unitStat.variablechantEnhancedName}>
-          <TextField
-            label="強化ヴァリアブルチャント名"
-            sx={{ width: "100%" }}
-            name="variablechantEnhancedName"
-            value={props.unitStat.variablechantEnhancedName || ""}
-            onChange={handleTextChange}
-          />
-        </EditedOutline>
         {/* 強化ヴァリアブルチャント詳細 */}
         <EditedOutline
           isEdited={props.default.variablechantEnhancedDetail !== props.unitStat.variablechantEnhancedDetail}
         >
           <TextField
             label="強化ヴァリアブルチャント詳細"
-            sx={{ width: "100%" }}
+            sx={{ width: "100%", background: "#e6dad244" }}
             name="variablechantEnhancedDetail"
             value={props.unitStat.variablechantEnhancedDetail || ""}
             onChange={handleTextChange}
@@ -70,49 +61,53 @@ const AbilitiesForm = (props: {
           />
         </EditedOutline>
 
-        {/* Ex必殺技名 */}
-        <EditedOutline isEdited={props.default.extraSpecialMoveName !== props.unitStat.extraSpecialMoveName}>
-          <TextField
-            label="Ex必殺技名"
-            sx={{ width: "100%", background: "#cadbdc44" }}
-            name="extraSpecialMoveName"
-            value={props.unitStat.extraSpecialMoveName || ""}
-            onChange={handleTextChange}
-          />
-        </EditedOutline>
-        {/* Ex必殺技詳細 */}
-        <EditedOutline isEdited={props.default.extraSpecialMoveDetail !== props.unitStat.extraSpecialMoveDetail}>
-          <TextField
-            label="Ex必殺技詳細"
-            sx={{ width: "100%", background: "#cadbdc44" }}
-            name="extraSpecialMoveDetail"
-            value={props.unitStat.extraSpecialMoveDetail || ""}
-            onChange={handleTextChange}
-            multiline
-          />
-        </EditedOutline>
+        <Box sx={(props.unitStat.style !== StyleType.ES ? {display: "none"} : {})}>
+          {/* Ex必殺技名 */}
+          <EditedOutline isEdited={props.default.extraSpecialMoveName !== props.unitStat.extraSpecialMoveName}>
+            <TextField
+              label="Ex必殺技名"
+              sx={{ width: "100%", background: "#cadbdc44" }}
+              name="extraSpecialMoveName"
+              value={props.unitStat.extraSpecialMoveName || ""}
+              onChange={handleTextChange}
+            />
+          </EditedOutline>
+          {/* Ex必殺技詳細 */}
+          <EditedOutline isEdited={props.default.extraSpecialMoveDetail !== props.unitStat.extraSpecialMoveDetail}>
+            <TextField
+              label="Ex必殺技詳細"
+              sx={{ width: "100%", background: "#cadbdc44" }}
+              name="extraSpecialMoveDetail"
+              value={props.unitStat.extraSpecialMoveDetail || ""}
+              onChange={handleTextChange}
+              multiline
+            />
+          </EditedOutline>
+        </Box>
 
-        {/* アナザーセンス名 */}
-        <EditedOutline isEdited={props.default.anotherSenceName !== props.unitStat.anotherSenceName}>
-          <TextField
-            label="アナザーセンス名"
-            sx={{ width: "100%", background: "#d7cbea44" }}
-            name="anotherSenceName"
-            value={props.unitStat.anotherSenceName || ""}
-            onChange={handleTextChange}
-          />
-        </EditedOutline>
-        {/* アナザーセンス詳細 */}
-        <EditedOutline isEdited={props.default.anotherSenceDetail !== props.unitStat.anotherSenceDetail}>
-          <TextField
-            label="アナザーセンス詳細"
-            sx={{ width: "100%", background: "#d7cbea44" }}
-            name="anotherSenceDetail"
-            value={props.unitStat.anotherSenceDetail || ""}
-            onChange={handleTextChange}
-            multiline
-          />
-        </EditedOutline>
+        <Box sx={(!props.unitStat.unitTrueName ? {display: "none"} : {})}>
+          {/* アナザーセンス名 */}
+          <EditedOutline isEdited={props.default.anotherSenceName !== props.unitStat.anotherSenceName}>
+            <TextField
+              label="アナザーセンス名"
+              sx={{ width: "100%", background: "#d7cbea44" }}
+              name="anotherSenceName"
+              value={props.unitStat.anotherSenceName || ""}
+              onChange={handleTextChange}
+            />
+          </EditedOutline>
+          {/* アナザーセンス詳細 */}
+          <EditedOutline isEdited={props.default.anotherSenceDetail !== props.unitStat.anotherSenceDetail}>
+            <TextField
+              label="アナザーセンス詳細"
+              sx={{ width: "100%", background: "#d7cbea44" }}
+              name="anotherSenceDetail"
+              value={props.unitStat.anotherSenceDetail || ""}
+              onChange={handleTextChange}
+              multiline
+            />
+          </EditedOutline>
+        </Box>
 
         {/* 個人アビリティ */}
         <EditedOutline isEdited={props.default.abilities?.join(",") !== props.unitStat.abilities?.join(",")}>
@@ -123,6 +118,16 @@ const AbilitiesForm = (props: {
             freeSolo
             value={props.unitStat.abilities || []}
             onChange={handleabilityChange}
+            ChipProps={{
+              sx: {
+                height: "auto",
+                paddingTop: 0.5,
+                paddingBottom: 0.5,
+                '& .MuiChip-label': {
+                  whiteSpace: 'normal',
+                },
+              },
+          }}
           />
         </EditedOutline>
       </Grid>

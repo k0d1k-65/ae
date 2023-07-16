@@ -6,6 +6,7 @@ const UnitSelectBox = (props: {
   unitList: IUnitStatModel[];
   selectedUnit: IUnitStatModel | null;
   handleOnSelect: (selected?: IUnitStatModel) => void;
+  label?: string;
 }) => {
   const getChipColor = (style: StyleType) => {
     switch (style) {
@@ -24,7 +25,7 @@ const UnitSelectBox = (props: {
     <Autocomplete
       options={props.unitList}
       value={props.selectedUnit}
-      sx={{ width: "320px", maxWidth: "50%" }}
+      sx={{ width: "100%" }}
       groupBy={(opt) => opt.weapon}
       getOptionLabel={(opt) => opt.unitName}
       renderOption={(props, opt) => (
@@ -33,7 +34,7 @@ const UnitSelectBox = (props: {
           {opt.unitName}
         </Box>
       )}
-      renderInput={(params) => <TextField {...params} label="Unit" />}
+      renderInput={(params) => <TextField {...params} label={props.label || "Unit"} />}
       onChange={(ev: any, unit: IUnitStatModel | null) => {
         if (unit) {
           props.handleOnSelect(unit);

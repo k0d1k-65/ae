@@ -9,11 +9,11 @@ export const AppRoutes = [
     component: Home,
     exact: true,
   },
-  {
-    path: "/dev/unit",
-    component: Units,
-    exact: true,
-  },
+  // {
+  //   path: "/dev/unit",
+  //   component: Units,
+  //   exact: true,
+  // },
   {
     path: "/test",
     component: Test,
@@ -31,10 +31,10 @@ export const NavLinks = {
     path: "/",
     name: "Home",
   },
-  devUnit: {
-    path: "/dev/unit",
-    name: "devUnit",
-  },
+  // devUnit: {
+  //   path: "/dev/unit",
+  //   name: "devUnit",
+  // },
   test: {
     path: "/test",
     name: "TEST",

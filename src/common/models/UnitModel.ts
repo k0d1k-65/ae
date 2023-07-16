@@ -80,8 +80,6 @@ export type IUnitAbilities = {
   variablechantName: string | null;
   /** ヴァリアブルチャント詳細 */
   variablechantDetail: string | null;
-  /** 強化ヴァリアブルチャント名 */
-  variablechantEnhancedName: string | null;
   /** 強化ヴァリアブルチャント詳細 */
   variablechantEnhancedDetail: string | null;
   /** Ex必殺技名 */

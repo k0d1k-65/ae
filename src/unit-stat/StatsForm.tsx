@@ -4,6 +4,8 @@ import { LightShadowType } from "../common/constants/LightShadowType";
 import { EditedOutline } from "../common/EditOutLinedText";
 import { IStatBonus, IUnitStatModel, IUnitStats } from "../common/models/UnitModel";
 import LightShadowBonusForm from "./LightShadowBonusForm";
+import StyleSelect from "../common/components/StyleSelect";
+import LightShadowSelect from "../common/components/LightShadowSelect";
 
 const StatsForm = (props: {
   unitStat: IUnitStatModel;
@@ -48,13 +50,11 @@ const StatsForm = (props: {
       {/* スタイル選択 */}
       <Grid item xs={2} lg={2}>
         <EditedOutline isEdited={props.default.style !== props.unitStat.style}>
-          <Select value={props.unitStat.style} onChange={handleStyleChange} sx={{ width: "100%", height: "56px" }}>
-            {Object.values(StyleType).map((wType) => (
-              <MenuItem value={wType}>
-                <ListItemText primary={wType} />
-              </MenuItem>
-            ))}
-          </Select>
+          <StyleSelect
+            value={props.unitStat.style}
+            handleSelect={handleStyleChange}
+            sx={{ width: "100%", height: "56px" }}
+          />
         </EditedOutline>
       </Grid>
       {/* 余白 */}
@@ -97,20 +97,11 @@ const StatsForm = (props: {
       {/* 天冥選択 */}
       <Grid item xs={2} lg={1}>
         <EditedOutline isEdited={props.default.lightShadow !== props.unitStat.lightShadow}>
-          <Select
-            value={props.unitStat.lightShadow || ""}
-            onChange={handleLightShadowChange}
+          <LightShadowSelect
+            value={props.unitStat.lightShadow || null}
+            handleSelect={handleLightShadowChange}
             sx={{ width: "100%", height: "56px" }}
-          >
-            <MenuItem value="">
-              <ListItemText primary="-" />
-            </MenuItem>
-            {Object.values(LightShadowType).map((wType) => (
-              <MenuItem value={wType}>
-                <ListItemText primary={wType} />
-              </MenuItem>
-            ))}
-          </Select>
+          />
         </EditedOutline>
       </Grid>
       {/* 天冥入力 */}

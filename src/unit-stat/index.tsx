@@ -212,7 +212,9 @@ const UnitStatComponent: React.FC = () => {
       }}
     >
       {/* 編集対象ユニット選択 */}
-      <UnitSelectBox unitList={unitList} selectedUnit={selectedUnit} handleOnSelect={handleOnChangeUnit} />
+      <div style={{minWidth: "320px"}}>
+        <UnitSelectBox unitList={unitList} selectedUnit={selectedUnit} handleOnSelect={handleOnChangeUnit} />
+      </div>
 
       {/* 余白 */}
       <div style={{ flex: "auto" }}></div>

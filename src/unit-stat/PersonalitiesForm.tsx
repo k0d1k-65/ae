@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid, Autocomplete, TextField } from "@mui/material";
+import { Grid, Autocomplete, TextField, Box } from "@mui/material";
 import { EditedOutline } from "../common/EditOutLinedText";
 import { IStatBonus, IUnitStatModel } from "../common/models/UnitModel";
 import UnitStatBonusEditorComponent from "./StatBonusEditor";
@@ -17,8 +17,12 @@ const PersonalitiesForm = (props: {
   handleOnChangeStatBonus: (key: keyof IStatBonus, value: IStatBonus[keyof IStatBonus]) => void;
 }) => {
   const [anotherCounter, setAnotherCouter] = React.useState<IUnitStatModel | null>(null);
-
   const [stylebonusLabel, setStylebonusLabel] = React.useState<JSX.Element | "">("");
+
+  const [nsUnitList, setNsUnitList] = React.useState<IUnitStatModel[]>([]);
+  const [hasNS, setHasNs] = React.useState<boolean>(false);
+  const [hasAS, setHasAs] = React.useState<boolean>(false);
+  const [hasES, setHasEs] = React.useState<boolean>(false);
 
   React.useEffect(() => {
     const currentUnit = props.default;
@@ -51,27 +55,32 @@ const PersonalitiesForm = (props: {
      * スタイルボーナスのLabel
      */
 
-    let [hasNS, hasAS, hasES] = [false, false, false];
+    let [isExistNS, isExistAS, isExistES] = [false, false, false];
     const nsUnits = unitList.filter(unit => unit.style === StyleType.NS);
     const asUnits = unitList.filter(unit => unit.style === StyleType.AS);
     const esUnits = unitList.filter(unit => unit.style === StyleType.ES);
 
     if (currentUnit.style !== StyleType.NS && nsUnits.some(unit => currentUnit.unitName === unit.unitName)) {
-      hasNS = true;
+      isExistNS = true;
     }
     if (currentUnit.style !== StyleType.AS && asUnits.some(unit => currentUnit.unitName === unit.unitName)) {
-      hasAS = true;
+      isExistAS = true;
     }
     if (currentUnit.style !== StyleType.ES && esUnits.some(unit => currentUnit.unitName === unit.unitName)) {
-      hasES = true;
+      isExistES = true;
     }
+
+    setNsUnitList(nsUnits);
+    setHasNs(isExistNS);
+    setHasAs(isExistAS);
+    setHasEs(isExistES);
 
     setStylebonusLabel(
       <>
         Style Bonus
-        {hasNS ? <StyleChip styleType={StyleType.NS} /> : ""}
-        {hasAS ? <StyleChip styleType={StyleType.AS} /> : ""}
-        {hasES ? <StyleChip styleType={StyleType.ES} /> : ""}
+        {isExistNS ? <StyleChip styleType={StyleType.NS} /> : ""}
+        {isExistAS ? <StyleChip styleType={StyleType.AS} /> : ""}
+        {isExistES ? <StyleChip styleType={StyleType.ES} /> : ""}
       </>
     );
 
@@ -124,7 +133,7 @@ const PersonalitiesForm = (props: {
       <Grid item xs={5} lg={2}>
         <EditedOutline isEdited={props.default.unitTrueName !== props.unitStat.unitTrueName}>
           <UnitSelectBox
-            unitList={props.units}
+            unitList={nsUnitList}
             selectedUnit={anotherCounter}
             handleOnSelect={handleOnChangeUnit}
             label="異時層"
@@ -154,14 +163,16 @@ const PersonalitiesForm = (props: {
       <Grid item xs={12} lg={6}></Grid>
 
       {/* スタイルコンプリートボーナス */}
-      <Grid item xs={12} lg={6}>
-        <UnitStatBonusEditorComponent
-          edit={props.unitStat.styleBoardBonus!}
-          default={props.default.styleBoardBonus!}
-          title={stylebonusLabel}
-          setter={props.handleOnChangeStatBonus}
-        />
-      </Grid>
+      <Box sx={(!hasNS && !hasAS && !hasES ? {opacity: 0.4} : {})}>
+        <Grid item xs={12} lg={6}>
+          <UnitStatBonusEditorComponent
+            edit={props.unitStat.styleBoardBonus!}
+            default={props.default.styleBoardBonus!}
+            title={stylebonusLabel}
+            setter={props.handleOnChangeStatBonus}
+          />
+        </Grid>
+      </Box>
     </Grid>
   );
 };

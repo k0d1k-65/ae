@@ -3,7 +3,6 @@ import { EditedOutline } from "../common/EditOutLinedText";
 import { IStatBonus } from "../common/models/UnitModel";
 import { UnitStatBonus, UnitStatBonusType } from "../common/constants/UnitStatType";
 import { UnitStat } from "../units/types/common/UnitStat";
-import { ReactJSXElement } from "@emotion/react/types/jsx-namespace";
 
 const UnitStatBonusEditorComponent = (props: {
   default: IStatBonus;

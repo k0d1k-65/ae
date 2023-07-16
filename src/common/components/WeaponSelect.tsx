@@ -1,4 +1,4 @@
-import { ListItemIcon, ListItemText, MenuItem, Select } from "@mui/material";
+import { ListItemIcon, MenuItem, Select } from "@mui/material";
 import { SxProps } from "@mui/material/styles";
 import { Theme } from "@emotion/react";
 import { WeaponType } from "../constants/WeaponType";

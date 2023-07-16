@@ -2,7 +2,6 @@ import { readLocalStorage, saveLocalStorage } from "./LocalStorageService";
 import { StyleType } from "../constants/StyleType";
 import { IUnitStatModel } from "../models/UnitModel";
 import { WeaponType } from "../constants/WeaponType";
-import { UnitStatType } from "../constants/UnitStatType";
 
 const unitsKey = "UnitModel";
 

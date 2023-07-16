@@ -1,4 +1,3 @@
-import React from "react";
 import { Grid } from "@mui/material";
 import { StyleType } from "../common/constants/StyleType";
 import UnitSkillEditorComponent from "./SkillEditor";

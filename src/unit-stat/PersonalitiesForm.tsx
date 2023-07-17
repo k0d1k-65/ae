@@ -163,16 +163,16 @@ const PersonalitiesForm = (props: {
       <Grid item xs={12} lg={6}></Grid>
 
       {/* スタイルコンプリートボーナス */}
-      <Box sx={(!hasNS && !hasAS && !hasES ? {opacity: 0.4} : {})}>
-        <Grid item xs={12} lg={6}>
+      <Grid item xs={12} lg={6}>
+        <Box sx={(!hasNS && !hasAS && !hasES ? {opacity: 0.4} : {})}>
           <UnitStatBonusEditorComponent
             edit={props.unitStat.styleBoardBonus!}
             default={props.default.styleBoardBonus!}
             title={stylebonusLabel}
             setter={props.handleOnChangeStatBonus}
           />
-        </Grid>
-      </Box>
+        </Box>
+      </Grid>
     </Grid>
   );
 };

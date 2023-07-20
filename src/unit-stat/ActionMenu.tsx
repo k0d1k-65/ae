@@ -103,7 +103,7 @@ const UnitStatActionMenu = (props: {
     setAnchorEl(null);
   };
 
-  type colors = "error" | "inherit" | "primary" | "secondary" | "info" | "success" | "warning";
+  // type colors = "error" | "inherit" | "primary" | "secondary" | "info" | "success" | "warning";
 
   return (
     <div>

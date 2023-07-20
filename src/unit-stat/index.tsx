@@ -27,7 +27,7 @@ const UnitStatComponent: React.FC = () => {
   // 「保存」
   const handleOnClickSave = () => {
     try {
-      const { result, updated } = saveUnit(editingUnit, selectedUnit.unitName, selectedUnit.style);
+      const { updated } = saveUnit(editingUnit, selectedUnit.unitName, selectedUnit.style);
       setUnitList(updated);
       setSelectedUnit(editingUnit);
 
@@ -53,7 +53,7 @@ const UnitStatComponent: React.FC = () => {
   const handleOnClickDelete = () => {
     try {
       // TODO: delete (selectedUnit.unitName, selectedUnit.style)
-      const { result, updated } = deleteUnit(selectedUnit);
+      const { updated } = deleteUnit(selectedUnit);
       setUnitList(updated);
       setSelectedUnit(editingUnit);
 

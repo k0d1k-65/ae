@@ -1,7 +1,7 @@
 import Home from "./home";
 import { Test } from "./test";
 import UnitStatComponent from "./unit-stat";
-import Units from "./units";
+// import Units from "./units";
 
 export const AppRoutes = [
   {

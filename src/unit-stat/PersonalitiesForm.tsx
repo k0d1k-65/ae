@@ -41,6 +41,8 @@ const PersonalitiesForm = (props: {
       else if (currentUnit.unitTrueName === unit.unitName) {
         return true;
       }
+
+      return false;
     });
 
     if (anotherCounterUnit != null) {

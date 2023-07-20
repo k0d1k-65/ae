@@ -4,7 +4,6 @@ import { createTheme, CssBaseline, ThemeProvider } from "@mui/material";
 import { ThemeColorModeContext } from "./common/contexts/ThemeColorModeContext";
 import { NavigationBar } from "./common/NavigationBar";
 import styled from "styled-components";
-import Home from "./home";
 import UnitStatComponent from "./unit-stat";
 import NotFound from "./not-found";
 import { AppRoutes } from "./Routes";

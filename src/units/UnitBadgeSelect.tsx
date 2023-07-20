@@ -3,28 +3,25 @@ import { Equipment } from "./types/common/Equiqment";
 
 // バッジ
 export function UnitBadgeSelectBox(props: {
-  labelTitle: string,
-  items: Equipment[],
-  selecting: Equipment|null,
-  onSelected: (s: Equipment|null) => void,
+  labelTitle: string;
+  items: Equipment[];
+  selecting: Equipment | null;
+  onSelected: (s: Equipment | null) => void;
 }) {
   const { labelTitle, items, selecting, onSelected } = props;
 
-  const options = items
-    .map((option) => {
-      return {
-        ...option,
-      };
-    });
+  const options = items.map((option) => {
+    return {
+      ...option,
+    };
+  });
 
-  const handleChange = (_: any, selected: Equipment|null) => {
+  const handleChange = (_: any, selected: Equipment | null) => {
     onSelected(selected);
   };
 
   const handleRender = (params: object) => {
-    return (
-      <TextField {...params} label={labelTitle} />
-    );
+    return <TextField {...params} label={labelTitle} />;
   };
 
   return (
@@ -37,4 +34,4 @@ export function UnitBadgeSelectBox(props: {
       onChange={handleChange}
     />
   );
-};
+}

@@ -1,6 +1,6 @@
-import * as React from 'react';
-import { Autocomplete, InputAdornment, TextField, ToggleButton } from '@mui/material';
-import { EffectType } from '../../common/constants/EffectType';
+import * as React from "react";
+import { Autocomplete, InputAdornment, TextField, ToggleButton } from "@mui/material";
+import { EffectType } from "../../common/constants/EffectType";
 
 export default function CommonEffects() {
   const [powerOfPain, setPowerOfPain] = React.useState<number[]>([]);
@@ -8,12 +8,7 @@ export default function CommonEffects() {
   const [enhCriticalDamage, setEnhCriticalDamage] = React.useState<number[]>([]);
   const [enhMagicCriticalDamage, setEnhMagicCriticalDamage] = React.useState<number[]>([]);
 
-  const handleRenderInput = (
-    params: any,
-    label: string,
-    type: string,
-    adornment?: JSX.Element
-  ) => {
+  const handleRenderInput = (params: any, label: string, type: string, adornment?: JSX.Element) => {
     return (
       <TextField
         {...params}
@@ -25,9 +20,7 @@ export default function CommonEffects() {
           startAdornment: (
             <>
               {params.InputProps.startAdornment}
-              <InputAdornment position="end">
-                {adornment}
-              </InputAdornment>
+              <InputAdornment position="end">{adornment}</InputAdornment>
             </>
           ),
         }}
@@ -35,24 +28,17 @@ export default function CommonEffects() {
     );
   };
 
-  const handleChange = (
-    reason: string,
-    value: any,
-    state: any[],
-    setter: (x: any) => void,
-  ) => {
-    if (reason === 'createOption' && !!value) {
+  const handleChange = (reason: string, value: any, state: any[], setter: (x: any) => void) => {
+    if (reason === "createOption" && !!value) {
       setter([...state, value]);
-    }
-    else if (reason === 'removeOption' && !!value) {
+    } else if (reason === "removeOption" && !!value) {
       const _state = [...state];
       _state.splice(_state.indexOf(value), 1);
       setter(_state);
-    }
-    else if (reason === 'clear') {
+    } else if (reason === "clear") {
       setter(state.splice(0));
     }
-  }
+  };
 
   const initStrings: number[] = [];
 
@@ -61,49 +47,38 @@ export default function CommonEffects() {
       {/* ペイン時強化 */}
       <Autocomplete
         options={initStrings}
-        renderInput={(p) => handleRenderInput(p, EffectType.powerOfPain, 'number')}
+        renderInput={(p) => handleRenderInput(p, EffectType.powerOfPain, "number")}
         multiple
         freeSolo
         isOptionEqualToValue={() => false}
-        value={powerOfPain.map(v => String(v))}
-        onChange={(e, v, reason, details) => handleChange(
-          reason,
-          Number(details?.option),
-          powerOfPain,
-          setPowerOfPain
-        )}
+        value={powerOfPain.map((v) => String(v))}
+        onChange={(e, v, reason, details) => handleChange(reason, Number(details?.option), powerOfPain, setPowerOfPain)}
       />
 
       {/* 毒時強化 */}
       <Autocomplete
         options={initStrings}
-        renderInput={(p) => handleRenderInput(p, EffectType.powerOfPoison, 'number')}
+        renderInput={(p) => handleRenderInput(p, EffectType.powerOfPoison, "number")}
         multiple
         freeSolo
         isOptionEqualToValue={() => false}
-        value={powerOfPoison.map(v => String(v))}
-        onChange={(e, v, reason, details) => handleChange(
-          reason,
-          Number(details?.option),
-          powerOfPoison,
-          setPowerOfPoison
-        )}
+        value={powerOfPoison.map((v) => String(v))}
+        onChange={(e, v, reason, details) =>
+          handleChange(reason, Number(details?.option), powerOfPoison, setPowerOfPoison)
+        }
       />
 
       {/* Critダメージ強化 */}
       <Autocomplete
         options={initStrings}
-        renderInput={(p) => handleRenderInput(p, EffectType.enhCriticalDamage, 'number')}
+        renderInput={(p) => handleRenderInput(p, EffectType.enhCriticalDamage, "number")}
         multiple
         freeSolo
         isOptionEqualToValue={() => false}
-        value={enhCriticalDamage.map(v => String(v))}
-        onChange={(e, v, reason, details) => handleChange(
-          reason,
-          Number(details?.option),
-          enhCriticalDamage,
-          setEnhCriticalDamage
-        )}
+        value={enhCriticalDamage.map((v) => String(v))}
+        onChange={(e, v, reason, details) =>
+          handleChange(reason, Number(details?.option), enhCriticalDamage, setEnhCriticalDamage)
+        }
       />
     </>
   );

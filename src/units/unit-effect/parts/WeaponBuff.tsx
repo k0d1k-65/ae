@@ -1,13 +1,13 @@
-import * as React from 'react';
-import { Autocomplete, Chip, InputAdornment, TextField } from '@mui/material';
-import { BuffWeaponPercent } from '../../types/common/BuffWeaponPercent';
-import { WeaponType } from '../../../common/constants/WeaponType';
-import WeaponSelect from '../../../common/WeaponSelect';
+import * as React from "react";
+import { Autocomplete, Chip, InputAdornment, TextField } from "@mui/material";
+import { BuffWeaponPercent } from "../../types/common/BuffWeaponPercent";
+import { WeaponType } from "../../../common/constants/WeaponType";
+import WeaponSelect from "../../../common/WeaponSelect";
 
 export default function WeaponBuff(props: {
-  label: string,
-  value: BuffWeaponPercent[],
-  setValue: (x: BuffWeaponPercent[]) => void,
+  label: string;
+  value: BuffWeaponPercent[];
+  setValue: (x: BuffWeaponPercent[]) => void;
 }) {
   const { label, value: buffs, setValue: setBuffs } = props;
 
@@ -17,7 +17,7 @@ export default function WeaponBuff(props: {
     return (
       <TextField
         {...params}
-        type='number'
+        type="number"
         label={label}
         variant="standard"
         InputProps={{
@@ -26,12 +26,7 @@ export default function WeaponBuff(props: {
             <>
               {params.InputProps.startAdornment}
               <InputAdornment position="end">
-                <WeaponSelect
-                  value={selectWeapon}
-                  handleSelect={setSelectWeapon}
-                  size='small'
-                  variant='standard'
-                />
+                <WeaponSelect value={selectWeapon} handleSelect={setSelectWeapon} size="small" variant="standard" />
               </InputAdornment>
             </>
           ),
@@ -41,7 +36,7 @@ export default function WeaponBuff(props: {
   };
 
   const handleChange = (reason: string, value: any) => {
-    if (reason === 'createOption') {
+    if (reason === "createOption") {
       if (!!value && typeof value === "string") {
         const item: BuffWeaponPercent = {
           type: selectWeapon,
@@ -49,21 +44,19 @@ export default function WeaponBuff(props: {
         };
         setBuffs([...buffs, item]);
       }
-    }
-    else if (reason === 'removeOption') {
+    } else if (reason === "removeOption") {
       if (!!value && typeof value === "object") {
-        const index = buffs.findIndex(x => x.amount === value.amount && x.type === value.type);
+        const index = buffs.findIndex((x) => x.amount === value.amount && x.type === value.type);
         if (index > -1) {
           const _buffs = [...buffs];
           _buffs.splice(index, 1);
           setBuffs(_buffs);
         }
       }
-    }
-    else if (reason === 'clear') {
+    } else if (reason === "clear") {
       setBuffs(buffs.splice(0));
     }
-  }
+  };
 
   return (
     <Autocomplete
@@ -78,10 +71,7 @@ export default function WeaponBuff(props: {
       freeSolo
       isOptionEqualToValue={() => false}
       value={buffs}
-      onChange={(e, v, reason, details) => handleChange(
-        reason,
-        details?.option,
-      )}
+      onChange={(e, v, reason, details) => handleChange(reason, details?.option)}
     />
   );
 }

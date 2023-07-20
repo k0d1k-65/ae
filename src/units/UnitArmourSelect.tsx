@@ -3,21 +3,19 @@ import { Equipment } from "./types/common/Equiqment";
 
 // 防具
 export function UnitArmourSelectBox(props: {
-  labelTitle: string,
-  items: Equipment[],
-  selecting: Equipment|null,
-  onSelected: (s: Equipment|null) => void,
+  labelTitle: string;
+  items: Equipment[];
+  selecting: Equipment | null;
+  onSelected: (s: Equipment | null) => void;
 }) {
   const { labelTitle, items, selecting, onSelected } = props;
 
-  const handleChange = (_: any, selected: Equipment|null) => {
+  const handleChange = (_: any, selected: Equipment | null) => {
     onSelected(selected);
   };
 
   const handleRender = (params: object) => {
-    return (
-      <TextField {...params} label={labelTitle} />
-    );
+    return <TextField {...params} label={labelTitle} />;
   };
 
   return (
@@ -30,4 +28,4 @@ export function UnitArmourSelectBox(props: {
       onChange={handleChange}
     />
   );
-};
+}

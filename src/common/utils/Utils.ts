@@ -1,6 +1,7 @@
 import { ArmourType } from "../constants/ArmourType";
 import { WeaponType } from "../constants/WeaponType";
 
+/** 武器種から防具種を取得 */
 export function getArmourByWeapon(weapon: WeaponType) {
   switch (weapon) {
     case WeaponType.Lod:

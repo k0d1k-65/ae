@@ -1,10 +1,10 @@
-import * as React from 'react';
-import ElementBuff from './parts/ElementBuff';
-import { Autocomplete, InputAdornment, Grid, TextField, ToggleButton } from '@mui/material';
-import { BuffElementPercent } from '../types/common/BuffElementPercent';
-import { BuffWeaponPercent } from '../types/common/BuffWeaponPercent';
-import { EffectType } from '../../common/constants/EffectType';
-import WeaponBuff from './parts/WeaponBuff';
+import * as React from "react";
+import ElementBuff from "./parts/ElementBuff";
+import { Autocomplete, InputAdornment, Grid, TextField, ToggleButton } from "@mui/material";
+import { BuffElementPercent } from "../types/common/BuffElementPercent";
+import { BuffWeaponPercent } from "../types/common/BuffWeaponPercent";
+import { EffectType } from "../../common/constants/EffectType";
+import WeaponBuff from "./parts/WeaponBuff";
 
 export default function EquipmentEffects() {
   const [powerBuffs, setPowerBuffs] = React.useState<number[]>([]);
@@ -21,12 +21,7 @@ export default function EquipmentEffects() {
   const [weakPointBuff, setWeakPointBuff] = React.useState<boolean>(false);
   const [multiHitBuff, setMultiHitBuff] = React.useState<boolean>(false);
 
-  const handleRenderInput = (
-    params: any,
-    label: string,
-    type: string,
-    adornment?: JSX.Element
-  ) => {
+  const handleRenderInput = (params: any, label: string, type: string, adornment?: JSX.Element) => {
     return (
       <TextField
         {...params}
@@ -38,9 +33,7 @@ export default function EquipmentEffects() {
           startAdornment: (
             <>
               {params.InputProps.startAdornment}
-              <InputAdornment position="end">
-                {adornment}
-              </InputAdornment>
+              <InputAdornment position="end">{adornment}</InputAdornment>
             </>
           ),
         }}
@@ -48,24 +41,17 @@ export default function EquipmentEffects() {
     );
   };
 
-  const handleChange = (
-    reason: string,
-    value: any,
-    state: any[],
-    setter: (x: any) => void,
-  ) => {
-    if (reason === 'createOption' && !!value) {
+  const handleChange = (reason: string, value: any, state: any[], setter: (x: any) => void) => {
+    if (reason === "createOption" && !!value) {
       setter([...state, value]);
-    }
-    else if (reason === 'removeOption' && !!value) {
+    } else if (reason === "removeOption" && !!value) {
       const _state = [...state];
       _state.splice(_state.indexOf(value), 1);
       setter(_state);
-    }
-    else if (reason === 'clear') {
+    } else if (reason === "clear") {
       setter(state.splice(0));
     }
-  }
+  };
 
   const initStrings: number[] = [];
 
@@ -74,92 +60,68 @@ export default function EquipmentEffects() {
       {/* 腕力 */}
       <Autocomplete
         options={initStrings}
-        renderInput={(p) => handleRenderInput(p, EffectType.powerBuffs, 'number')}
+        renderInput={(p) => handleRenderInput(p, EffectType.powerBuffs, "number")}
         multiple
         freeSolo
         isOptionEqualToValue={() => false}
-        value={powerBuffs.map(v => String(v))}
-        onChange={(e, v, reason, details) => handleChange(
-          reason,
-          Number(details?.option),
-          powerBuffs,
-          setPowerBuffs
-        )}
+        value={powerBuffs.map((v) => String(v))}
+        onChange={(e, v, reason, details) => handleChange(reason, Number(details?.option), powerBuffs, setPowerBuffs)}
       />
       {/* 知性 */}
       <Autocomplete
         options={initStrings}
-        renderInput={(p) => handleRenderInput(p, EffectType.intBuffs, 'number')}
+        renderInput={(p) => handleRenderInput(p, EffectType.intBuffs, "number")}
         multiple
         freeSolo
         isOptionEqualToValue={() => false}
-        value={intBuffs.map(v => String(v))}
-        onChange={(e, v, reason, details) => handleChange(
-          reason,
-          Number(details?.option),
-          intBuffs,
-          setIntBuffs
-        )}
+        value={intBuffs.map((v) => String(v))}
+        onChange={(e, v, reason, details) => handleChange(reason, Number(details?.option), intBuffs, setIntBuffs)}
       />
       {/* 速度 */}
       <Autocomplete
         options={initStrings}
-        renderInput={(p) => handleRenderInput(p, EffectType.speedBuffs, 'number')}
+        renderInput={(p) => handleRenderInput(p, EffectType.speedBuffs, "number")}
         multiple
         freeSolo
         isOptionEqualToValue={() => false}
-        value={speedBuffs.map(v => String(v))}
-        onChange={(e, v, reason, details) => handleChange(
-          reason,
-          Number(details?.option),
-          speedBuffs,
-          setSpeedBuffs
-        )}
+        value={speedBuffs.map((v) => String(v))}
+        onChange={(e, v, reason, details) => handleChange(reason, Number(details?.option), speedBuffs, setSpeedBuffs)}
       />
 
       {/* 属性 */}
-      <ElementBuff
-        label={EffectType.elementBuffs}
-        value={elementBuffs}
-        setValue={setElementBuffs}
-      />
+      <ElementBuff label={EffectType.elementBuffs} value={elementBuffs} setValue={setElementBuffs} />
 
       {/* 武器種 */}
-      <WeaponBuff
-        label={EffectType.weaponTypeBuffs}
-        value={weaponTypeBuffs}
-        setValue={setWeaponTypeBuffs}
-      />
+      <WeaponBuff label={EffectType.weaponTypeBuffs} value={weaponTypeBuffs} setValue={setWeaponTypeBuffs} />
 
       {/* 精神統一 */}
       <Autocomplete
         options={initStrings}
-        renderInput={(p) => handleRenderInput(p, EffectType.concentration, 'number')}
+        renderInput={(p) => handleRenderInput(p, EffectType.concentration, "number")}
         multiple
         freeSolo
         isOptionEqualToValue={() => false}
-        value={concentration.map(v => String(v))}
-        onChange={(e, v, reason, details) => handleChange(
-          reason,
-          Number(details?.option),
-          concentration,
-          setConcentration
-        )}
+        value={concentration.map((v) => String(v))}
+        onChange={(e, v, reason, details) =>
+          handleChange(reason, Number(details?.option), concentration, setConcentration)
+        }
       />
 
-      <Grid container spacing={1} marginTop={.5} marginBottom={.5}>
+      <Grid container spacing={1} marginTop={0.5} marginBottom={0.5}>
         <Grid item xs={4}>
           {/* 虎視眈々 */}
-          <div style={{
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "flex-end"
-          }}>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "flex-end",
+            }}
+          >
             <ToggleButton
               value="check"
               selected={vigilantly}
               onChange={() => setVigilantly(!vigilantly)}
-              size={'small'}
+              size={"small"}
               style={{
                 width: "100px",
                 marginRight: "8px",
@@ -171,7 +133,7 @@ export default function EquipmentEffects() {
               aria-readonly
               disabled={!vigilantly}
               value={50}
-              size={'small'}
+              size={"small"}
               style={{
                 flex: 1,
               }}
@@ -182,15 +144,17 @@ export default function EquipmentEffects() {
 
         <Grid item xs={4}>
           {/* 下剋上 */}
-          <div style={{
-            display: "flex",
-            flexDirection: "row"
-          }}>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+            }}
+          >
             <ToggleButton
               value="check"
               selected={downhill}
               onChange={() => setDownhill(!downhill)}
-              size={'small'}
+              size={"small"}
               style={{
                 width: "100px",
                 marginRight: "8px",
@@ -202,7 +166,7 @@ export default function EquipmentEffects() {
               aria-readonly
               disabled={!downhill}
               value={50}
-              size={'small'}
+              size={"small"}
               style={{
                 flex: 1,
               }}
@@ -213,15 +177,17 @@ export default function EquipmentEffects() {
 
         <Grid item xs={4}>
           {/* 弱点強化 */}
-          <div style={{
-            display: "flex",
-            flexDirection: "row"
-          }}>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+            }}
+          >
             <ToggleButton
               value="check"
               selected={weakPointBuff}
               onChange={() => setWeakPointBuff(!weakPointBuff)}
-              size={'small'}
+              size={"small"}
               style={{
                 width: "100px",
                 marginRight: "8px",
@@ -233,7 +199,7 @@ export default function EquipmentEffects() {
               aria-readonly
               disabled={!weakPointBuff}
               value={50}
-              size={'small'}
+              size={"small"}
               style={{
                 flex: 1,
               }}
@@ -244,15 +210,17 @@ export default function EquipmentEffects() {
 
         <Grid item xs={4}>
           {/* 多段強化 */}
-          <div style={{
-            display: "flex",
-            flexDirection: "row"
-          }}>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+            }}
+          >
             <ToggleButton
               value="check"
               selected={multiHitBuff}
               onChange={() => setMultiHitBuff(!multiHitBuff)}
-              size={'small'}
+              size={"small"}
               style={{
                 width: "100px",
                 marginRight: "8px",
@@ -264,7 +232,7 @@ export default function EquipmentEffects() {
               aria-readonly
               disabled={!multiHitBuff}
               value={50}
-              size={'small'}
+              size={"small"}
               style={{
                 flex: 1,
               }}

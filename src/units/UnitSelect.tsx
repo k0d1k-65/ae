@@ -1,12 +1,12 @@
-import * as React from 'react';
+import * as React from "react";
 import { Autocomplete, TextField, ToggleButton, ToggleButtonGroup, Paper, ClickAwayListener } from "@mui/material";
 import { WeaponType } from "../common/constants/WeaponType";
-import { Unit } from './types/units/Unit';
-import { Box } from '@mui/system';
-import { StyleChip } from '../common/StyleChip';
-import Spacer from '../common/Spacer';
+import { Unit } from "./types/units/Unit";
+import { Box } from "@mui/system";
+import { StyleChip } from "../common/StyleChip";
+import Spacer from "../common/Spacer";
 
-export function UnitSelectBox(props: {units: Unit[], onSelected: (s: Unit|null) => void}) {
+export function UnitSelectBox(props: { units: Unit[]; onSelected: (s: Unit | null) => void }) {
   const { units, onSelected } = props;
 
   const allUnits = units.map((option) => {
@@ -27,7 +27,7 @@ export function UnitSelectBox(props: {units: Unit[], onSelected: (s: Unit|null) 
     if (wTypes.length == 0) {
       setSelectableUnits(allUnits);
     } else {
-      setSelectableUnits(allUnits.filter(u => wTypes.includes(u.weapon)));
+      setSelectableUnits(allUnits.filter((u) => wTypes.includes(u.weapon)));
     }
 
     // 武器種絞り込みが全てONになったら、bulkボタンもON状態に
@@ -39,23 +39,21 @@ export function UnitSelectBox(props: {units: Unit[], onSelected: (s: Unit|null) 
     }
   }, [wTypes]);
 
-  const handleUnitChange = (_: any, selected: Unit|null) => {
+  const handleUnitChange = (_: any, selected: Unit | null) => {
     onSelected(selected);
   };
 
   const handleRender = (params: object) => {
-    return (
-      <TextField {...params} label="Unit" />
-    );
+    return <TextField {...params} label="Unit" />;
   };
 
   const handleRenderOption = (props: object, option: Unit) => {
     return (
       <Box component="li" {...props}>
-        <StyleChip styleType={option.styleType}/>
+        <StyleChip styleType={option.styleType} />
         <span>{option.name}</span>
       </Box>
-    )
+    );
   };
 
   const handleWeaponToggle = (_: any, values: WeaponType[]) => {
@@ -66,19 +64,19 @@ export function UnitSelectBox(props: {units: Unit[], onSelected: (s: Unit|null) 
     // bulk がONのとき、武器種絞り込みを全てOFFに
     // bulk がOFFのとき、武器種絞り込みを全てONにする
     if (bulkWeapon) {
-      setBulkWeapon(false)
+      setBulkWeapon(false);
       setWTypes([]);
     } else {
       setBulkWeapon(true);
       setWTypes(weapons);
     }
-  }
+  };
 
   const handleRenderPaperComponent = (paperProps: any) => {
     return (
       <Paper {...paperProps}>
         <div>
-          <Box sx={{display: 'flex'}}>
+          <Box sx={{ display: "flex" }}>
             {/* 一括ON/OFF */}
             <ToggleButton
               value="bulk"
@@ -93,11 +91,8 @@ export function UnitSelectBox(props: {units: Unit[], onSelected: (s: Unit|null) 
             <Spacer size={8} />
 
             {/* ユニット一覧絞り込み */}
-            <ToggleButtonGroup
-              value={wTypes}
-              onChange={handleWeaponToggle}
-            >
-              {weapons.map(wt => {
+            <ToggleButtonGroup value={wTypes} onChange={handleWeaponToggle}>
+              {weapons.map((wt) => {
                 return (
                   <ToggleButton size="small" value={wt} aria-label={wt}>
                     <>{wt}</>
@@ -110,12 +105,16 @@ export function UnitSelectBox(props: {units: Unit[], onSelected: (s: Unit|null) 
           {paperProps.children}
         </div>
       </Paper>
-    )
-  }
+    );
+  };
 
   return (
-    <ClickAwayListener onClickAway={() => {setOpen(false)}}>
-      <Box display={'flex'} flexDirection={'column'}>
+    <ClickAwayListener
+      onClickAway={() => {
+        setOpen(false);
+      }}
+    >
+      <Box display={"flex"} flexDirection={"column"}>
         {/* ユニット一覧オートコンプリート */}
         <Autocomplete
           // id="UnitSelectBox"
@@ -123,12 +122,16 @@ export function UnitSelectBox(props: {units: Unit[], onSelected: (s: Unit|null) 
           groupBy={(opt) => opt.weapon}
           getOptionLabel={(opt) => opt.name}
           renderOption={handleRenderOption}
-          size={'small'}
+          size={"small"}
           renderInput={handleRender}
           onChange={handleUnitChange}
           open={open}
-          onOpen={() => {setOpen(true)}}
-          onClose={(_, reason) => {reason !== "blur" && setOpen(false);}}
+          onOpen={() => {
+            setOpen(true);
+          }}
+          onClose={(_, reason) => {
+            reason !== "blur" && setOpen(false);
+          }}
           PaperComponent={handleRenderPaperComponent}
         />
       </Box>

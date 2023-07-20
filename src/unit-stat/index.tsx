@@ -1,9 +1,9 @@
 import React, { useEffect, useReducer, useState } from "react";
 import PersonalitiesForm from "./PersonalitiesForm";
-import { deleteUnit, importUnits, sortUnits, saveUnit, trancateUnit } from "../common/services/UnitService";
+import { deleteUnit, importUnits, sortUnits, saveUnit, trancateUnit, defaultUnitStat, mapModelUnitStat } from "../common/services/UnitService";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import reduceUnitStat, { initUnitStat } from "./UnitStatReducer";
+import reduceUnitStat from "./UnitStatReducer";
 import UnitStatActionMenu from "./ActionMenu";
 import { retrieveUnits } from "../common/services/UnitService";
 import { Divider, ToggleButton } from "@mui/material";
@@ -16,10 +16,10 @@ import MainContentComponent from "../common/MainContentComponent";
 
 const UnitStatComponent: React.FC = () => {
   // 編集フォームのステート
-  const [editingUnit, dispatchEditUnit] = useReducer(reduceUnitStat, initUnitStat());
+  const [editingUnit, dispatchEditUnit] = useReducer(reduceUnitStat, defaultUnitStat);
 
   // 編集対象選択中のユニット
-  const [selectedUnit, setSelectedUnit] = useState<IUnitStatModel>(initUnitStat());
+  const [selectedUnit, setSelectedUnit] = useState<IUnitStatModel>(defaultUnitStat);
 
   // ユニット全情報
   const [unitList, setUnitList] = useState<IUnitStatModel[]>([]);
@@ -78,8 +78,8 @@ const UnitStatComponent: React.FC = () => {
         try {
           const updated = importUnits(contents, true);
           setUnitList(updated);
-          setSelectedUnit(initUnitStat());
-          dispatchEditUnit({ type: "replace", newItem: initUnitStat() });
+          setSelectedUnit(defaultUnitStat);
+          dispatchEditUnit({ type: "replace", newItem: defaultUnitStat });
 
           toast.dismiss();
           toast.success("インポートしました");
@@ -130,7 +130,7 @@ const UnitStatComponent: React.FC = () => {
   const handleOnClickTrancate = () => {
     trancateUnit();
 
-    const initUnit = initUnitStat();
+    const initUnit = defaultUnitStat;
     setUnitList([]);
     dispatchEditUnit({ type: "clear" });
     setSelectedUnit(initUnit);
@@ -188,7 +188,7 @@ const UnitStatComponent: React.FC = () => {
 
   // 選択ユニット変更
   const handleOnChangeUnit = (selected?: IUnitStatModel) => {
-    const initialized = initUnitStat(selected);
+    const initialized = mapModelUnitStat(selected);
     setSelectedUnit(initialized);
 
     dispatchEditUnit({
@@ -212,7 +212,7 @@ const UnitStatComponent: React.FC = () => {
       }}
     >
       {/* 編集対象ユニット選択 */}
-      <div style={{minWidth: "320px"}}>
+      <div style={{ minWidth: "320px" }}>
         <UnitSelectBox unitList={unitList} selectedUnit={selectedUnit} handleOnSelect={handleOnChangeUnit} />
       </div>
 

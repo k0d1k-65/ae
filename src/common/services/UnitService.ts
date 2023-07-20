@@ -1,48 +1,138 @@
 import { readLocalStorage, saveLocalStorage } from "./LocalStorageService";
 import { StyleType } from "../constants/StyleType";
-import { IUnitStatModel } from "../models/UnitModel";
+import { IUnitAbilities, IUnitPersonalities, IUnitSkills, IUnitStatModel, IUnitStats } from "../models/UnitModel";
 import { WeaponType } from "../constants/WeaponType";
 
 const unitsKey = "UnitModel";
 
+export const defaultUnitPersonalities: IUnitPersonalities = {
+  weapon: WeaponType.Lod,
+  unitName: "",
+  style: StyleType.NS,
+  className: "",
+  personalities: null,
+  unitTrueName: null,
+} as const;
+
+export const defaultUnitStats: IUnitStats = {
+  statHp: null,
+  statMp: null,
+  statPower: null,
+  statEndure: null,
+  statLuck: null,
+  statIntelligense: null,
+  statSpeed: null,
+  statSplit: null,
+  lightShadow: null,
+  lightShadowNumber: null,
+  ls_5: null,
+  ls_15: null,
+  ls_30: null,
+  ls_50: null,
+  ls_75: null,
+  ls_105: null,
+  ls_140: null,
+  ls_175: null,
+  ls_215: null,
+  ls_255: null,
+  styleBoardBonus: null,
+} as const;
+
+export const defaultUnitAbilities: IUnitAbilities = {
+  variablechantName: null,
+  variablechantDetail: null,
+  variablechantEnhancedDetail: null,
+  extraSpecialMoveName: null,
+  extraSpecialMoveDetail: null,
+  anotherSenceName: null,
+  anotherSenceDetail: null,
+  abilities: null,
+} as const;
+
+export const defaultUnitSkills: IUnitSkills = {
+  extra: { name: null, mp: null, detail: null },
+  first: { name: null, mp: null, detail: null },
+  second: { name: null, mp: null, detail: null },
+  thirdA: { name: null, mp: null, detail: null },
+  thirdB: { name: null, mp: null, detail: null },
+  fourthA: { name: null, mp: null, detail: null },
+  fourthB: { name: null, mp: null, detail: null },
+  fifthA: { name: null, mp: null, detail: null },
+  fifthB: { name: null, mp: null, detail: null },
+} as const;
+
+export const defaultUnitStat = {
+  ...defaultUnitPersonalities,
+  ...defaultUnitStats,
+  ...defaultUnitAbilities,
+  ...defaultUnitSkills,
+} as const;
+
 /** ちゃんとマッピング */
-export const mapModelUnitStat = (unitStat: any): IUnitStatModel | null => {
+export const mapModelUnitStat = (obj?: unknown): IUnitStatModel => {
   // オブジェクトですらない
-  if (typeof unitStat !== "object") {
-    return null;
+  if (obj == null || typeof obj !== "object") {
+    return defaultUnitStat;
   }
 
-  // 名前とスタイル情報は必須
-  if (!unitStat.unitName || !unitStat.style) {
-    return null;
+  const unitStat = obj as IUnitStatModel;
+
+  // 必須チェック
+  if (!unitStat.weapon || !unitStat.unitName || !unitStat.style || !unitStat.className) {
+    return defaultUnitStat;
   }
 
-  const response = unitStat as IUnitStatModel;
+  unitStat.personalities = unitStat.personalities || null;
+  unitStat.unitTrueName = unitStat.unitTrueName || null;
 
-  // TODO: カスタムタイプに合わないやつとか、型違反しているデータを弾く
+  unitStat.statHp = unitStat.statHp || null;
+  unitStat.statMp = unitStat.statMp || null;
+  unitStat.statPower = unitStat.statPower || null;
+  unitStat.statEndure = unitStat.statEndure || null;
+  unitStat.statLuck = unitStat.statLuck || null;
+  unitStat.statIntelligense = unitStat.statIntelligense || null;
+  unitStat.statSpeed = unitStat.statSpeed || null;
+  unitStat.statSplit = unitStat.statSplit || null;
 
-  // ステータスボーナスは、ステータス珠の指定がない場合nullにしておく
-  const bonusProps: (keyof IUnitStatModel)[] = [
-    "styleBoardBonus",
-    "ls_5",
-    "ls_15",
-    "ls_30",
-    "ls_50",
-    "ls_75",
-    "ls_105",
-    "ls_140",
-    "ls_175",
-    "ls_215",
-    "ls_255",
-  ];
-  // TODO: なんとかして。
-  // for (const keyName of bonusProps) {
-  //   if (!Object.keys(UnitStatType).includes(response[keyName]?.statType || "")) {
-  //     response[keyName] = null;
-  //   }
-  // }
+  unitStat.lightShadow = unitStat.lightShadow || null;
+  unitStat.lightShadowNumber = unitStat.lightShadowNumber || null;
 
-  return response;
+  unitStat.ls_5 = unitStat.ls_5?.statType ? unitStat.ls_5 : null;
+  unitStat.ls_15 = unitStat.ls_15?.statType ? unitStat.ls_15 : null;
+  unitStat.ls_30 = unitStat.ls_30?.statType ? unitStat.ls_30 : null;
+  unitStat.ls_50 = unitStat.ls_50?.statType ? unitStat.ls_50 : null;
+  unitStat.ls_75 = unitStat.ls_75?.statType ? unitStat.ls_75 : null;
+  unitStat.ls_105 = unitStat.ls_105?.statType ? unitStat.ls_105 : null;
+  unitStat.ls_140 = unitStat.ls_140?.statType ? unitStat.ls_140 : null;
+  unitStat.ls_175 = unitStat.ls_175?.statType ? unitStat.ls_175 : null;
+  unitStat.ls_215 = unitStat.ls_215?.statType ? unitStat.ls_215 : null;
+  unitStat.ls_255 = unitStat.ls_255?.statType ? unitStat.ls_255 : null;
+
+  unitStat.styleBoardBonus = unitStat.styleBoardBonus?.statType ? unitStat.styleBoardBonus : null;
+
+  unitStat.variablechantName = unitStat.variablechantName || null;
+  unitStat.variablechantDetail = unitStat.variablechantDetail || null;
+  unitStat.variablechantEnhancedDetail = unitStat.variablechantEnhancedDetail || null;
+
+  unitStat.extraSpecialMoveName = unitStat.extraSpecialMoveName || null;
+  unitStat.extraSpecialMoveDetail = unitStat.extraSpecialMoveDetail || null;
+
+  unitStat.anotherSenceName = unitStat.anotherSenceName || null;
+  unitStat.anotherSenceDetail = unitStat.anotherSenceDetail || null;
+
+  unitStat.abilities = unitStat.abilities || null;
+
+  unitStat.extra = unitStat.extra?.name ? unitStat.extra : defaultUnitStat.extra;
+  unitStat.first = unitStat.first?.name ? unitStat.first : defaultUnitStat.first;
+  unitStat.second = unitStat.second?.name ? unitStat.second : defaultUnitStat.second;
+  unitStat.thirdA = unitStat.thirdA?.name ? unitStat.thirdA : defaultUnitStat.thirdA;
+  unitStat.thirdB = unitStat.thirdB?.name ? unitStat.thirdB : defaultUnitStat.thirdB;
+  unitStat.fourthA = unitStat.fourthA?.name ? unitStat.fourthA : defaultUnitStat.fourthA;
+  unitStat.fourthB = unitStat.fourthB?.name ? unitStat.fourthB : defaultUnitStat.fourthB;
+  unitStat.fifthA = unitStat.fifthA?.name ? unitStat.fifthA : defaultUnitStat.fifthA;
+  unitStat.fifthB = unitStat.fifthB?.name ? unitStat.fifthB : defaultUnitStat.fifthB;
+
+  return unitStat;
 };
 
 /** ユニットデータをローカルストレージから取得 */

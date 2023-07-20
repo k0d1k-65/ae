@@ -5,9 +5,9 @@ import { IStatBonus, IUnitStatModel } from "../common/models/UnitModel";
 import UnitStatBonusEditorComponent from "./StatBonusEditor";
 import WeaponSelect from "../common/components/WeaponSelect";
 import UnitSelectBox from "./UnitSelectBox";
-import { initUnitStat } from "./UnitStatReducer";
 import { StyleType } from "../common/constants/StyleType";
 import { StyleChip } from "../common/StyleChip";
+import { mapModelUnitStat } from "../common/services/UnitService";
 
 const PersonalitiesForm = (props: {
   unitStat: IUnitStatModel;
@@ -32,7 +32,7 @@ const PersonalitiesForm = (props: {
      * 異時層ユニット
      */
 
-    const anotherCounterUnit = unitList.find(unit => {
+    const anotherCounterUnit = unitList.find((unit) => {
       // 通常 ⇒ 異時層
       if (currentUnit.unitName === unit.unitTrueName) {
         return true;
@@ -46,8 +46,7 @@ const PersonalitiesForm = (props: {
     if (anotherCounterUnit != null) {
       setAnotherCouter(anotherCounterUnit);
       props.handleOnChangeStat("unitTrueName", anotherCounterUnit.unitName);
-    }
-    else {
+    } else {
       setAnotherCouter(null);
     }
 
@@ -56,17 +55,17 @@ const PersonalitiesForm = (props: {
      */
 
     let [isExistNS, isExistAS, isExistES] = [false, false, false];
-    const nsUnits = unitList.filter(unit => unit.style === StyleType.NS);
-    const asUnits = unitList.filter(unit => unit.style === StyleType.AS);
-    const esUnits = unitList.filter(unit => unit.style === StyleType.ES);
+    const nsUnits = unitList.filter((unit) => unit.style === StyleType.NS);
+    const asUnits = unitList.filter((unit) => unit.style === StyleType.AS);
+    const esUnits = unitList.filter((unit) => unit.style === StyleType.ES);
 
-    if (currentUnit.style !== StyleType.NS && nsUnits.some(unit => currentUnit.unitName === unit.unitName)) {
+    if (currentUnit.style !== StyleType.NS && nsUnits.some((unit) => currentUnit.unitName === unit.unitName)) {
       isExistNS = true;
     }
-    if (currentUnit.style !== StyleType.AS && asUnits.some(unit => currentUnit.unitName === unit.unitName)) {
+    if (currentUnit.style !== StyleType.AS && asUnits.some((unit) => currentUnit.unitName === unit.unitName)) {
       isExistAS = true;
     }
-    if (currentUnit.style !== StyleType.ES && esUnits.some(unit => currentUnit.unitName === unit.unitName)) {
+    if (currentUnit.style !== StyleType.ES && esUnits.some((unit) => currentUnit.unitName === unit.unitName)) {
       isExistES = true;
     }
 
@@ -83,7 +82,6 @@ const PersonalitiesForm = (props: {
         {isExistES ? <StyleChip styleType={StyleType.ES} /> : ""}
       </>
     );
-
   }, [props.default]);
 
   const handlePersonalitiesChange = (_: any, items: string[]) => {
@@ -98,7 +96,7 @@ const PersonalitiesForm = (props: {
   };
 
   const handleOnChangeUnit = (selected?: IUnitStatModel) => {
-    const initialized = initUnitStat(selected);
+    const initialized = mapModelUnitStat(selected);
     setAnotherCouter(initialized);
 
     props.handleOnChangeStat("unitTrueName", initialized.unitName || null);
@@ -164,7 +162,7 @@ const PersonalitiesForm = (props: {
 
       {/* スタイルコンプリートボーナス */}
       <Grid item xs={12} lg={6}>
-        <Box sx={(!hasNS && !hasAS && !hasES ? {opacity: 0.4} : {})}>
+        <Box sx={!hasNS && !hasAS && !hasES ? { opacity: 0.4 } : {}}>
           <UnitStatBonusEditorComponent
             edit={props.unitStat.styleBoardBonus!}
             default={props.default.styleBoardBonus!}

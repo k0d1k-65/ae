@@ -18,28 +18,22 @@ export type IUnitPersonalities = {
   weapon: WeaponType;
   /** ユニット名入力 */
   unitName: string;
+  /** スタイル選択 */
+  style: StyleType;
+  /** クラス名 */
+  className: string;
   /** パーソナリティ */
   personalities: string[] | null;
   /** 真の名前 */
   unitTrueName: string | null;
-  /** スタイルコンプリートボーナス */
-  styleBoardBonus: IStatBonus | null;
 };
 
 /** ステータス */
 export type IUnitStats = {
-  /** クラス名 */
-  className: string | null;
-  /** スタイル選択 */
-  style: StyleType;
   /** HP */
   statHp: number | null;
   /** MP */
   statMp: number | null;
-  /** 天冥選択 */
-  lightShadow: LightShadowType | null;
-  /** 天冥入力 */
-  lightShadowNumber: number | null;
   /** 腕力 */
   statPower: number | null;
   /** 耐久 */
@@ -52,6 +46,12 @@ export type IUnitStats = {
   statSpeed: number | null;
   /** 精神 */
   statSplit: number | null;
+
+  /** 天冥選択 */
+  lightShadow: LightShadowType | null;
+  /** 天冥入力 */
+  lightShadowNumber: number | null;
+
   /** 天冥ボーナス 5 */
   ls_5: IStatBonus | null;
   /** 天冥ボーナス 15 */
@@ -72,6 +72,9 @@ export type IUnitStats = {
   ls_215: IStatBonus | null;
   /** 天冥ボーナス 255 */
   ls_255: IStatBonus | null;
+
+  /** スタイルコンプリートボーナス */
+  styleBoardBonus: IStatBonus | null;
 };
 
 /** アビリティ */
@@ -82,14 +85,17 @@ export type IUnitAbilities = {
   variablechantDetail: string | null;
   /** 強化ヴァリアブルチャント詳細 */
   variablechantEnhancedDetail: string | null;
+
   /** Ex必殺技名 */
   extraSpecialMoveName: string | null;
   /** Ex必殺技詳細 */
   extraSpecialMoveDetail: string | null;
+
   /** アナザーセンス名 */
   anotherSenceName: string | null;
   /** アナザーセンス詳細 */
   anotherSenceDetail: string | null;
+
   /** 個人アビリティ */
   abilities: string[] | null;
 };
@@ -105,7 +111,7 @@ export type ISkillProperty = {
 
 /** スキル */
 export type IUnitSkills = {
-  // - 通常攻撃変化
+  /** 通常攻撃変化 */
   extra: ISkillProperty;
 
   /** ★1 スキル */

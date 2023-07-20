@@ -5,8 +5,8 @@ import { UnitStatBonus, UnitStatBonusType } from "../common/constants/UnitStatTy
 import { UnitStat } from "../units/types/common/UnitStat";
 
 const UnitStatBonusEditorComponent = (props: {
-  default: IStatBonus;
-  edit: IStatBonus;
+  default: IStatBonus | null;
+  edit: IStatBonus | null;
   title: string | JSX.Element;
   setter: (key: keyof IStatBonus, value: IStatBonus[keyof IStatBonus]) => void;
   preset?: UnitStat;
@@ -18,9 +18,9 @@ const UnitStatBonusEditorComponent = (props: {
       <span style={{ flex: "none", minWidth: "15%", margin: 8 }}>{props.title}</span>
 
       {/* ステータス種 */}
-      <EditedOutline isEdited={props.default.statType !== props.edit.statType} style={{ width: "45%" }}>
+      <EditedOutline isEdited={props.default?.statType !== props.edit?.statType} style={{ width: "45%" }}>
         <Select
-          value={props.edit.statType}
+          value={props.edit?.statType}
           onChange={(ev) => {
             const statType = ev.target.value as UnitStatBonusType;
 
@@ -28,7 +28,7 @@ const UnitStatBonusEditorComponent = (props: {
 
             if (!!statType) {
               // 補正値の設定がなければ、プリセットを適用
-              if (!props.edit.statAmount) {
+              if (!props.edit?.statAmount) {
                 switch (statType) {
                   case "HP":
                     props.setter("statAmount", props.preset?.hp || null);
@@ -59,7 +59,7 @@ const UnitStatBonusEditorComponent = (props: {
                 }
               }
               // 演算子の設定がなければ、「.0」にする
-              if (!props.edit.operator) {
+              if (!props.edit?.operator) {
                 props.setter("operator", "+");
               }
             }
@@ -78,19 +78,19 @@ const UnitStatBonusEditorComponent = (props: {
       </EditedOutline>
 
       {/* 補正値 */}
-      <EditedOutline isEdited={props.default.statAmount !== props.edit.statAmount} style={{ width: "20%" }}>
+      <EditedOutline isEdited={props.default?.statAmount !== props.edit?.statAmount} style={{ width: "20%" }}>
         <TextField
           sx={{ width: "100%" }}
           type="number"
-          value={props.edit.statAmount?.toString() || ""}
+          value={props.edit?.statAmount?.toString() || ""}
           onChange={(ev) => props.setter("statAmount", Number(ev.target.value))}
         />
       </EditedOutline>
 
       {/* 演算子 */}
-      <EditedOutline isEdited={props.default.operator !== props.edit.operator} style={{ width: "20%" }}>
+      <EditedOutline isEdited={props.default?.operator !== props.edit?.operator} style={{ width: "20%" }}>
         <Select
-          value={props.edit.operator}
+          value={props.edit?.operator}
           onChange={(ev) => props.setter("operator", (ev.target.value as "+" | "%") || null)}
           sx={{ width: "100%", height: "56px" }}
         >

@@ -5,18 +5,9 @@ import { StyleType } from "../constants/StyleType";
 import { StyleChip } from "../StyleChip";
 
 /** スタイルセレクトボックス */
-const StyleSelect = (props: {
-  value: StyleType | undefined;
-  handleSelect: (x: any) => void;
-  sx?: SxProps<Theme>;
-}) => {
+const StyleSelect = (props: { value: StyleType | undefined; handleSelect: (x: any) => void; sx?: SxProps<Theme> }) => {
   return (
-    <Select
-      value={props.value}
-      onChange={props.handleSelect}
-      sx={props.sx}
-      disableUnderline
-    >
+    <Select value={props.value} onChange={props.handleSelect} sx={props.sx} disableUnderline>
       <MenuItem value={StyleType.NS}>
         <ListItemIcon>
           <StyleChip styleType={StyleType.NS} />

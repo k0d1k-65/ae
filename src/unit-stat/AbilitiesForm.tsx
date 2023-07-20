@@ -61,7 +61,7 @@ const AbilitiesForm = (props: {
           />
         </EditedOutline>
 
-        <Box sx={(props.unitStat.style !== StyleType.ES ? {display: "none"} : {})}>
+        <Box sx={props.unitStat.style !== StyleType.ES ? { display: "none" } : {}}>
           {/* Ex必殺技名 */}
           <EditedOutline isEdited={props.default.extraSpecialMoveName !== props.unitStat.extraSpecialMoveName}>
             <TextField
@@ -85,7 +85,7 @@ const AbilitiesForm = (props: {
           </EditedOutline>
         </Box>
 
-        <Box sx={(!props.unitStat.unitTrueName ? {display: "none"} : {})}>
+        <Box sx={!props.unitStat.unitTrueName ? { display: "none" } : {}}>
           {/* アナザーセンス名 */}
           <EditedOutline isEdited={props.default.anotherSenceName !== props.unitStat.anotherSenceName}>
             <TextField
@@ -123,11 +123,11 @@ const AbilitiesForm = (props: {
                 height: "auto",
                 paddingTop: 0.5,
                 paddingBottom: 0.5,
-                '& .MuiChip-label': {
-                  whiteSpace: 'normal',
+                "& .MuiChip-label": {
+                  whiteSpace: "normal",
                 },
               },
-          }}
+            }}
           />
         </EditedOutline>
       </Grid>
